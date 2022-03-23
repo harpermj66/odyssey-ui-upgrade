@@ -3,5 +3,565 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "odyssey-home": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/odyssey-home",
+      "sourceRoot": "projects/odyssey-home/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/odyssey-home",
+            "index": "projects/odyssey-home/src/index.html",
+            "main": "projects/odyssey-home/src/main.ts",
+            "polyfills": "projects/odyssey-home/src/polyfills.ts",
+            "tsConfig": "projects/odyssey-home/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/odyssey-home/src/favicon.ico",
+              "projects/odyssey-home/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/odyssey-home/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/odyssey-home/src/environments/environment.ts",
+                  "with": "projects/odyssey-home/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "odyssey-home:build:production"
+            },
+            "development": {
+              "browserTarget": "odyssey-home:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "odyssey-home:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-home/src/test.ts",
+            "polyfills": "projects/odyssey-home/src/polyfills.ts",
+            "tsConfig": "projects/odyssey-home/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-home/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/odyssey-home/src/favicon.ico",
+              "projects/odyssey-home/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/odyssey-home/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "odyssey-administration-library": {
+      "projectType": "library",
+      "root": "projects/odyssey-administration-library",
+      "sourceRoot": "projects/odyssey-administration-library/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/odyssey-administration-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/odyssey-administration-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/odyssey-administration-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-administration-library/src/test.ts",
+            "tsConfig": "projects/odyssey-administration-library/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-administration-library/karma.conf.js"
+          }
+        }
+      }
+    },
+    "odyssey-customer-portal": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/odyssey-customer-portal",
+      "sourceRoot": "projects/odyssey-customer-portal/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/odyssey-customer-portal",
+            "index": "projects/odyssey-customer-portal/src/index.html",
+            "main": "projects/odyssey-customer-portal/src/main.ts",
+            "polyfills": "projects/odyssey-customer-portal/src/polyfills.ts",
+            "tsConfig": "projects/odyssey-customer-portal/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/odyssey-customer-portal/src/favicon.ico",
+              "projects/odyssey-customer-portal/src/assets"
+            ],
+            "styles": [
+              "projects/odyssey-customer-portal/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/odyssey-customer-portal/src/environments/environment.ts",
+                  "with": "projects/odyssey-customer-portal/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "odyssey-customer-portal:build:production"
+            },
+            "development": {
+              "browserTarget": "odyssey-customer-portal:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "odyssey-customer-portal:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-customer-portal/src/test.ts",
+            "polyfills": "projects/odyssey-customer-portal/src/polyfills.ts",
+            "tsConfig": "projects/odyssey-customer-portal/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-customer-portal/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/odyssey-customer-portal/src/favicon.ico",
+              "projects/odyssey-customer-portal/src/assets"
+            ],
+            "styles": [
+              "projects/odyssey-customer-portal/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "odyssey-mandr-library": {
+      "projectType": "library",
+      "root": "projects/odyssey-mandr-library",
+      "sourceRoot": "projects/odyssey-mandr-library/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/odyssey-mandr-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/odyssey-mandr-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/odyssey-mandr-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-mandr-library/src/test.ts",
+            "tsConfig": "projects/odyssey-mandr-library/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-mandr-library/karma.conf.js"
+          }
+        }
+      }
+    },
+    "odyssey-route-finder-library": {
+      "projectType": "library",
+      "root": "projects/odyssey-route-finder-library",
+      "sourceRoot": "projects/odyssey-route-finder-library/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/odyssey-route-finder-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/odyssey-route-finder-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/odyssey-route-finder-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-route-finder-library/src/test.ts",
+            "tsConfig": "projects/odyssey-route-finder-library/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-route-finder-library/karma.conf.js"
+          }
+        }
+      }
+    },
+    "odyssey-customer-portal-library": {
+      "projectType": "library",
+      "root": "projects/odyssey-customer-portal-library",
+      "sourceRoot": "projects/odyssey-customer-portal-library/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/odyssey-customer-portal-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/odyssey-customer-portal-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/odyssey-customer-portal-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-customer-portal-library/src/test.ts",
+            "tsConfig": "projects/odyssey-customer-portal-library/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-customer-portal-library/karma.conf.js"
+          }
+        }
+      }
+    },
+    "odyssey-search-library": {
+      "projectType": "library",
+      "root": "projects/odyssey-search-library",
+      "sourceRoot": "projects/odyssey-search-library/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/odyssey-search-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/odyssey-search-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/odyssey-search-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-search-library/src/test.ts",
+            "tsConfig": "projects/odyssey-search-library/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-search-library/karma.conf.js"
+          }
+        }
+      }
+    },
+    "odyssey-service-library": {
+      "projectType": "library",
+      "root": "projects/odyssey-service-library",
+      "sourceRoot": "projects/odyssey-service-library/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/odyssey-service-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/odyssey-service-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/odyssey-service-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-service-library/src/test.ts",
+            "tsConfig": "projects/odyssey-service-library/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-service-library/karma.conf.js"
+          }
+        }
+      }
+    },
+    "odyssey-shared-views": {
+      "projectType": "library",
+      "root": "projects/odyssey-shared-views",
+      "sourceRoot": "projects/odyssey-shared-views/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/odyssey-shared-views/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/odyssey-shared-views/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/odyssey-shared-views/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-shared-views/src/test.ts",
+            "tsConfig": "projects/odyssey-shared-views/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-shared-views/karma.conf.js"
+          }
+        }
+      }
+    },
+    "odyssey-vendorjobs-library": {
+      "projectType": "library",
+      "root": "projects/odyssey-vendorjobs-library",
+      "sourceRoot": "projects/odyssey-vendorjobs-library/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/odyssey-vendorjobs-library/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/odyssey-vendorjobs-library/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/odyssey-vendorjobs-library/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-vendorjobs-library/src/test.ts",
+            "tsConfig": "projects/odyssey-vendorjobs-library/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-vendorjobs-library/karma.conf.js"
+          }
+        }
+      }
+    },
+    "odyssey-test-project": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
+      "root": "projects/odyssey-test-project",
+      "sourceRoot": "projects/odyssey-test-project/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/odyssey-test-project",
+            "index": "projects/odyssey-test-project/src/index.html",
+            "main": "projects/odyssey-test-project/src/main.ts",
+            "polyfills": "projects/odyssey-test-project/src/polyfills.ts",
+            "tsConfig": "projects/odyssey-test-project/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/odyssey-test-project/src/favicon.ico",
+              "projects/odyssey-test-project/src/assets"
+            ],
+            "styles": [
+              "projects/odyssey-test-project/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/odyssey-test-project/src/environments/environment.ts",
+                  "with": "projects/odyssey-test-project/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "odyssey-test-project:build:production"
+            },
+            "development": {
+              "browserTarget": "odyssey-test-project:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "odyssey-test-project:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/odyssey-test-project/src/test.ts",
+            "polyfills": "projects/odyssey-test-project/src/polyfills.ts",
+            "tsConfig": "projects/odyssey-test-project/tsconfig.spec.json",
+            "karmaConfig": "projects/odyssey-test-project/karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/odyssey-test-project/src/favicon.ico",
+              "projects/odyssey-test-project/src/assets"
+            ],
+            "styles": [
+              "projects/odyssey-test-project/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "odyssey-home"
 }

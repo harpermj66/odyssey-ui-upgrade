@@ -5,9 +5,9 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "strict": false,
+    "noImplicitOverride": false,
+    "noPropertyAccessFromIndexSignature": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
@@ -15,6 +15,64 @@
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
+    "paths": {
+      "odysse-search-library": [
+        "dist/odysse-search-library/odysse-search-library",
+        "dist/odysse-search-library"
+      ],
+      "odysse-service-library": [
+        "dist/odysse-service-library/odysse-service-library",
+        "dist/odysse-service-library"
+      ],
+      "odyssey-administration-library": [
+        "dist/odyssey-administration-library/odyssey-administration-library",
+        "dist/odyssey-administration-library"
+      ],
+      "odyssey-bookings-library": [
+        "dist/odyssey-bookings-library/odyssey-bookings-library",
+        "dist/odyssey-bookings-library"
+      ],
+      "odyssey-crm-library": [
+        "dist/odyssey-crm-library/odyssey-crm-library",
+        "dist/odyssey-crm-library"
+      ],
+      "odyssey-customer-portal-library": [
+        "dist/odyssey-customer-portal-library/odyssey-customer-portal-library",
+        "dist/odyssey-customer-portal-library"
+      ],
+      "odyssey-equipment-library": [
+        "dist/odyssey-equipment-library/odyssey-equipment-library",
+        "dist/odyssey-equipment-library"
+      ],
+      "odyssey-mandr-library": [
+        "dist/odyssey-mandr-library/odyssey-mandr-library",
+        "dist/odyssey-mandr-library"
+      ],
+      "odyssey-route-finder-library": [
+        "dist/odyssey-route-finder-library/odyssey-route-finder-library",
+        "dist/odyssey-route-finder-library"
+      ],
+      "odyssey-search-library": [
+        "dist/odyssey-search-library/odyssey-search-library",
+        "dist/odyssey-search-library"
+      ],
+      "odyssey-service-library": [
+        "dist/odyssey-service-library/odyssey-service-library",
+        "dist/odyssey-service-library"
+      ],
+      "odyssey-shared-views": [
+        "dist/odyssey-shared-views/odyssey-shared-views",
+        "dist/odyssey-shared-views"
+      ],
+      "odyssey-test-library": [
+        "dist/odyssey-test-library/odyssey-test-library",
+        "dist/odyssey-test-library"
+      ],
+      "odyssey-vendorjobs-library": [
+        "dist/odyssey-vendorjobs-library/odyssey-vendorjobs-library",
+        "dist/odyssey-vendorjobs-library"
+      ]
+    },
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
