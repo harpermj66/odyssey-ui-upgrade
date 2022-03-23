@@ -1,0 +1,13 @@
+<div class="headerToolbarHome" fxLayout="row"  >
+
+  <div *ngIf="viewState === 'maximized'" sfxLayout="row" fxLayoutAlign="left center" class="logoClass" fxFlex="100%">
+    <div class="navbar-brand" fxLayout="column" fxLayoutAlign="center" style="padding-top:{{themeService.headerPadding}}">
+      <a routerLink="/welcome">
+        <img src="assets/{{themeService.appLogo}}" height="{{themeService.appLogoHeight}}" (click)="onHome()">
+      </a>
+    </div>
+  </div>
+
+
+
+</div>

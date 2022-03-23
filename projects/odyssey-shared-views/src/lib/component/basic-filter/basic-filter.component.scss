@@ -1,0 +1,40 @@
+@import "~@angular/material/theming";
+
+@mixin basic-filter($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+
+  .listFilter {
+    padding-left: 2px;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    border: solid 1px mat-color($accent, 100) !important;
+    border-radius: 2px;
+    height: 32px;
+    background-color: mat-contrast($primary, 700) !important;
+
+    .filterIcon {
+      font-size: 24px;
+      padding-top: 2px;
+      padding-left: 4px;
+      color: mat-color($accent, 150) !important;
+    }
+
+    .searchFieldInput {
+      height: 20px;
+      padding-top: 0px;
+      margin-top: -11px;
+    }
+
+    .listFilterButton {
+      color: darkgray;
+      font-size: 18px;
+      padding-bottom: 16px;
+      padding-right: 0px;
+    }
+  }
+
+
+
+}

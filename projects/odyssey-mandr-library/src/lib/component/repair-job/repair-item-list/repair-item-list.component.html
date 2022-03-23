@@ -1,0 +1,267 @@
+<div class="repair-item-list" fxLayout="column" fxLayoutAlign="start start">
+  <lib-standard-list-page-header [title]="repairJobNumber ? 'Repair Items for ' + repairJobNumber : 'Repair Items'" >
+    <ng-container *ngIf="editMode; else notEdit">
+      <button mat-raised-button
+              matTooltip="Clear all changes"
+              (click)="onCancelChanges()"
+              [disabled]="actionRequestQueue.loading">Cancel</button>
+      <button mat-raised-button
+              matTooltip="Save changes"
+              color="primary"
+              (click)="onSaveAll()"
+              [disabled]="disabled || actionRequestQueue.loading">Save</button>
+    </ng-container>
+    <ng-template #notEdit>
+      <button *ngIf="!readonly && repairJobId"
+              mat-raised-button matTooltip="Approve All"
+              (click)="onApproveAll()"
+              [disabled]="disabled || actionRequestQueue.loading">Approve All</button>
+      <button *ngIf="!readonly"
+              mat-raised-button
+              matTooltip="Edit"
+              (click)="onOpenEditMode()"
+              [disabled]="disabled || actionRequestQueue.loading">Edit</button>
+      <button *ngIf="!readonly && repairJobId"
+              mat-raised-button
+              matTooltip="Add Item"
+              color="primary"
+              (click)="onAddEditClick()"
+              [disabled]="disabled || actionRequestQueue.loading">Add Item</button>
+    </ng-template>
+
+  </lib-standard-list-page-header>
+
+  <div class="table-wrapper">
+    <mat-table [dataSource]="datasource"
+               [trackBy]="trackById">
+
+      <ng-container matColumnDef="itemNum" >
+        <mat-header-cell *matHeaderCellDef>Item Number</mat-header-cell>
+        <mat-cell *matCellDef="let item; let i = index" [matTooltip]="item.itemNum"> {{(i+1) + (this.pageSettings.pageNumber * this.pageSettings.pageSize)}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="machinery" >
+        <mat-header-cell *matHeaderCellDef>Machinery</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <mat-checkbox [ngModel]="item.machinery"
+                          [disableRipple]="true"
+                          (click)="$event.preventDefault()"></mat-checkbox>
+
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="location" >
+        <mat-header-cell *matHeaderCellDef>Location</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+
+          <lib-cedex-location-select *ngIf="editMode; else isReadOnly"
+                                     [(value)]="item.locationCode"
+                                     [contType]="repairJob?.containerStock?.contType"
+                                     (machineryChange)="item.machinery = $event"
+                                     [readonly]="readonly || !editMode"
+                                     [disabled]="disabled || actionRequestQueue.loading"></lib-cedex-location-select>
+          <ng-template #isReadOnly><span [matTooltip]="getLocationCodeDescription(item) | async | default:''">{{item.locationCode}}</span></ng-template>
+
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="component" >
+      <mat-header-cell *matHeaderCellDef>Component</mat-header-cell>
+      <mat-cell *matCellDef="let item">
+
+        <lib-cedex-component-select *ngIf="editMode; else isReadOnly"
+                                    [(value)]="item.componentCode"
+                                    [contType]="repairJob?.containerStock?.contType"
+                                    [machinery]="item.machinery"
+                                    [location]="item.locationCode"
+                                    [readonly]="readonly || !editMode"
+                                    [disabled]="disabled || actionRequestQueue.loading"></lib-cedex-component-select>
+        <ng-template #isReadOnly><span [matTooltip]="getComponentCodeDescription(item) | async | default:''">{{item.componentCode}}</span></ng-template>
+      </mat-cell>
+    </ng-container>
+
+      <ng-container matColumnDef="damage" >
+        <mat-header-cell *matHeaderCellDef>Damage</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+
+          <lib-cedex-damage-select *ngIf="editMode; else isReadOnly"
+                                   [(value)]="item.damageCode"
+                                   [contType]="repairJob?.containerStock?.contType"
+                                   [readonly]="readonly || !editMode"
+                                   [disabled]="disabled || actionRequestQueue.loading"></lib-cedex-damage-select>
+          <ng-template #isReadOnly><span [matTooltip]="getDamageCodeDescription(item) | async | default:''">{{item.damageCode}}</span></ng-template>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="damageMeasurements" >
+        <mat-header-cell *matHeaderCellDef class="column-measurements">Measurements (m)</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-measurements" [matTooltip]="item.damageHeight + '×' + item.damageWidth">
+
+          <ng-container *ngIf="!readonly && editMode; else isReadonly">
+            <mat-form-field>
+              <input matInput
+                     type="number"
+                     placeholder="Length"
+                     [(ngModel)]="item.damageHeight"
+                     [disabled]="disabled || actionRequestQueue.loading">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput
+                     type="number"
+                     placeholder="Width"
+                     [(ngModel)]="item.damageWidth"
+                     [disabled]="disabled || actionRequestQueue.loading">
+            </mat-form-field>
+          </ng-container>
+
+          <ng-template #isReadonly>
+            <ng-container *ngIf="item.damageHeight && item.damageWidth">
+              {{item.damageHeight}} × {{item.damageWidth}}
+            </ng-container>
+          </ng-template>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="repair" >
+        <mat-header-cell *matHeaderCellDef>Repair</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+
+          <lib-cedex-repair-select *ngIf="editMode; else isReadOnly"
+                                   [(value)]="item.repairCode"
+                                   [contType]="repairJob?.containerStock?.contType"
+                                   [readonly]="readonly || !editMode"
+                                   [disabled]="disabled || actionRequestQueue.loading"></lib-cedex-repair-select>
+          <ng-template #isReadOnly><span [matTooltip]="getRepairCodeDescription(item) | async | default:''">{{item.repairCode}}</span></ng-template>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="hours" >
+        <mat-header-cell *matHeaderCellDef class="column-number-short">Hrs</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-number-short" [matTooltip]="item.hours">
+
+          <mat-form-field *ngIf="!readonly && editMode; else isReadonly">
+            <input matInput type="number" [(ngModel)]="item.hours" [disabled]="disabled || actionRequestQueue.loading">
+          </mat-form-field>
+          <ng-template #isReadonly>{{item.hours}}</ng-template>
+
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="labourRate">
+        <mat-header-cell *matHeaderCellDef class="column-number-short">Labour Rate</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-number-short" [matTooltip]="item.labourRate">
+
+          <mat-form-field *ngIf="!readonly && editMode; else isReadonly">
+            <input matInput type="number" [(ngModel)]="item.labourRate" [disabled]="disabled || actionRequestQueue.loading">
+          </mat-form-field>
+          <ng-template #isReadonly>{{item.labourRate}}</ng-template>
+
+          </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="labourCost" >
+        <mat-header-cell *matHeaderCellDef class="column-number">Labour Cost</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-number" [matTooltip]="item.totalLabourCost"> {{item.totalLabourCost}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="materialCostPerUnit" >
+        <mat-header-cell *matHeaderCellDef class="column-number">Material Cost Per Unit</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-number" [matTooltip]="item.perUnitMaterialCost">
+
+          <mat-form-field *ngIf="!readonly && editMode; else isReadonly">
+            <input matInput type="number" [(ngModel)]="item.perUnitMaterialCost" [disabled]="disabled || actionRequestQueue.loading">
+          </mat-form-field>
+          <ng-template #isReadonly>{{item.perUnitMaterialCost}}</ng-template>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="materialQuantity" >
+        <mat-header-cell *matHeaderCellDef class="column-number-short">Material Quantity</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-number-short" [matTooltip]="item.materialQuantity">
+
+          <mat-form-field *ngIf="!readonly && editMode; else isReadonly">
+            <input matInput type="number" [(ngModel)]="item.materialQuantity" [disabled]="disabled || actionRequestQueue.loading">
+          </mat-form-field>
+          <ng-template #isReadonly>{{item.materialQuantity}}</ng-template>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="totalMaterialCost" >
+        <mat-header-cell *matHeaderCellDef class="column-number">Material Cost</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-number" [matTooltip]="item.totalMaterialCost"> {{item.totalMaterialCost}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="totalCost" >
+        <mat-header-cell *matHeaderCellDef class="column-number">Total Cost</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-number" [matTooltip]="item.totalCost">{{item.totalCost}}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="status" >
+        <mat-header-cell *matHeaderCellDef class="column-status">Status</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-status" [matTooltip]="item.status">
+
+          <mat-form-field *ngIf="!readonly && editMode; else isReadonly">
+            <mat-select [(ngModel)]="item.status" [disabled]="disabled || actionRequestQueue.loading">
+              <mat-option value="SUBMITTED"></mat-option>
+              <mat-option value="APPROVED">Approved</mat-option>
+              <mat-option value="REJECTED">Rejected</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <ng-template #isReadonly>{{item.status !== 'SUBMITTED' ? (item.status | removeUnderscore | titlecase) : ''}}</ng-template>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="remarks" >
+        <mat-header-cell *matHeaderCellDef class="column-button">Remarks</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-button">
+          <button mat-icon-button (click)="onCommentClick(item)"><mat-icon>comment</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="attachments" >
+        <mat-header-cell *matHeaderCellDef class="column-button">Attachments</mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-button"></mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="menu" >
+        <mat-header-cell *matHeaderCellDef class="column-icon"></mat-header-cell>
+        <mat-cell *matCellDef="let item" class="column-icon">
+          <button mat-icon-button
+                  [matMenuTriggerFor]="rowMenu"
+                  [matMenuTriggerData]="{item: item}">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+
+      <mat-row *matRowDef="let row; columns:displayedColumns;" (click)="select(row)" [ngClass]="{selected: selected.includes(row)}"></mat-row>
+    </mat-table>
+
+
+  </div>
+  <mat-paginator [disabled]="disabled || editMode"
+                 [length]="pageSettings.total"
+                 [pageIndex]="pageSettings.pageNumber"
+                 [pageSize]="pageSettings.pageSize"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="onPagingChanged($event)"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>
+
+
+<mat-menu #rowMenu="matMenu">
+  <ng-template matMenuContent let-item="item">
+    <button mat-menu-item
+            (click)="onViewClick(item)"><mat-icon>preview</mat-icon>View</button>
+    <button *ngIf="!readonly"
+            mat-menu-item
+            (click)="onAddEditClick(item)"><mat-icon>edit</mat-icon>edit</button>
+    <button *ngIf="!readonly"
+            mat-menu-item
+            (click)="onDeleteClick(item)"><mat-icon>delete</mat-icon>Delete</button>
+  </ng-template>
+</mat-menu>

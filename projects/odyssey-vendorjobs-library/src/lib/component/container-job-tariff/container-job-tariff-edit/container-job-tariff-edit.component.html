@@ -1,0 +1,201 @@
+<div class="container-job-tariff-edit">
+  <lib-content-wrapper>
+    <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-card-subtitle>Vendor Job Tariff</mat-card-subtitle>
+        <mat-card-title *ngIf="containerJobTariff.id; else newTariff">{{containerJobTariff.depotName && containerJobTariff.jobType ? containerJobTariff.depotName + ' ' + (containerJobTariff.jobType | removeUnderscore | titlecase) : containerJobTariffId}}</mat-card-title>
+        <ng-template #newTariff>
+          <mat-card-title>New Tariff</mat-card-title>
+        </ng-template>
+      </div>
+
+      <div *ngIf="!loading; else isLoading" [ngClass]="{'edit-content-page': !isMainDialog, 'edit-content-dialog': !!isMainDialog}">
+
+        <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+          <mat-divider></mat-divider>
+
+          <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-form-field class="edit-field" *ngIf="containerJobTariff.id">
+              <mat-label>Company</mat-label>
+              <input matInput
+                     [ngModel]="containerJobTariff.companyName"
+                     readonly
+                     [disabled]="disabled || busy">
+            </mat-form-field>
+
+            <div class="edit-field">
+              <lib-container-location-lookup label="Location"
+                                             placeholder="Depot"
+                                             type="depot"
+                                             [value]="{depotId: containerJobTariff.depotId}"
+                                             (valueChange)="onChangeDepot($event)"
+                                             [required]="true"
+                                             [error]="validationIssues.depotId"
+                                             [disabled]="disabled || busy"
+                                             [readonly]="readonly"></lib-container-location-lookup>
+            </div>
+
+            <div class="edit-field">
+              <lib-currency-lookup label="Currency"
+                                   placeholder="Currency"
+                                   [value]="{currencyId: containerJobTariff.currencyId}"
+                                   (valueChange)="onCurrencyChange($event)"
+                                   [required]="true"
+                                   [error]="validationIssues.currencyId"
+                                   [disabled]="disabled || busy"
+                                   [readonly]="readonly"></lib-currency-lookup>
+            </div>
+
+            <div class="edit-field">
+              <lib-container-job-type-selector label="Job Type"
+                                             placeholder="Job Type"
+                                             [(value)]="containerJobTariff.jobType"
+                                               (valueChange)="onJobTypeChange()"
+                                             [required]="true"
+                                             [error]="validationIssues.jobType"
+                                             [disabled]="disabled || busy"
+                                             [readonly]="readonly"></lib-container-job-type-selector>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+          <mat-divider></mat-divider>
+
+          <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-form-field class="edit-field">
+              <mat-label>Valid From</mat-label>
+              <input matInput
+                     readonly
+                     [errorStateMatcher]="validFromErrorMatcher"
+                     [matDatepicker]="validFromDatePicker"
+                     [(ngModel)]="containerJobTariff.validFrom"
+                     (ngModelChange)="onValidFromChange()">
+              <mat-datepicker-toggle matSuffix
+                                     [for]="validFromDatePicker"
+                                     [disabled]="disabled || busy || readonly"></mat-datepicker-toggle>
+              <mat-datepicker #validFromDatePicker></mat-datepicker>
+              <mat-error *ngIf="validationIssues.validFrom">{{validationIssues.validFrom}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="edit-field">
+              <mat-label>Valid To</mat-label>
+              <input matInput
+                     readonly
+                     [errorStateMatcher]="validToErrorMatcher"
+                     [matDatepicker]="validToDatePicker"
+                     [(ngModel)]="containerJobTariff.validTo"
+                     (ngModelChange)="onValidToChange()">
+              <mat-datepicker-toggle matSuffix
+                                     [for]="validToDatePicker"
+                                     [disabled]="disabled || busy || readonly"></mat-datepicker-toggle>
+              <mat-datepicker #validToDatePicker></mat-datepicker>
+              <mat-error *ngIf="validationIssues.validTo">{{validationIssues.validTo}}</mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+          <mat-divider></mat-divider>
+
+          <div fxLayout="column" fxLayoutAlign="start start">
+            <mat-card-subtitle>Container Types</mat-card-subtitle>
+          </div>
+
+          <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <div class="edit-field">
+              <lib-container-category-multi-selector label="Container Categories"
+                                                     placeholder="Container Categories"
+                                                     [(value)]="containerJobTariff.containerCategories"
+                                                     (valueChange)="onContCategoriesChange()"
+                                                     [required]="true"
+                                                     [error]="validationIssues.containerCategories"
+                                                     [disabled]="disabled || busy"
+                                                     [readonly]="readonly"></lib-container-category-multi-selector>
+            </div>
+
+            <mat-form-field class="edit-field">
+              <mat-label>Container Empty/Full</mat-label>
+              <mat-select [(value)]="containerJobTariff.empty"
+                          (valueChange)="onEmptyChange()"
+                          [disabled]="disabled || busy || readonly"
+                          [errorStateMatcher]="emptyErrorMatcher"
+                          required>
+                <mat-option value="EMPTY">Empty</mat-option>
+                <mat-option value="NOT_EMPTY">Not Empty</mat-option>
+                <mat-option value="BOTH">Both</mat-option>
+              </mat-select>
+              <mat-error *ngIf="validationIssues.empty">{{validationIssues.empty}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="edit-field">
+              <mat-label>Hazardous</mat-label>
+              <mat-select [(value)]="containerJobTariff.hazardous"
+                          (valueChange)="onHazardousChange()"
+                          [disabled]="disabled || busy || readonly"
+                          [errorStateMatcher]="hazardousErrorMatcher"
+                          required>
+                <mat-option value="HAZARDOUS">Hazardous</mat-option>
+                <mat-option value="NON-HAZARDOUS">Non-Hazardous</mat-option>
+                <mat-option value="BOTH">Both</mat-option>
+              </mat-select>
+              <mat-error *ngIf="validationIssues.hazardous">{{validationIssues.hazardous}}</mat-error>
+            </mat-form-field>
+          </div>
+
+        </div>
+
+        <div class="section"
+             *ngIf="containerJobTariff.jobType"
+             fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+          <mat-divider></mat-divider>
+
+          <div fxLayout="column" fxLayoutAlign="start start">
+            <mat-card-subtitle>Amounts</mat-card-subtitle>
+          </div>
+
+          <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+            <mat-form-field class="edit-field" *ngFor="let group of amountGroups">
+              <mat-label>{{group}}</mat-label>
+              <input #numberInput
+                     matInput
+                     type="number"
+                     inputmode="decimal"
+                     min="0"
+                     (keyup)="checkInputValidity(group, numberInput)"
+                     [errorStateMatcher]="getErrorMatcher(group, numberInput)"
+                     [(ngModel)]="containerJobTariff.amounts[group]"
+                     [disabled]="disabled || busy"
+                     [readonly]="readonly"/>
+              <span *ngIf="containerJobTariff.currencyShort" matSuffix>{{containerJobTariff.currencyShort}}</span>
+              <mat-error *ngIf="isNegative(containerJobTariff.amounts[group])">Cannot be negative</mat-error>
+              <mat-error *ngIf="numberInput.validity?.badInput || numberInput.validity?.customError">Must be a number</mat-error>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+      </div>
+
+      <ng-template #isLoading>
+        <div class="spinner-wrapper" fxLayout="column" fxLayoutAlign="center center">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+
+      <mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <button mat-raised-button
+                (click)="onClose()"
+                [disabled]="saving">Close</button>
+        <button *ngIf="!readonly"
+                mat-raised-button
+                color="primary"
+                (click)="saveTariff()"
+                [disabled]="!canSave">Save</button>
+        <mat-spinner *ngIf="saving" [diameter]="30"></mat-spinner>
+      </mat-card-actions>
+    </div>
+  </lib-content-wrapper>
+</div>

@@ -1,0 +1,38 @@
+
+<mgl-timeline [alternate]="true">
+    <mgl-timeline-entry *ngFor="let node of timeline.nodes; let i = index;">
+        <mgl-timeline-entry-header (click)="preventExpand($event)" [ngStyle]="{'text-align': getTextAlignment(i + 1)}">
+            <h2>{{node.locode}}</h2>
+            <p *ngIf="node.legs[0]">{{node.legs[0].voyage.vesselName}} {{node.legs[0].voyage.voyageNo}}</p>
+            <p *ngIf="!node.legs[0]">{{node.vesselName}} {{node.voyageNo}}</p>
+            <p *ngIf="node.legs[0]">ETA: {{node.legs[0].eta}}</p>
+            <p *ngIf="node.legs[0]">ETD: {{node.legs[0].etd}}</p>
+            <strong>{{node.containerNumber}}</strong>
+            <p>{{node.eventType}}: {{node.eventDate}}</p>
+        </mgl-timeline-entry-header>
+        <mgl-timeline-entry-dot (click)="preventExpand($event)" [size]="90" fxLayoutAlign="center center">
+            <mat-icon>{{getIcon(node.eventType)}}</mat-icon>
+        </mgl-timeline-entry-dot>
+    </mgl-timeline-entry>
+</mgl-timeline>
+
+
+<!--Keeping this as we might need it-->
+<!--<div *ngFor="let timeline of timelines">
+    <h2 class="number" fxLayoutAlign="center center">{{timeline.bookingNumber}}</h2>
+    <mgl-timeline [alternate]="true">
+        <mgl-timeline-entry *ngFor="let node of timeline.nodes; let i = index;">
+            <mgl-timeline-entry-header (click)="preventExpand($event)" [ngStyle]="{'text-align': getTextAlignment(i + 1)}">
+                <h2>{{node.locode}}</h2>
+                <p>{{node.legs[0].voyage.vesselName}} {{node.legs[0].voyage.voyageNo}}</p>
+                <p>ETA: {{node.legs[0].eta}}</p>
+                <p>ETD: {{node.legs[0].etd}}</p>
+                <strong>{{node.containerNumber}}</strong>
+                <p>{{node.eventType}}: {{node.eventDate}}</p>
+            </mgl-timeline-entry-header>
+            <mgl-timeline-entry-dot (click)="preventExpand($event)" [size]="90" fxLayoutAlign="center center">
+                <mat-icon>directions_boat_filled</mat-icon>
+            </mgl-timeline-entry-dot>
+        </mgl-timeline-entry>
+    </mgl-timeline>
+</div>-->

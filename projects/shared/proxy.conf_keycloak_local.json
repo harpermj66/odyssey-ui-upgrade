@@ -1,0 +1,15 @@
+{
+  "/odyssey-keycloak-service/*": {
+    "target": "http://localhost:8085/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info",
+    "pathRewrite": {"/odyssey-keycloak-service" : ""}
+  },
+  "/": {
+    "target": "https://10.1.3.16/developer-dev/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "info"
+  }
+}

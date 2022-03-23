@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { DataGridGroupedSumsTemplate1Component } from './data-grid-grouped-sums-template1.component';
+
+describe('DataGridGroupedSumsTemplate1Component', () => {
+  let component: DataGridGroupedSumsTemplate1Component;
+  let fixture: ComponentFixture<DataGridGroupedSumsTemplate1Component>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ DataGridGroupedSumsTemplate1Component ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(DataGridGroupedSumsTemplate1Component);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+});

@@ -1,0 +1,16 @@
+<mat-form-field>
+    <mat-label>{{label}}</mat-label>
+    <input
+            matInput
+            [placeholder]="placeholder"
+            [required]="required"
+            [(ngModel)]="searchString"
+            (keyup)="findCurrencies($event)"
+            [matAutocomplete]="auto"
+    >
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="emitCurrency($event)" [displayWith]="getCurrencyShortName">
+        <mat-option *ngFor="let currency of filteredCurrencies" [value]="currency">
+            {{currency.shortName}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

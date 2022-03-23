@@ -1,0 +1,25 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { AdvancedSearchToolbarComponent } from './advanced-search-toolbar.component';
+
+describe('AdvancedSearchToolbarComponent', () => {
+  let component: AdvancedSearchToolbarComponent;
+  let fixture: ComponentFixture<AdvancedSearchToolbarComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ AdvancedSearchToolbarComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AdvancedSearchToolbarComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

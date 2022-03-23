@@ -1,0 +1,97 @@
+@import "~@angular/material/theming";
+
+@mixin sidebar-wide($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .wideMenuArea {
+    width: calc(100% - 1px);
+    background-color: mat-color($primary, 500);
+    border-top: solid 1px mat-color($accent, 200);
+    border-right: solid 1px mat-color($accent, 200);
+    padding-top: 10px;
+    overflow: auto;
+    height: calc(100% - 87px);
+
+    .mat-accordion {
+
+      .mat-expansion-panel {
+        background-color: transparent;
+        padding-bottom: 0px !important;
+        margin: 2px 0px 2px 0px !important;
+
+        .mat-expansion-panel-header {
+          padding: 0px 0px 0px 0px !important;
+        }
+
+        .mat-toolbar {
+          padding-left: 2px;
+          height: 30px;
+          background-color: transparent;
+          color: mat-color($accent, 150);
+
+          .mat-icon {
+            color: mat-contrast($primary, 500);
+            font-size: 20px;
+          }
+
+          .groupTitle {
+            padding-left: 0px;
+            font-weight: normal !important;
+            color: mat-contrast($primary, 500);
+            font-size: 13px
+          }
+
+        }
+
+        .mat-list {
+          padding-left: 0px !important;
+          margin-left: 0px !important;
+          width: 210px !important;
+
+          .mat-list-item {
+            margin-left: -24px !important;
+            margin-right: -17px !important;
+            padding-left: 0px !important;
+            width: 100%;
+          }
+
+
+        }
+      }
+
+      .mat-expansion-indicator:after {
+        color: white;
+      }
+    }
+
+  }
+
+  .mat-menu-panel.wider-mat-menu {
+    max-width: none !important;
+  }
+
+
+  mat-list {
+    padding: 3px 0px 8px 0px !important;
+    width: 100%;
+
+    .mat-list-item {
+      padding: 0px;
+      font-size: 12px !important;
+      color: mat-contrast($primary, 500) !important;
+      height: 22px !important;
+      width: 100%;
+    }
+
+    .mat-list-item:hover {
+      background-color: mat-color($primary, 800) !important;
+    }
+
+    .mat-list-item:active {
+      background-color: mat-color($primary, 800) !important;
+    }
+  }
+}

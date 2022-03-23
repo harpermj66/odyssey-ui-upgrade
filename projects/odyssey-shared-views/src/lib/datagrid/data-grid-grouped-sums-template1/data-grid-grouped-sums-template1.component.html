@@ -1,0 +1,127 @@
+<div class="dataGridGroupedSumsTemplate">
+  <table
+    mat-table #table [dataSource]="dataSource"
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    multiTemplateDataRows
+    (cdkDropListDropped)="dropColumn($event)"
+  >
+
+    <ng-container matColumnDef="select" [sticky]="true" >
+      <div >
+        <th mat-header-cell *matHeaderCellDef >
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row" >
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? rowSelectToggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)" >
+          </mat-checkbox>
+        </td>
+      </div>
+    </ng-container>
+
+    <ng-container *ngFor="let column of displayColumns" matColumnDef="{{column}}">
+
+      <ng-container [ngSwitch]="getType(column)">
+
+        <ng-container *ngSwitchDefault>
+          <th mat-header-cell cdkDrag *matHeaderCellDef i18n [matTooltip]="getTitle(column)">{{getTitle(column)}}</th>
+        </ng-container>
+
+      </ng-container>
+
+      <ng-container [ngSwitch]="getType(column)"]>
+
+        <ng-container *ngSwitchCase="'Date'">
+          <td mat-cell  *matCellDef="let row" [ngClass]="{'headerClass' : row._calc === 'H', highlight: selectedRow != null && selectedRow[keyField] == row[keyField] && row._calc != 'H' && row._calc !== 'S'}">{{row[column] | date:'dd/MM/yyyy hh:mm '}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Double'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'headerClass' : row._calc === 'H', 'sumTotalClass' : row._calc === 'S' && row[column] !== undefined && row[column] !== null, highlight: selectedRow != null && selectedRow[keyField] == row[keyField] && row._calc !== 'H' && row._calc !== 'S'}"
+              style="text-align: right">{{row[column] | number:'1.2-2'}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'BigDecimal'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'headerClass' : row._calc === 'H', 'sumTotalClass' : row._calc === 'S' && row[column] !== undefined && row[column] !== null, highlight: selectedRow != null && selectedRow[keyField] == row[keyField] && row._calc !== 'H' && row._calc !== 'S'}"
+              style="text-align: right">{{row[column] | number:'1.2-2'}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Float'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'headerClass' : row._calc === 'H', 'sumTotalClass' : row._calc === 'S' && row[column] !== undefined && row[column] !== null, highlight: selectedRow != null && selectedRow[keyField] == row[keyField] && row._calc !== 'H' && row._calc !== 'S'}"
+              style="text-align: right">{{row[column] | number:'1.2-2'}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Long'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'headerClass' : row._calc === 'H', 'sumTotalClass' : row._calc === 'S' && row[column] !== undefined && row[column] !== null, highlight: selectedRow != null && selectedRow[keyField] == row[keyField] && row._calc !== 'H' && row._calc !== 'S'}"
+              style="text-align: right">{{row[column]}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Int'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'headerClass' : row._calc === 'H', 'sumTotalClass' : row._calc === 'S' && row[column] !== undefined && row[column] !== null, highlight: selectedRow != null && selectedRow[keyField] == row[keyField] && row._calc !== 'H' && row._calc !== 'S'}"
+              style="text-align: right">{{row[column]}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Boolean'">
+          <td mat-cell  *matCellDef="let row"  [ngClass]="{'headerClass' : row._calc === 'H', highlight: selectedRow != null && selectedRow[keyField] == row[keyField] && row._calc != 'H' && row._calc !== 'S'}">{{row[column] ? 'Yes' : 'No' }}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          <td mat-cell *matCellDef="let row"  [ngClass]="{'headerClass' : row._calc === 'H', highlight: selectedRow != null && selectedRow[keyField] == row[keyField] && row._calc !== 'H' && row._calc !== 'S'}">{{row[column]}}</td>
+        </ng-container>
+
+      </ng-container>
+
+    </ng-container>
+
+    <ng-container matColumnDef="buttons">
+
+      <div [ngStyle]="{'display': headerMenus.length > 0 ? 'block' : 'none'}">
+        <th mat-header-cell *matHeaderCellDef >
+          <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+          <mat-menu #menu="matMenu" >
+            <ng-container *ngFor="let parentMenu of headerMenus">
+              <button *ngIf="parentMenu.children.length === 0" mat-menu-item (click)="onHeaderMenuClick(parentMenu.actionId)">
+                <mat-icon *ngIf="parentMenu.icon.length > 0">{{parentMenu.icon}}</mat-icon>
+                <span>{{parentMenu.title}}</span>
+              </button>
+              <button *ngIf="parentMenu.children.length > 0" mat-menu-item [mat-menu-trigger-for]="submenu">
+                <mat-icon *ngIf="parentMenu.icon.length > 0">{{parentMenu.icon}}</mat-icon>
+                <span>{{parentMenu.title}}</span>
+              </button>
+              <mat-menu #submenu >
+                <ng-container *ngFor="let childMenu of parentMenu.children">
+                  <button mat-menu-item (click)="onHeaderMenuClick(childMenu.actionId)">
+                    <mat-icon *ngIf="childMenu.icon.length > 0">{{childMenu.icon}}</mat-icon>
+                    <span>{{childMenu.title}}</span>
+                  </button>
+                  <mat-divider *ngIf="childMenu.title === ''"></mat-divider>
+                </ng-container>
+              </mat-menu>
+            </ng-container>
+          </mat-menu>
+        </th>
+
+        <td mat-cell *matCellDef="let element" style="padding-top: 1px; padding-bottom: 0px" >
+          <div *ngIf="rowMenus.length > 0" mat-icon-button ><mat-icon>more_vert</mat-icon></div>
+        </td>
+
+      </div>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="allColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: allColumns;" [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField] && row._calc !== 'H' && row._calc !== 'S'}" (click)="onSelectRow(row)"></tr>
+  </table>
+</div>

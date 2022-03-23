@@ -1,0 +1,48 @@
+@import "~@angular/material/theming";
+
+@mixin repair-job-attachments-view-theme($theme) {
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .wrapper {
+    max-width: 90vh;
+    max-height: 90vw;
+    width: 100%;
+  }
+
+  .attachment-overlay {
+    position: absolute;
+  }
+
+  .vertical-filler {
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  .image-preview {
+    width: 100%;
+  }
+
+  .mat-paginator {
+    width: 100%;
+  }
+
+  .attachment-toolbar {
+    width: 100%;
+    background-color: $background-color;
+  }
+
+  .attachment-footer {
+    width: 100%;
+    background-color: $background-color;
+  }
+
+  .section {
+    width: 100%;
+  }
+
+  .section-content {
+    width: 100%;
+    overflow: auto;
+  }
+}

@@ -1,0 +1,37 @@
+<div fxFlexAlign="row" fxLayoutGap="10px">
+
+  <form [formGroup]="form" fxLayout="column" >
+
+    <mat-form-field >
+      <input
+        matInput placeholder="Name"
+        formControlName="name"
+        (keyup)="onNameChange()"
+      />
+      <mat-hint align="end">An abbreviated description with no spaces</mat-hint>
+      <mat-error *ngIf="nameRequired" >You must enter a rule name.</mat-error>
+      <mat-error *ngIf="duplicateName" >The rule name is already in use.</mat-error>
+    </mat-form-field>
+    <mat-form-field >
+      <input
+        matInput placeholder="Description"
+        formControlName="description"
+        (keyup)="onDescriptionChange()"
+      />
+      <mat-hint align="end">A meaningful description</mat-hint>
+      <mat-error *ngIf="descriptionInvalid">You must enter a description.</mat-error>
+    </mat-form-field>
+
+    <mat-checkbox class="save-checkbox"
+                  formControlName="shareLocally"
+                  (change)="onShareLocally()"
+    >Share with your company
+    </mat-checkbox>
+    <mat-checkbox class="save-checkbox"
+                  formControlName="shareAll"
+                  (change)="onShareAllChanged()"
+    >Share with everyone</mat-checkbox>
+
+  </form>
+
+</div>

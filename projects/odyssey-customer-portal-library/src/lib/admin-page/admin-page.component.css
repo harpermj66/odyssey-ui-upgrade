@@ -1,0 +1,12 @@
+.page-container{
+    min-height: 100vh;
+    height: 100%;
+}
+
+mat-tab-group {
+    width: 100%;
+}
+
+tab-content-container {
+    padding: 50px 20px;
+}

@@ -1,0 +1,109 @@
+<div class="menuArea"
+     fxLayoutAlign="top center"
+     fxLayout="column"
+     fxFlexFill
+>
+    <div class="logo-container">
+        <img *ngIf="isSidebarClosed()" src="https://www.marfret.fr/app/uploads/2019/03/cropped-logo_marfret_hd.png"
+             alt="Logo placeholder" width="70" height="70" [style.visibility]="showExpandIcon ? 'visible' : 'hidden'">
+    </div>
+
+    <div class="menu-item-container" *ngIf="menuLoaded">
+<!--        <button *ngIf="showExpandIcon" mat-icon-button [matTooltip]="'Show menu'" (click)="onShowMenu()">-->
+<!--            <mat-icon class="iconClass">code</mat-icon>-->
+<!--        </button>-->
+
+        <div *ngFor="let m of menu">
+            <button class="menu-button" fxLayout="center center" mat-button disableRipple (click)="onMenuChange(m)">
+                <mat-icon class="iconClass">{{m.groupIcon}}</mat-icon>
+                <mat-label
+                        class="menu-item-label"
+                        [style.visibility]="isSidebarClosed() ? 'hidden' : 'visible'"
+                        [style.opacity]="isSidebarClosed() ? 0 : 1"
+                >
+                    {{m.groupTitle}}
+                </mat-label>
+            </button>
+        </div>
+
+        <div class="bottom-menu-items"
+             fxLayout="column"
+             [fxLayoutAlign]="isSidebarClosed() ? 'top center' : 'top start'"
+        >
+
+            <button *ngIf="!authenticated" mat-button class="menu-button" fxLayout="center center" disableRipple
+                    (click)="emitRegisterClicked()">
+                <mat-icon>person_add_alt</mat-icon>
+                <mat-label
+                        class="menu-item-label"
+                        [style.visibility]="isSidebarClosed() ? 'hidden' : 'visible'"
+                        [style.opacity]="isSidebarClosed() ? 0 : 1">
+                    Register
+                </mat-label>
+            </button>
+
+            <button *ngIf="!authenticated" mat-button class="menu-button" fxLayout="center center" disableRipple
+                    (click)="signIn()">
+                <mat-icon>login</mat-icon>
+                <mat-label
+                        class="menu-item-label"
+                        [style.visibility]="isSidebarClosed() ? 'hidden' : 'visible'"
+                        [style.opacity]="isSidebarClosed() ? 0 : 1">
+                    Login
+                </mat-label>
+            </button>
+
+            <button *ngIf="delayedDrawReady"
+                    mat-button
+                    class="menu-button"
+                    fxLayout="center center"
+                    disableRipple
+                    [matMenuTriggerFor]="helpDropDown.helpMenu">
+                <mat-icon>help_outline</mat-icon>
+                <mat-label class="menu-item-label"
+                           [style.visibility]="isSidebarClosed() ? 'hidden' : 'visible'"
+                           [style.opacity]="isSidebarClosed() ? 0 : 1">
+                    Help
+                </mat-label>
+            </button>
+            <lib-help-menu #helpDropDown rootTitle="root"></lib-help-menu>
+
+            <button *ngIf="authenticated && false"
+                    mat-button class="menu-button"
+                    fxLayout="center center"
+                    disableRipple
+                    [matMenuTriggerFor]="profileMenu">
+                <mat-icon *ngIf="!avatar(); else hasAvatar">person</mat-icon>
+                <ng-template #hasAvatar>
+                    <div class="avatar" [style]="'background-image: url(\'' + avatar() + '\')'"></div>
+                </ng-template>
+                <mat-label class="menu-item-label"
+                           [style.visibility]="isSidebarClosed() ? 'hidden' : 'visible'"
+                           [style.opacity]="isSidebarClosed() ? 0 : 1">
+                    Profile
+                </mat-label>
+            </button>
+
+            <mat-menu #profileMenu>
+                <ng-template matMenuContent>
+                    <button *ngFor="let item of userMenuItems()" mat-menu-item (click)="onUserMenuItemClick(item)">
+                        <mat-icon>{{item.icon}}</mat-icon>
+                        <span>{{item.title}}</span>
+                    </button>
+                </ng-template>
+            </mat-menu>
+
+            <button *ngIf="authenticated" mat-button class="signOut" fxLayout="center center" disableRipple
+                    (click)="onSignOut()">
+                <mat-icon>logout</mat-icon>
+                <mat-label
+                        class="menu-item-label"
+                        [style.visibility]="isSidebarClosed() ? 'hidden' : 'visible'"
+                        [style.opacity]="isSidebarClosed() ? 0 : 1"
+                >
+                    Logout
+                </mat-label>
+            </button>
+        </div>
+    </div>
+</div>

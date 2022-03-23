@@ -1,0 +1,126 @@
+<div fxLayoutAlign="center" style="padding-top: 40px; width: 100%; height: 100%;" >
+  <div fxLayout="column" fxFlex="96%" fxFlex.gt-lg="1520px" style=" height: 100%">
+<lib-work-in-progress *ngIf="showWorkInProgress" [componentTitle]="title"></lib-work-in-progress>
+<div fxLayout="column" fxLayoutGap="6px" *ngIf="!configurationLoading" >
+
+  <!-- Quick Search -->
+  <lib-list-filter
+    *ngIf="searchConfigurationService.searchPageConfiguration.searchType == 'quick'"
+    [resourceTypeModel]="this.searchConfigurationService.searchPageConfiguration.resourceType"
+    [filterItems]="searchConfigurationService.searchPageConfiguration.displayableFields"
+    [filterValues]="searchConfigurationService.searchPageConfiguration.lastQuickSearchItems.filterItems"
+    [filterMatchAll]="searchConfigurationService.searchPageConfiguration.lastQuickSearchItems.filterMatchAll"
+    [favourites]="searchConfigurationService.searchPageConfiguration.quickSearchItemFavourites"
+    [history]="searchConfigurationService.searchPageConfiguration.quickSearchItemHistory"
+    [(value)]="searchConfigurationService.searchPageConfiguration.lastQuickSearchItems.filter"
+    (filterChanged)="onQuickSearchFilterChanged($event);"
+    (saveFavourite)="onSaveFavourite($event)"
+    (manageFavourites)="onManageFavourites()"
+    (manageHistory)="onManageHistory()"
+  >
+  </lib-list-filter>
+
+  <!-- Advanced search default -->
+  <lib-advanced-search-toolbar
+    *ngIf="searchConfigurationService.searchPageConfiguration.searchType == 'advanced' && searchConfigurationService.advancedWizardStatus == 'summary'"
+    [savedSearches]="searchConfigurationService.savedAdvancedSearches"
+    [resourceType]="this.searchConfigurationService.searchPageConfiguration.resourceType"
+    [lastAdvancedSearchItems]="searchConfigurationService.searchPageConfiguration.lastAdvancedSearchItems"
+    (addRule)="onAddRule()"
+    (editRule)="onEditRule()"
+    (ruleSelected)="searchConfigurationService.onRuleSelected($event)"
+  >
+  </lib-advanced-search-toolbar>
+
+  <!-- First time add advanced rule message -->
+  <div *ngIf="searchConfigurationService.searchPageConfiguration.searchType == 'advanced' && searchConfigurationService.savedAdvancedSearchNames.length === 0">
+    <h3>Please add your first rule using the wizard below.</h3>
+  </div>
+
+  <!-- Advanced search editor -->
+  <div
+    class="search-rule-editor mat-elevation-z1"
+    *ngIf="searchConfigurationService.searchPageConfiguration.searchType == 'advanced' &&
+      (searchConfigurationService.advancedWizardStatus == 'add' || searchConfigurationService.advancedWizardStatus == 'edit')"
+  >
+    <lib-search-rule-editor
+      [area]="area"
+      [isFirstRule]="searchConfigurationService.savedAdvancedSearchNames.length == 0"
+      [savedSearch]="this.searchConfigurationService.searchPageConfiguration.lastAdvancedSearchItems"
+      [filterItems]="this.searchConfigurationService.searchPageConfiguration.displayableFields"
+      [resourceType]="this.searchConfigurationService.searchPageConfiguration.resourceType"
+      (cancelEdits)="onCancelEdits()"
+      (saveEdits)="onAdvancedSearchFilterChanged($event)"
+      [currentState]="this.searchConfigurationService.advancedWizardStatus"
+    >
+    </lib-search-rule-editor>
+
+  </div>
+
+  <!--  Header component -->
+  <lib-standard-list-page-header
+          *ngIf="searchConfigurationService.searchPageConfiguration.searchType != 'advanced'"
+          [title]="title"
+          [addLabel]="addLabel"
+          [selectColumnsAvailable]="true"
+          [displayableFields]="searchConfigurationService.searchPageConfiguration.displayedFields"
+          [displayableFieldsDefault]="searchConfigurationService.searchPageConfiguration.defaultFields"
+          [resourceType]="searchConfigurationService.searchPageConfiguration.resourceType"
+          [showSearchOptions]="true"
+          [searchType]="searchConfigurationService.searchPageConfiguration.searchType"
+          [sort]="searchConfigurationService.searchPageConfiguration.sort"
+
+          (columnsReset)="onColumnsReset($event)"
+          (columnVisibilityChanged)="onColumnVisibilityChanged($event)"
+          (searchTypeChanged)="onSearchTypeChange($event)"
+          (sortCleared)="onSortCleared()"
+  ></lib-standard-list-page-header>
+
+  <lib-standard-list-page-header
+          *ngIf="searchConfigurationService.searchPageConfiguration.searchType == 'advanced' && searchConfigurationService.advancedWizardStatus == 'summary'"
+          [title]="title"
+          [addLabel]="addLabel"
+          [selectColumnsAvailable]="true"
+          [displayableFields]="searchConfigurationService.searchPageConfiguration.lastAdvancedSearchItems.displayedFields"
+          [displayableFieldsDefault]="searchConfigurationService.searchPageConfiguration.lastAdvancedSearchItems.defaultFields"
+          [resourceType]="searchConfigurationService.searchPageConfiguration.resourceType"
+          [showSearchOptions]="true"
+          [searchType]="searchConfigurationService.searchPageConfiguration.searchType"
+          [sort]="searchConfigurationService.searchPageConfiguration.sort"
+
+          (columnsReset)="onColumnsReset($event)"
+          (columnVisibilityChanged)="onColumnVisibilityChanged($event)"
+          (searchTypeChanged)="onSearchTypeChange($event)"
+          (sortCleared)="onSortCleared()"
+  ></lib-standard-list-page-header>
+  <div>
+
+
+    <lib-quick-search
+            #quickSearchComponent
+            *ngIf="searchConfigurationService.searchPageConfiguration.searchType === 'quick'"
+            [area]="area"
+            [keyField]="keyField"
+            [configuration]="searchConfigurationService.searchPageConfiguration"
+            [headerMenus]="headerMenus"
+            [rowMenus]="rowMenus"
+
+            (headerActionSelected)="onHeaderActionSelected($event)"
+            (rowActionSelected)="onRowActionSelected($event)"
+            (findModelChanged)="onFindModelChanged($event)"
+    >
+    </lib-quick-search>
+
+    <lib-advanced-search
+      #advancedSearchComponent
+      *ngIf="searchConfigurationService.searchPageConfiguration.searchType === 'advanced'"
+      [area]="area"
+      [keyField]="keyField"
+      [configuration]="searchConfigurationService.searchPageConfiguration"
+    >
+    </lib-advanced-search>
+
+  </div>
+
+</div>
+  </div></div>

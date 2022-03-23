@@ -1,0 +1,8 @@
+.toolbar-container{
+    height: 46px;
+    width: 100%;
+    padding: 0 10px;
+    margin: 20px 0;
+    border: 1px solid lightgray;
+    background-color: #ebebeb;
+}

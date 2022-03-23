@@ -1,0 +1,8 @@
+<div fxLayout="column" fxLayoutAlign="start center">
+    <div class="loading" *ngIf="isLoading" fxLayout="row" fxLayoutGap="10px">
+        <mat-label>Loading Pin...</mat-label>
+        <mat-spinner diameter="20"></mat-spinner>
+    </div>
+
+    <lib-container-tracker fxLayout="row" *ngIf="!isLoading" [pin]="trackingPin" [searchString]="searchString" [selectedOption]="selectedOption"></lib-container-tracker>
+</div>

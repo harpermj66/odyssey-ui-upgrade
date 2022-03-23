@@ -1,0 +1,55 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" (click)="onClick()">
+  <mat-form-field *ngIf="!readonly; else isReadonly"
+                  [class]="'input-form ' + type"
+                  [matTooltip]="selected ? selected.code + ':' + selected.description : 'Select a code'">
+    <mat-label *ngIf="label">{{label}}</mat-label>
+    <mat-select [ngModel]="selected"
+                (selectionChange)="onSelectionChange($event)"
+                (opened)="onSelectOpened()"
+                [errorStateMatcher]="errorStateMatcher"
+                [placeholder]="placeholder"
+                [disabled]="readonly"
+                [required]="required"
+                (click)="refreshOptions()">
+
+      <mat-form-field class="cedex-select-field-sticky-option" color="accent">
+        <input #searchInput
+               type="text"
+               [(ngModel)]="filter"
+               (keyup)="refreshOptions(true)"
+               placeholder="Search"
+               matInput>
+      </mat-form-field>
+
+      <mat-option *ngIf="!required"></mat-option>
+      <mat-option *ngFor="let option of options"
+                  [value]="option"
+                  [matTooltip]="option.description">
+        {{option.code}} : {{option.description}}
+      </mat-option>
+
+      <!-- have a hidden unclickable option so that the menu will always open (mat-select will not open unless there is one option -->
+      <mat-option [disabled]="true" [style.height.px]="0"></mat-option>
+      <span *ngIf="requestQueue.loading; else notLoading" fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </span>
+      <ng-template #notLoading>
+        <mat-optgroup class="no-results" *ngIf="noResults" label="No Results" [disabled]="true"></mat-optgroup>
+      </ng-template>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-template #isReadonly>
+    <mat-form-field [matTooltip]="selected ? selected.code + ' : ' + selected.description : (value ? value : '')">
+      <mat-label *ngIf="label && label.trim() !== ''">{{label}}</mat-label>
+      <input type="text"
+             [ngModel]="value"
+             [placeholder]="placeholder"
+             matInput
+             readonly
+             [disabled]="disabled">
+    </mat-form-field>
+  </ng-template>
+</div>
+
+

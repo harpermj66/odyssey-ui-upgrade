@@ -1,0 +1,17 @@
+<div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="end center">
+    <mat-label>Sort By</mat-label>
+    <mat-form-field>
+        <mat-select (selectionChange)="emitSortOption($event.value)" [value]="selectedSortOption">
+            <mat-option *ngFor="let option of sortOptions" [value]="option">
+                {{option.displayName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-select (selectionChange)="emitSortOrder($event.value)" [value]="selectedSortOrder">
+            <mat-option *ngFor="let order of sortOrders" [value]="order">
+                {{order.displayName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

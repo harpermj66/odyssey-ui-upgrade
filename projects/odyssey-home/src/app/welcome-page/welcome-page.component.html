@@ -1,0 +1,48 @@
+<lib-welcome-page-toolbar
+  (requestSignIn)="onSignIn()"
+>
+</lib-welcome-page-toolbar>
+
+<div fxFill class="displayArea">
+
+  <div  fxLayout="column">
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column">
+
+      <div fxFlex="30%" fxFlex.md="40%" fxFlex.xs="100%" class="odysseySignIn" >
+
+        <h1>Welcome to Odyssey</h1>
+        <div fxLayout="row" fxLayoutGap="20px">
+          <div>
+            <mat-label class="loginLabel" (click)="onSignIn()">Sign in to Odyssey</mat-label>
+            <button mat-icon-button
+                    [matTooltip]="'Sign In'"
+                    (click)="onSignIn()"
+            >
+              <mat-icon >login</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div fxFlex="70%" fxFlex.md="60%" fxFlex.xs="100%" class="registration">
+
+        <h1>Company Registration</h1>
+        <div fxLayout="row">
+          <div >
+            <mat-label>Your company must be registered before you can login. A company can be registered once only. If your company is registered and you need a user login then please contact your company administrator.</mat-label>
+          </div>
+          <div class="registrationIcon">
+            <button mat-icon-button
+                    [matTooltip]="'Company Registration'"
+            >
+              <mat-icon >schema</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

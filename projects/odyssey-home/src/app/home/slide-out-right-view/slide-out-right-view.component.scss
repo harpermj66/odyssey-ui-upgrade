@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+
+@mixin slide-right-view($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .mainSlideRightContainer {
+    font-size: 14px;
+    padding-left: 2px;
+  }
+}

@@ -1,0 +1,52 @@
+<div class="container-location-lookup" (click)="onClick()">
+  <mat-form-field *ngIf="!readonly; else isReadonly">
+    <mat-label *ngIf="label">{{label}}</mat-label>
+    <mat-select #selectList
+                [errorStateMatcher]="errorMatcher"
+                [ngModel]="value"
+                [placeholder]="placeholder"
+                (opened)="selectOpened()"
+                (closed)="selectClosed()"
+                (selectionChange)="onSelectChange($event)"
+                [disabled]="disabled"
+                [required]="required">
+
+      <mat-form-field class="container-location-lookup-sticky-option" color="accent">
+        <input #searchInput
+               type="text"
+               [(ngModel)]="filter"
+               (keyup)="onFilterChange()"
+               placeholder="Search"
+               matInput>
+      </mat-form-field>
+
+      <!-- hidden value in case the selected value is off page -->
+      <mat-option class="container-location-lookup-hidden-option" *ngIf="noMatchAndRequired" [value]="this.value">{{this.displayName(this.value)}}</mat-option>
+
+      <mat-option *ngIf="!required"></mat-option>
+      <mat-option *ngFor="let cont of containerLocations; trackBy: trackById" [value]="cont">{{this.displayName(cont)}}</mat-option>
+
+      <!-- have a hidden unclickable option so that the menu will always open (mat-select will not open unless there is one option -->
+      <mat-option [disabled]="true" [style.height.px]="0"></mat-option>
+      <span *ngIf="infiniteScroll.loading; else notLoading" fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </span>
+      <ng-template #notLoading>
+        <mat-optgroup class="no-results" *ngIf="noResults" label="No Results" [disabled]="true"></mat-optgroup>
+      </ng-template>
+    </mat-select>
+    <mat-error *ngIf="error">{{error}}</mat-error>
+  </mat-form-field>
+
+  <ng-template #isReadonly>
+    <mat-form-field>
+      <mat-label *ngIf="label">{{label}}</mat-label>
+      <input type="text"
+             [ngModel]="this.displayName(this.value)"
+             [placeholder]="placeholder"
+             matInput
+             readonly
+             [disabled]="disabled">
+    </mat-form-field>
+  </ng-template>
+</div>

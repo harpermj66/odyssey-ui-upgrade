@@ -1,0 +1,97 @@
+
+<div fxFill fxLayoutAlign="center center" class="loginContainer" >
+  <mat-card *ngIf="!showTermsAndConditions">
+    <mat-card-header class="cardHeader" >
+      <mat-card-title>Sign In</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="cardContent" >
+      <div fxFlex="360px" fxLayout="column">
+        <mat-form-field fxFlex="100%" appearance="standard"  >
+          <input matInput class="inputClass" placeholder="Username" (keyup.enter)="onSignIn()" (keyup)="setCanSignIn()" [(ngModel)]="username" />
+        </mat-form-field>
+        <mat-form-field fxFlex="100%" appearance="standard"  >
+          <input matInput class="inputClass" placeholder="Password" type="password" (keyup.enter)="onSignIn()" (keyup)="setCanSignIn()" [(ngModel)]="password" />
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <div class="errorDiv">
+      <mat-label class="errorLbl">{{error}}</mat-label>
+    </div>
+    <mat-card-actions fxLayoutGap="20px" class="cardActionStyle">
+      <div fxFlex="100%" fxLayout="row" fxLayoutAlign="start center">
+        <img src="assets/{{themeService.appLogo}}" height="{{themeService.authHeight}}"
+             [ngClass]="themeService.getCurrentCarrier()">
+        <span class="fill-remaining-space"></span>
+        <button mat-stroked-button color="primary"
+                [disabled]="!canSignIn" (click)="onSignIn()" fxFlex="90px"
+        >
+          Sign In
+          <mat-icon *ngIf="busy">
+            <mat-spinner color="accent" diameter="20"></mat-spinner>
+          </mat-icon>
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+
+  <mat-card *ngIf="showTermsAndConditions" class="tacCard">
+
+    <mat-card-header class="cardHeader">
+
+      <mat-card-title fxFlex="100%" fxLayoutAlign="start center" fxLayoutGap="10px">
+        Terms and Conditions
+      </mat-card-title>
+
+    </mat-card-header>
+
+    <mat-card-content fxLayout="column" class="cardContent"  fxLayoutGap="20px">
+      <div fxLayout="column">
+        <mat-label>You are required to accept our Terms and Conditions before proceeding.</mat-label>
+        <mat-label>This is due to either:</mat-label>
+      </div>
+
+      <div fxLayout="column" >
+
+        <div fxLayout="row" fxLayoutAlign="start middle" fxLayoutGap="20px">
+          <mat-icon class="tacIcon">fiber_manual_record</mat-icon>
+          <mat-label>You have not previously accepted the Terms and Conditions; or</mat-label>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start middle" fxLayoutGap="20px">
+          <mat-icon class="tacIcon">fiber_manual_record</mat-icon>
+          <mat-label>The Terms and Conditions have changed and need to be accepted again.</mat-label>
+        </div>
+
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="start middle" fxLayoutGap="20px">
+        <mat-label>It is important that you read and understand the terms and conditions before confirming acceptance. Please click on the link below to read the Terms and Conditions.</mat-label>
+      </div>
+
+      <a class="tandcLink" href="https://locussoftware.atlassian.net/wiki/spaces/ODYDOC/pages/410925/Universal+Terms+and+Conditions" target="_blank">Odyssey Terms and Conditions</a>
+
+      <div fxLayout="row" fxLayoutAlign="start middle" fxLayoutGap="20px">
+        <mat-label>If you agree to the Terms and Conditions, click on the I Accept button to confirm your acceptance. If you don't agree to the Terms and Conditions, click on the Don't Accept button.</mat-label>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions fxLayoutGap="20px" class="cardActionStyle">
+      <div fxFlex="100%" fxLayout="row" fxLayoutAlign="start center">
+
+        <span class="fill-remaining-space"></span>
+
+        <button mat-stroked-button color="primary"
+                (click)="onAccept()" fxFlex="110px"
+        >
+          I Accept
+        </button>
+
+        <button mat-stroked-button color="primary"
+                (click)="onDontAccept()" fxFlex="120px"
+        >
+          I Don't Accept
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

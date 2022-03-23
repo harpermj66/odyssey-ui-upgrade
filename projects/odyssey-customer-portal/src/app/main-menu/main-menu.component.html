@@ -1,0 +1,30 @@
+<div class="expandedMainMenu" fxLayout="column" fxLayoutGap="10px">
+
+        <mat-toolbar style="background-color: transparent; padding-left: 0px; padding-right: 0px">
+            <!--    <mat-icon>{{menus.groupIcon}}</mat-icon>-->
+            <mat-label>{{menus.groupTitle}}</mat-label>
+
+            <span class="fill-remaining-space"></span>
+
+            <button  mat-icon-button [matTooltip]="'Close'" (click)="onCloseMenu()">
+                <mat-icon class="iconClass" style="color: #c1cae0; font-size: 16px; padding-bottom: 4px">arrow_back_ios</mat-icon>
+            </button>
+        </mat-toolbar>
+
+
+        <mat-list style="width: 100%">
+            <div *ngFor="let m of menus.menus">
+                <mat-list-item *ngIf="m.title !== 'div'" (click)="onMenuChange(m)" >
+                    <div fxLayoutGap="0px" fxLayout="row" style="padding-top: 4px">
+                        <mat-icon style="padding-top:2px; width: 12px; font-size: 16px">{{m.icon}}</mat-icon>
+                        <mat-label >{{m.title}}</mat-label>
+                    </div>
+                </mat-list-item>
+                <mat-divider *ngIf="m.title === 'div'"></mat-divider>
+            </div>
+
+        </mat-list>
+
+
+</div>
+

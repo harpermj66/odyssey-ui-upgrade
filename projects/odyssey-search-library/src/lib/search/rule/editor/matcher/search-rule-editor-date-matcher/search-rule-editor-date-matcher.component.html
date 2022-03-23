@@ -1,0 +1,52 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <mat-form-field *ngIf="!readonly; else readonlyOperator">
+    <mat-label >Matches</mat-label>
+    <mat-select [(value)]="matcher.operator"
+                (selectionChange)="onOperatorChange()"
+                [disabled]="disabled">
+      <mat-option *ngFor="let operator of operators"
+                  [value]="operator">{{operator | removeUnderscore | titlecase}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-template #readonlyOperator>
+    <mat-form-field>
+      <mat-label>Matches</mat-label>
+      <input matInput
+               [ngModel]="matcher.operator | removeUnderscore | titlecase"
+               [readonly]="readonly"
+               [disabled]="disabled">
+    </mat-form-field>
+  </ng-template>
+
+  <mat-form-field>
+    <mat-label *ngIf="matcher.operator !== operatorRange; else isRange">Value</mat-label>
+    <ng-template #isRange>
+      <mat-label>From</mat-label>
+    </ng-template>
+    <input matInput
+           readonly
+           [matDatepicker]="singlePicker"
+           [ngModel]="matcher.values[0]"
+           (ngModelChange)="onSingleDateChange($event)">
+    <mat-datepicker-toggle matSuffix
+                           [for]="singlePicker"
+                           [disabled]="disabled || readonly"></mat-datepicker-toggle>
+    <mat-datepicker #singlePicker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="matcher.operator === operatorRange">
+    <mat-label>To</mat-label>
+    <input matInput
+           readonly
+           [matDatepicker]="toPicker"
+           [ngModel]="matcher.values[1]"
+           (ngModelChange)="onToDateChange($event)">
+    <mat-datepicker-toggle matSuffix
+                           [for]="toPicker"
+                           [disabled]="disabled || readonly"></mat-datepicker-toggle>
+    <mat-datepicker #toPicker></mat-datepicker>
+  </mat-form-field>
+</div>
+
+

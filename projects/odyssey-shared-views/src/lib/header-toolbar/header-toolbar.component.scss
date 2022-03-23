@@ -1,0 +1,31 @@
+@import "~@angular/material/theming";
+
+@mixin shared-toolbar($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .leftIconButton {
+    font-size: 20px;
+    color: mat-color($accent, 800) !important;
+    margin-left: -18px;
+    padding-left: 0px;
+    padding-bottom: 4px
+  }
+
+  .headerToolbar {
+    height: 46px;
+    padding-top: 4px;
+    padding-left: 20px;
+    background-color: white !important;
+    border: none;
+  }
+
+  .closeDrawer {
+    font-size: 20px;
+    color: mat-color($accent, 800);
+    padding-bottom: 4px
+  }
+
+}

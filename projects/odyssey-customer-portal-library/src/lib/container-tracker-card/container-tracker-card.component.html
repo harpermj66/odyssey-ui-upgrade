@@ -1,0 +1,22 @@
+<mat-card style="width: 480px; height: 300px; background-color: white; font-size: 24px; color: black; border-radius: 6px" class="mat-elevation-z1">
+
+    <div fxLayout="row" fxLayoutAlig="start middle">
+        <div style="padding-top: 10px; padding-left: 10px; max-width: 380px">
+            <mat-card-title>Container Tracker</mat-card-title>
+            <mat-card-subtitle>Track containers by Container Number, Booking Number, SI Number, or BL Number.</mat-card-subtitle>
+        </div>
+        <mat-icon style="font-size: 64px">search</mat-icon>
+    </div>
+
+    <mat-card-content style="height: calc(100% - 140px)">
+        <lib-container-tracker-compact
+                (onSearchValuesChange)="setSearchValues($event)"
+                (onSelectedOptionChange)="setSelectedSearchOption($event)"
+        >
+        </lib-container-tracker-compact>
+    </mat-card-content>
+
+    <mat-card-footer fxLayoutAlign="end middle" style="padding-right: 20px">
+        <button mat-stroked-button color="primary" (click)="submitRequestData()">Find</button>
+    </mat-card-footer>
+</mat-card>

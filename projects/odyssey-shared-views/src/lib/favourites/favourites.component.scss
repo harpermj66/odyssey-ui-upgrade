@@ -1,0 +1,19 @@
+@mixin favourites($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .favouritesContainer {
+    width: 500px;
+
+    .mat-toolbar {
+      background-color: transparent;
+      padding-right: 0px;
+
+      button {
+        width: 90px;
+      }
+
+    }
+  }
+
+}

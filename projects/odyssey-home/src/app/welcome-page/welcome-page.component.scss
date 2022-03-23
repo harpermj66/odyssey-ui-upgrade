@@ -1,0 +1,77 @@
+@import "~@angular/material/theming";
+
+@mixin welcome-page($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .headerToolbar {
+    background-color: mat-color($primary, 550) !important;
+    color: mat-color($accent, 50);
+    font-size: medium;
+    height: 70px;
+  }
+
+  .companyTitle {
+    padding-top: 11px;
+  }
+
+
+  .subHeaderToolbar {
+    background-color: mat-color($accent, 700) !important;
+    color: mat-color($accent, 100);
+    font-size: small;
+    height: 36px !important;
+  }
+
+  .displayArea {
+    background-color: mat-color($accent, 200);
+
+    .signInIcon {
+      padding-bottom: 2px;
+      color:  mat-color($accent, 700);
+    }
+
+    .loginLabel {
+      color:  mat-color($accent, 100);
+    }
+
+  }
+
+  .welcomeSubPage {
+    background-color: mat-color($accent, 400);
+    height: 200px;
+  }
+
+  .odysseySignIn {
+    background-color: mat-color($accent, 900);
+    padding: 20px;
+    color: mat-color($accent, 200);
+  }
+
+  .registration {
+    background-color: mat-color($primary, 900);
+    padding: 20px;
+    color: mat-color($accent, 100);
+  }
+
+  .registrationIcon {
+    margin-top: -10px;
+  }
+
+  .mainImage {
+    opacity: 80%;
+  }
+
+  .widgetArea {
+
+  }
+
+  .publicOption {
+    width: 200px;
+    height: 200px;
+
+    background-color: mat-color($primary, 400) !important;
+  }
+}

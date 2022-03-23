@@ -1,0 +1,16 @@
+<div class="favouritesContainer" fxLayout="column" >
+  <h3>Save to favourites</h3>
+  <form [formGroup]="form" fxLayout="column" >
+    <mat-form-field >
+      <input matInput placeholder="Favourite name" formControlName="name" (keyup)="checkDuplicate()">
+    </mat-form-field>
+    <mat-hint *ngIf="duplicate">A favourite with this name exits. If you save it you will overwrite the current one.</mat-hint>
+  </form>
+  <mat-toolbar fxLayoutGap="6px" fxLayout="row" >
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button (click)="onCancel()" >Cancel</button>
+    <button mat-raised-button color="primary" [disabled]="!form.valid" (click)="onSave()">Save</button>
+  </mat-toolbar>
+</div>
+
+

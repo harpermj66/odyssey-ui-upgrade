@@ -1,0 +1,16 @@
+<mat-form-field>
+    <mat-label>{{label}}</mat-label>
+    <input
+            matInput
+            [placeholder]="placeholder"
+            [required]="required"
+            [(ngModel)]="searchString"
+            (keyup)="findUnLocodes($event)"
+            [matAutocomplete]="auto"
+    >
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="emitUnLocode($event)" [displayWith]="getLocode">
+        <mat-option *ngFor="let unlocode of filteredUnLocodes" [value]="unlocode">
+            {{unlocode.locode}} | {{unlocode.city}} | {{unlocode.countryName}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>

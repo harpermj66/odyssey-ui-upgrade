@@ -1,0 +1,63 @@
+<div>
+  <mat-toolbar class="standaloneDataGridHeader" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+
+    <div fxLayout="row" fxLayoutGap="20px" fxFlex="33%" >
+      <mat-label style="font-size: 16px;">{{title}}</mat-label>
+    </div>
+
+    <div fxFlex="33%" fxLayoutAlign="center top">
+
+    </div>
+
+    <div fxFlex="33%" fxLayoutAlign="end top" fxLayoutGap="4px">
+      <ng-content select="[left-side]"></ng-content>
+
+      <!-- Search type selection -->
+
+      <ng-content></ng-content>
+
+      <div *ngIf="selectColumnsAvailable" fxLayout="row" >
+
+        <lib-search-type
+                *ngIf="showSearchOptions"
+                [searchType]="searchType"
+                (searchTypeChanged)="onSearchTypeChange($event)"
+                (sortCleared)="onClearSort()"
+                [sort]="sort"
+                [fields]="displayableFields"
+        ></lib-search-type>
+
+
+        <button mat-icon-button>
+          <mat-icon [matMenuTriggerFor]="menu">view_column</mat-icon>
+        </button>
+
+        <mat-menu #menu="matMenu" style="height: 400px" (closed)="onColumnsChangedVisibility()">
+          <button *ngIf="displayableFieldsDefault" mat-menu-item (click)="onResetColumns()">Reset Columns</button>
+
+          <span *ngFor="let fi of displayableFields | objectSort:['description', 'fieldName']"
+                mat-menu-item
+                (click)="$event.stopPropagation()"
+                fxLayout="row"
+                fxLayoutAlign="start center"
+                fxLayoutGap="10px">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="onToggleColumnVisibility(fi, $event.checked);"
+                          [checked]="fi.visible"
+            ></mat-checkbox>
+            <span (click)="onToggleColumnVisibility(fi, !fi.visible); $event.stopPropagation()" fxFill>
+              {{fi.displayName}}
+            </span>
+          </span>
+        </mat-menu>
+
+      </div>
+
+
+    </div>
+
+
+
+  </mat-toolbar>
+
+</div>

@@ -1,0 +1,47 @@
+<div id="user-creation-page-container" class="page-container" fxLayout="row" fxLayoutAlign="center start">
+    <mat-tab-group dynamicHeight mat-align-tabs="start">
+        <mat-tab label="Users">
+            <ng-template matTabContent>
+                <div>
+                    <lib-action-toolbar>
+                        <button mat-flat-button color="primary" (click)="showUserCreationPage()">Create</button>
+                    </lib-action-toolbar>
+                    <lib-user-creation-page
+                            (userCreationCancelled)="showUserListPage()"
+                            *ngIf="showUserCreation"
+                            [userToEdit]="userToEdit"
+                    >
+                    </lib-user-creation-page>
+                    <lib-user-list-page
+                            *ngIf="!showUserCreation"
+                            (editButtonClicked)="setUserToEdit($event)"
+                    ></lib-user-list-page>
+                </div>
+            </ng-template>
+        </mat-tab>
+
+        <mat-tab label="Permission Groups">
+            <ng-template matTabContent>
+                <div>
+                    <lib-action-toolbar>
+                        <button mat-flat-button color="primary" (click)="showPermissionGroupCreationPage()">Create</button>
+                    </lib-action-toolbar>
+
+                    <lib-permission-group-creation-page
+                            (permissionGroupCreationCancelled)="showPermissionGroupListPage()"
+                            *ngIf="showPermissionGroupCreation"
+                            [permissionGroupToEdit]="permissionGroupToEdit"
+                    >
+                    </lib-permission-group-creation-page>
+
+                    <lib-permission-group-list-page
+                            *ngIf="!showPermissionGroupCreation"
+                            (editButtonClicked)="setPermissionGroupToEdit($event)"
+                    >
+
+                    </lib-permission-group-list-page>
+                </div>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>

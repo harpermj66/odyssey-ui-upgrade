@@ -1,0 +1,25 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { BookingGroupedTemplate1Component } from './booking-grouped-template1.component';
+
+describe('BookingGroupedTemplate1Component', () => {
+  let component: BookingGroupedTemplate1Component;
+  let fixture: ComponentFixture<BookingGroupedTemplate1Component>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ BookingGroupedTemplate1Component ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(BookingGroupedTemplate1Component);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,10 @@
+@import "../../../../../../node_modules/@angular/material/theming";
+
+@mixin signIn-page($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+}

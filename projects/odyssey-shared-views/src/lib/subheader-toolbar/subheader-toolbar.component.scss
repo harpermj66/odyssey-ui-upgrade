@@ -1,0 +1,52 @@
+@import "~@angular/material/theming";
+
+@mixin shared-subheader($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .subheader {
+    padding-left: 4px;
+    padding-right: 20px;
+    background-color: mat-color($accent, 50);
+    color: mat-contrast($primary, 500);
+    font-size: 14px;
+    height: 30px;
+    border-right: solid 1px mat-color($accent, 200);
+    border-top: solid 1px mat-color($accent, 200);
+    border-bottom: solid 1px mat-color($accent, 200);
+
+    .homeIcon {
+      font-size: 20px;
+      color: mat-color($accent, 800);
+      padding-bottom: 4px
+    }
+
+    .homeLabel {
+      color: mat-color($accent, 100);
+      font-size: 13px;
+    }
+
+    .moduleLabel {
+      color: mat-color($accent, 800);
+      font-size: 13px;
+      font-weight: normal;
+      padding-left: 16px;
+      padding-top: 2px;
+      padding-right: 4px;
+    }
+
+    .helpLabel {
+      color: mat-color($accent, 800);
+      font-size: 14px;
+    }
+
+    .devIcon {
+      font-size: 20px;
+      color: mat-color($accent, 600);
+    }
+  }
+
+}

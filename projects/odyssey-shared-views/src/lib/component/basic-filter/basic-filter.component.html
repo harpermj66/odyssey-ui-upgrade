@@ -1,0 +1,28 @@
+<div class="listFilter" fxLayout="row" fxLayoutGap="10px" >
+
+  <div>
+    <mat-icon class="filterIcon material-icons-outlined">filter_alt</mat-icon>
+  </div>
+
+  <div fxLayout="row" fxFlex="100%" fxLayoutGap="6px">
+    <ng-container>
+      <mat-form-field class="searchFieldInput">
+        <input matInput
+               type="text"
+               (ngModelChange)="onFilterChange()"
+               (keyup)="onFilterChange()"
+               [formControl]="searchControl"/>
+      </mat-form-field>
+    </ng-container>
+
+    <span class="fill-remaining-space"></span>
+
+    <div fxLayout="row" fxLayoutGap="0px">
+      <button mat-icon-button matTooltip="Clear search" (click)="onClear()">
+        <mat-icon class="listFilterButton">close</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+</div>

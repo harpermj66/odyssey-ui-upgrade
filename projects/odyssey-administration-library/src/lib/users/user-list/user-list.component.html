@@ -1,0 +1,62 @@
+<div class="userListComponent" fxLayout="row" fxFlex="100%" fxLayoutAlign="center">
+
+  <div fxLayout="column" fxLayoutGap="6px" class="searchContainer" fxFlex="96%" fxFlex.gt-lg="1600px">
+    <lib-list-filter
+      [(value)]="filter"
+      [filterItems]="filterItems"
+      (filterChanged)="onQuickSearchFilterChanged($event);"
+      style="width: 100%"
+    >
+    </lib-list-filter>
+
+
+    <div >
+
+      <lib-standard-list-page-header
+        [title]="'Users'"
+        [addLabel]="'Add User'"
+        [selectColumnsAvailable]="true"
+        [displayableFields]="filterItems"
+        [resourceType]="resourceType"
+      ></lib-standard-list-page-header>
+
+
+      <div>
+
+        <lib-no-data-found *ngIf="noData" [message]="'No users exists, please user the + button to add new users'">
+        </lib-no-data-found>
+
+        <lib-standard-data-grid-template
+          [displayColumns]="displayColumns"
+          [dataGridColumnMaps]="columnMappings"
+          [dataSource]="dataSource"
+          [keyField]="'email'"
+          [headerMenus]="headerMenus"
+          [rowMenus]="rowMenus"
+
+          (sortChanged)="onSortChanged($event)"
+          (columnOrderingChanged)="onColumnOrderingChanged($event)"
+          (selectionsChanged)="onSelectionsChanged($event)"
+          (rowSelected)="onRowSelected($event)"
+          (headerActionSelected)="onHeaderActionSelected($event)"
+          (rowActionSelected)="onRowActionSelected($event)"
+        >
+        </lib-standard-data-grid-template>
+
+      </div>
+
+      <lib-data-grid-navigator
+        [totalRecords]="resultModel.totalRecords"
+        [page]="findModel.page"
+        [size]="findModel.size"
+        (pageChanged)="onPageChange($event)"
+      >
+
+      </lib-data-grid-navigator>
+
+    </div>
+
+  </div>
+
+
+</div>

@@ -1,0 +1,51 @@
+@import "~@angular/material/theming";
+
+@mixin search-rule-editor ($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .wrapper {
+    box-sizing: border-box;
+    padding-left: 0;
+    padding-right: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .rule-details {
+    height: 100%;
+    width: 100%;
+  }
+
+  .rule-name-field {
+    width: 341px;
+    margin-bottom: -16px;
+  }
+
+  .mat-tab-group {
+    width: 100%;
+    height: calc(100% - 96px);
+  }
+
+  .button-toolbar {
+    background-color: mat-contrast($primary, 500);
+    height: 36px;
+    padding: 0 !important;
+    text-align: end;
+  }
+
+  .mat-wizard-button {
+    padding: 0;
+    color: mat-color($primary, 400);
+  }
+
+  lib-search-rule-editor-sort-selector, lib-search-rule-editor-generic-rule, lib-search-rule-editor-grouping {
+    box-sizing: border-box;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .save-checkbox {
+    padding-top: 15px;
+  }
+}

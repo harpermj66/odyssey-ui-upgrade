@@ -1,0 +1,67 @@
+<div class="listFilter" fxLayout="row" fxLayoutGap="10px">
+  <div>
+    <mat-icon class="filterIcon material-icons-outlined">filter_alt</mat-icon>
+  </div>
+  <div fxLayout="row" fxLayoutGap="6px">
+    <mat-label class="filterLabel">{{message}}</mat-label>
+  </div>
+  <div>
+
+    <mat-form-field class="filterField" *ngIf="saveSearches">
+      <mat-select (selectionChange)="onSelectionChange($event)" [ngModel]="lastAdvancedSearchItems?.id">
+
+        <mat-form-field class="sticky-option search-input" color="accent">
+          <input #searchInput
+                 type="text"
+                 [(ngModel)]="selectFilter"
+                 (keyup)="onSelectFilterChange()"
+                 placeholder="Filter"
+                 matInput>
+        </mat-form-field>
+
+        <mat-optgroup label="Favourites">
+          <mat-option *ngFor="let searchValue of favouritesFiltered"
+                      [matTooltip]="searchValue.description"
+                      [value]="searchValue.id">
+            {{searchValue.name}}
+          </mat-option>
+        </mat-optgroup>
+
+        <mat-divider
+          *ngIf="favourites && favouritesFiltered.length > 0 && notInFavouritesFiltered && notInFavouritesFiltered.length > 0"></mat-divider>
+
+        <mat-optgroup label="Saved">
+          <mat-option *ngFor="let searchValue of notInFavouritesFiltered"
+                      [matTooltip]="searchValue.description"
+                      [value]="searchValue.id">
+            {{searchValue.name}}
+          </mat-option>
+        </mat-optgroup>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+  <button mat-icon-button *ngIf="savedSearches && selectedSearch && lastAdvancedSearchItems && !favouritesMap[lastAdvancedSearchItems.id]"
+          (click)="onFavourite()">
+    <mat-icon class="favouriteIcon">bookmark_border</mat-icon>
+  </button>
+
+  <button mat-icon-button *ngIf="savedSearches && selectedSearch && lastAdvancedSearchItems && favouritesMap[lastAdvancedSearchItems.id]"
+          (click)="onUnfavourite()">
+    <mat-icon class="favouriteIcon">bookmark</mat-icon>
+  </button>
+
+  <button mat-icon-button *ngIf="savedSearches && selectedSearch" (click)="onEditRule()">
+    <mat-icon class="editIcon">edit</mat-icon>
+  </button>
+
+  <span class="fill-remaining-space"></span>
+
+  <button mat-icon-button>
+    <mat-icon class="addIcon"
+              (click)="onAddRule()"
+    >add
+    </mat-icon>
+  </button>
+</div>

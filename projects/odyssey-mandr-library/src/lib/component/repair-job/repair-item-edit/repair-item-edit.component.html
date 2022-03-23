@@ -1,0 +1,210 @@
+<div class="repair-item-edit">
+  <lib-content-wrapper>
+    <div fxLayout="row wrap" fxFlexFill fxLayoutAlign="start start" fxLayoutGap="20px">
+
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-card-subtitle>Repair Item</mat-card-subtitle>
+        <ng-container *ngIf="!readonly && !loading">
+          <mat-card-title *ngIf="repairItemId; else newItem">Edit</mat-card-title>
+          <ng-template #newItem><mat-card-title>Create</mat-card-title></ng-template>
+        </ng-container>
+      </div>
+
+      <div *ngIf="!loadingItem && !loadingJob; else isLoadingItem" [ngClass]="{'edit-content-page': !isMainDialog, 'edit-content-dialog': !!isMainDialog}">
+        <div fxFlexFill fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+          <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-divider></mat-divider>
+
+            <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+              <mat-form-field class="edit-field">
+                <mat-label>Status</mat-label>
+                <mat-select [(ngModel)]="repairItem.status"
+                            [disabled]="disabled || readonly || saving">
+                  <mat-option value="SUBMITTED"></mat-option>
+                  <mat-option value="APPROVED">Approved</mat-option>
+                  <mat-option value="REJECTED">Rejected</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+          </div>
+
+          <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-divider></mat-divider>
+
+            <div fxLayout="column" fxLayoutAlign="start start">
+              <mat-card-subtitle>CEDEX</mat-card-subtitle>
+            </div>
+
+            <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+              <div class="edit-field" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <mat-checkbox [ngModel]="this.repairItem.machinery"
+                              [disabled]="disabled || busy"
+                              [disableRipple]="true"
+                              (click)="$event.preventDefault()">Is Reefer Machinery</mat-checkbox>
+              </div>
+
+              <div class="edit-field">
+                <lib-cedex-location-select label="Location"
+                                           placeholder="Location"
+                                           [(value)]="repairItem.locationCode"
+                                           [contType]="repairJob.containerStock?.contType"
+                                           (machineryChange)="repairItem.machinery = $event"
+                                           [readonly]="readonly"
+                                           [disabled]="disabled || saving"></lib-cedex-location-select>
+              </div>
+
+              <div class="edit-field">
+                <lib-cedex-component-select label="Component"
+                                            placeholder="Component"
+                                            [(value)]="repairItem.componentCode"
+                                            [contType]="repairJob.containerStock?.contType"
+                                            [machinery]="repairItem.machinery"
+                                            [location]="repairItem.locationCode"
+                                            [readonly]="readonly"
+                                            [disabled]="disabled || saving"></lib-cedex-component-select>
+              </div>
+
+              <div class="edit-field">
+                <lib-cedex-damage-select label="Damage"
+                                         placeholder="Damage"
+                                         [(value)]="repairItem.damageCode"
+                                         [contType]="repairJob.containerStock?.contType"
+                                         [readonly]="readonly"
+                                         [disabled]="disabled || saving"></lib-cedex-damage-select>
+              </div>
+
+              <div class="edit-field">
+                <lib-cedex-repair-select label="Repair"
+                                         placeholder="Repair"
+                                         [(value)]="repairItem.repairCode"
+                                         [contType]="repairJob.containerStock?.contType"
+                                         [readonly]="readonly"
+                                         [disabled]="disabled || saving"></lib-cedex-repair-select>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-divider></mat-divider>
+
+            <div fxLayout="column" fxLayoutAlign="start start">
+              <mat-card-subtitle>Damage</mat-card-subtitle>
+            </div>
+
+            <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+              <mat-form-field class="edit-field">
+                <mat-label>Length (m)</mat-label>
+                <input matInput
+                       type="number"
+                       [errorStateMatcher]="errorMatcherHeight"
+                       [required]="!!repairItem.damageWidth"
+                       [(ngModel)]="repairItem.damageHeight"
+                       (ngModelChange)="onDamageHeightChange()"
+                       [readonly]="readonly"
+                       [disabled]="disabled || saving">
+                <mat-error class="mat-error" *ngIf="validationIssues.damageHeight">{{validationIssues.damageHeight}}</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="edit-field">
+                <mat-label>Width (m)</mat-label>
+                <input matInput
+                       type="number"
+                       [required]="!!repairItem.damageHeight"
+                       [errorStateMatcher]="errorMatcherWidth"
+                       [(ngModel)]="repairItem.damageWidth"
+                       (ngModelChange)="onDamageWidthChange()"
+                       [readonly]="readonly"
+                       [disabled]="disabled || saving">
+                <mat-error class="mat-error" *ngIf="validationIssues.damageWidth">{{validationIssues.damageWidth}}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-divider></mat-divider>
+
+            <div fxLayout="column" fxLayoutAlign="start start">
+              <mat-card-subtitle>Labour</mat-card-subtitle>
+            </div>
+
+            <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+              <mat-form-field class="edit-field">
+                <mat-label>Hours</mat-label>
+                <input matInput
+                       type="number"
+                       [(ngModel)]="repairItem.hours"
+                       [readonly]="readonly"
+                       [disabled]="disabled || saving">
+              </mat-form-field>
+
+              <mat-form-field class="edit-field">
+                <mat-label>Rate</mat-label>
+                <input matInput
+                       type="number"
+                       [(ngModel)]="repairItem.labourRate"
+                       [readonly]="readonly"
+                       [disabled]="disabled || saving">
+              </mat-form-field>
+
+            </div>
+          </div>
+
+          <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-divider></mat-divider>
+
+            <div fxLayout="column" fxLayoutAlign="start start">
+              <mat-card-subtitle>Materials</mat-card-subtitle>
+            </div>
+
+            <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+              <mat-form-field class="edit-field">
+                <mat-label>Per Unit Cost</mat-label>
+                <input matInput
+                       type="number"
+                       [(ngModel)]="repairItem.perUnitMaterialCost"
+                       [readonly]="readonly"
+                       [disabled]="disabled || saving">
+              </mat-form-field>
+
+              <mat-form-field class="edit-field">
+                <mat-label>Quantity</mat-label>
+                <input matInput
+                       type="number"
+                       [(ngModel)]="repairItem.materialQuantity"
+                       [readonly]="readonly"
+                       [disabled]="disabled || saving">
+              </mat-form-field>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <ng-template #isLoadingItem>
+        <div class="spinner-wrapper" fxLayout="column" fxLayoutAlign="center center">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+
+      <mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <button mat-raised-button
+                (click)="onClose()"
+                [disabled]="saving">Close</button>
+        <button *ngIf="!readonly"
+                mat-raised-button
+                color="primary"
+                (click)="save()"
+                [disabled]="!canSave">Save</button>
+        <mat-spinner *ngIf="saving" [diameter]="30"></mat-spinner>
+      </mat-card-actions>
+    </div>
+  </lib-content-wrapper>
+</div>

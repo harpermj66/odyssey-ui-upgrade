@@ -1,0 +1,366 @@
+<div class="repair-job-edit">
+  <lib-content-wrapper>
+    <div fxLayout="row wrap" fxFlexFill fxLayoutAlign="start start" fxLayoutGap="20px">
+
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-card-subtitle>Repair Job</mat-card-subtitle>
+        <mat-card-title>{{repairJob ? repairJob.jobNum : repairJobId}}</mat-card-title>
+      </div>
+
+      <div *ngIf="!loadingJob; else isLoadingJob" [ngClass]="{'edit-content-page': !isMainDialog, 'edit-content-dialog': !!isMainDialog}">
+        <mat-expansion-panel [(expanded)]="expandedJob">
+
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon class="mat-panel-title-icon">task</mat-icon>
+              Job
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div fxFlexFill fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+              <mat-divider></mat-divider>
+
+              <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+                <mat-form-field class="edit-field" *ngIf="repairJob.id">
+                  <mat-label>Job Number</mat-label>
+                  <input matInput
+                         [ngModel]="repairJob.jobNum"
+                         readonly
+                         [disabled]="disabled || busy">
+                </mat-form-field>
+
+                <mat-form-field class="edit-field" *ngIf="repairJob.id">
+                  <mat-label>Company</mat-label>
+                  <input matInput
+                         [ngModel]="repairJob.company?.companyName"
+                         [errorStateMatcher]="companyErrorMatcher"
+                         readonly
+                         [disabled]="disabled || busy">
+                  <mat-error *ngIf="validationIssues.company">{{validationIssues.company}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="edit-field" *ngIf="repairJob.id">
+                  <mat-label>Status</mat-label>
+                  <input matInput
+                         [ngModel]="repairJob.status | repairJobStatus"
+                         [errorStateMatcher]="statusErrorMatcher"
+                         readonly
+                         [disabled]="disabled || busy">
+                  <mat-error *ngIf="validationIssues.status">{{validationIssues.status}}</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+              <mat-divider></mat-divider>
+
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <mat-card-subtitle>Equipment</mat-card-subtitle>
+              </div>
+
+              <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <div class="edit-field">
+                  <lib-container-lookup label="Equipment"
+                                        placeholder="Container Number"
+                                        [(value)]="repairJob.containerStock"
+                                        (valueChange)="onContainerChanged($event)"
+                                        [error]="validationIssues.containerStock"
+                                        [required]="true"
+                                        [disabled]="disabled || busy"
+                                        [readonly]="readonly"></lib-container-lookup>
+                </div>
+
+                <mat-form-field class="edit-field">
+                  <mat-label>Type</mat-label>
+                  <input matInput
+                         [ngModel]="repairJob?.containerStock?.contType ? repairJob?.containerStock?.contType?.contSize + '\' ' + repairJob?.containerStock?.contType?.contTypeName : ''"
+                         readonly
+                         [disabled]="disabled || busy">
+                </mat-form-field>
+
+                <mat-form-field class="edit-field">
+                  <mat-label>Code</mat-label>
+                  <input matInput
+                         [ngModel]="repairJob?.containerStock?.contType?.isoCode00b"
+                         readonly
+                         [disabled]="disabled || busy">
+                </mat-form-field>
+
+                <div class="edit-field" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+                  <mat-checkbox [(ngModel)]="this.repairJob.emergencyRepair"
+                                [disabled]="disabled || busy"
+                                [disableRipple]="readonly"
+                                (click)="readonly ? $event.preventDefault() : null">Emergency Repair</mat-checkbox>
+                  <mat-checkbox [(ngModel)]="this.repairJob.containerEmpty"
+                                [disabled]="disabled || busy"
+                                [disableRipple]="readonly"
+                                (click)="readonly ? $event.preventDefault() : null">Empty</mat-checkbox>
+
+                  <!-- readonly tick boxes (container properties)-->
+                  <mat-checkbox [ngModel]="this.repairJob?.containerStock?.contType?.reefer"
+                                [disabled]="disabled || busy"
+                                [disableRipple]="true"
+                                (click)="$event.preventDefault()">Reefer</mat-checkbox>
+                  <mat-checkbox [ngModel]="this.repairJob?.containerStock?.containerCharacteristics?.FOOD_GRADE"
+                                [disabled]="disabled || busy"
+                                [disableRipple]="true"
+                                (click)="$event.preventDefault()">Food Grade</mat-checkbox>
+                </div>
+
+                <mat-form-field class="edit-field" *ngIf="!readonly; else isReadonly">
+                  <mat-label>Repair Type</mat-label>
+                  <mat-select placeholder="Repair Type"
+                              [(ngModel)]="repairJob.repairType"
+                              [errorStateMatcher]="errorStateMatcher"
+                              (ngModelChange)="onChangeRepairType()"
+                              [required]="true"
+                              [disabled]="disabled || busy || readonly">
+                    <mat-option *ngFor="let type of repairTypes" [value]="type">{{type | removeUnderscore | titlecase}}</mat-option>
+                  </mat-select>
+                  <mat-error class="mat-error" *ngIf="validationIssues.repairType">{{validationIssues.repairType}}</mat-error>
+                </mat-form-field>
+                <ng-template #isReadonly>
+                  <mat-form-field class="edit-field">
+                    <mat-label>Repair Type</mat-label>
+                    <input type="text"
+                           [ngModel]="repairJob.repairType  | removeUnderscore | titlecase"
+                           placeholder="Repair Type"
+                           matInput
+                           readonly>
+                  </mat-form-field>
+                </ng-template>
+              </div>
+            </div>
+
+            <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+              <mat-divider></mat-divider>
+
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <mat-card-subtitle>Location</mat-card-subtitle>
+              </div>
+
+              <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <div class="edit-field">
+                  <lib-container-location-lookup label="Location"
+                                                 placeholder="Depot or Terminal"
+                                                 [value]="repairJob.depot ? repairJob.depot : repairJob.terminal"
+                                                 (valueChange)="onChangeContainerLocation($event)"
+                                                 [required]="true"
+                                                 [error]="validationIssues.depot ? validationIssues.depot : validationIssues.terminal"
+                                                 [disabled]="disabled || busy"
+                                                 [readonly]="readonly"></lib-container-location-lookup>
+                </div>
+
+                <div class="edit-field">
+                  <lib-container-location-lookup label="Supplier"
+                                                 placeholder="Depot"
+                                                 type="depot"
+                                                 [value]="repairJob.supplier"
+                                                 (valueChange)="onChangeSupplier($event)"
+                                                 [required]="true"
+                                                 [error]="validationIssues.supplier"
+                                                 [disabled]="disabled || busy"
+                                                 [readonly]="readonly"></lib-container-location-lookup>
+                </div>
+              </div>
+
+              <div class="edit-field">
+                <lib-currency-lookup label="Currency"
+                                     placeholder="Currency"
+                                     [required]="true"
+                                     [disabled]="disabled || saving"
+                                     [readonly]="readonly"
+                                     [error]="validationIssues.currency"
+                                     [value]="repairJob.currency"
+                                     (valueChange)="onChangeCurrency($event)"></lib-currency-lookup>
+              </div>
+            </div>
+
+            <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+              <mat-divider></mat-divider>
+
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <mat-card-subtitle>Cost</mat-card-subtitle>
+              </div>
+
+              <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <mat-form-field class="edit-field">
+                  <mat-label>Estimated Cost</mat-label>
+                  <input matInput
+                         type="number"
+                         placeholder="Estimated Cost"
+                         [(ngModel)]="repairJob.estimateCost"
+                         [readonly]="readonly"
+                         [disabled]="disabled || busy">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+              <mat-divider></mat-divider>
+
+              <div fxLayout="column" fxLayoutAlign="start start">
+                <mat-card-subtitle>Scheduling</mat-card-subtitle>
+              </div>
+
+              <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <mat-form-field class="edit-field">
+                  <mat-label>Turn In Date</mat-label>
+                  <input matInput
+                         readonly
+                         [matDatepicker]="turnInDatePicker"
+                         [(ngModel)]="repairJob.turnInDate">
+                  <mat-datepicker-toggle matSuffix
+                                         [for]="turnInDatePicker"
+                                         [disabled]="disabled || busy || readonly"></mat-datepicker-toggle>
+                  <mat-datepicker #turnInDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="edit-field">
+                  <mat-label>Estimate Date</mat-label>
+                  <input matInput
+                         readonly
+                         [matDatepicker]="estDatePicker"
+                         [(ngModel)]="repairJob.estimateDate">
+                  <mat-datepicker-toggle matSuffix
+                                         [for]="estDatePicker"
+                                         [disabled]="disabled || busy || readonly"></mat-datepicker-toggle>
+                  <mat-datepicker #estDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="edit-field">
+                  <mat-label>Approval Date</mat-label>
+                  <input matInput
+                         readonly
+                         [matDatepicker]="appDatePicker"
+                         [(ngModel)]="repairJob.approvalDate">
+                  <mat-datepicker-toggle matSuffix
+                                         [for]="appDatePicker"
+                                         [disabled]="disabled || busy || readonly"></mat-datepicker-toggle>
+                  <mat-datepicker #appDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="edit-field">
+                  <mat-label>Due Date</mat-label>
+                  <input matInput
+                         readonly
+                         [matDatepicker]="dueDatePicker"
+                         [(ngModel)]="repairJob.dueDate">
+                  <mat-datepicker-toggle matSuffix
+                                         [for]="dueDatePicker"
+                                         [disabled]="disabled || busy || readonly"></mat-datepicker-toggle>
+                  <mat-datepicker #dueDatePicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="edit-field">
+                  <mat-label>Completed Date</mat-label>
+                  <input matInput
+                         readonly
+                         [matDatepicker]="completedDatePicker"
+                         [(ngModel)]="repairJob.completedDate">
+                  <mat-datepicker-toggle matSuffix
+                                         [for]="completedDatePicker"
+                                         disabled></mat-datepicker-toggle>
+                  <mat-datepicker #completedDatePicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+            <button *ngIf="!readonly"
+                    mat-raised-button
+                    color="primary"
+                    (click)="submitRepairJob()"
+                    [disabled]="!canSubmit || busy">Submit for Approval</button>
+            <button *ngIf="!readonly"
+                    mat-raised-button
+                    color="primary"
+                    (click)="approveRepairJob()"
+                    [hidden]="this.userService.user != null && this.userService.user.roles != null && !this.userService.user.roles.MR_APPROVER"
+                    [disabled]="!canApprove || busy">Approve</button>
+            <button *ngIf="!readonly"
+                    mat-raised-button
+                    color="primary"
+                    (click)="sendRepairJob()"
+                    [hidden]="this.userService.user != null && this.userService.user.roles != null && this.userService.user.roles.MR_APPROVER"
+                    [disabled]="!canSend || busy">Send To Vendor</button>
+            <button *ngIf="!readonly"
+                    mat-raised-button
+                    color="primary"
+                    (click)="save()"
+                    [disabled]="!canSave">Save</button>
+            <button *ngIf="!readonly"
+                    mat-raised-button
+                    color="primary"
+                    (click)="createRequestInspectionJob()"
+                    [disabled]="!canCreateRequestInspectionJob">Request Inspection</button>
+            <mat-spinner *ngIf="saving" [diameter]="30"></mat-spinner>
+          </mat-card-actions>
+        </mat-expansion-panel>
+
+        <ng-container *ngIf="repairJobId">
+          <mat-expansion-panel [(expanded)]="expandedAttachments">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon class="mat-panel-title-icon">attachment</mat-icon>
+                Attachments
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <lib-repair-job-attachments-list [readonly]="readonly"
+                                             [disabled]="disabled"
+                                             [repairJobId]="repairJobId"></lib-repair-job-attachments-list>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [(expanded)]="expandedItems">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon class="mat-panel-title-icon">build</mat-icon>
+                Items
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <lib-repair-item-list [readonly]="readonly"
+                                  [disabled]="disabled"
+                                  (editClick)="onRepairItemEditClick($event)"
+                                  (addClick)="onRepairItemAddClick()"
+                                  (viewClick)="onRepairItemViewClick($event)"
+                                  (repairItemsUpdated)="loadIsAnyRepairItemApproved()"
+                                  [repairJobId]="repairJobId">
+            </lib-repair-item-list>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [(expanded)]="expandedRemarks">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon class="mat-panel-title-icon">comment</mat-icon>
+                Remarks
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <lib-repair-comment-list [disabled]="disabled"
+                                     [repairJobId]="repairJobId"></lib-repair-comment-list>
+          </mat-expansion-panel>
+        </ng-container>
+
+
+      </div>
+
+      <ng-template #isLoadingJob>
+        <div class="spinner-wrapper" fxLayout="column" fxLayoutAlign="center center">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+
+      <mat-card-actions  fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <button mat-raised-button
+                (click)="onClose()"
+                [disabled]="saving">Close</button>
+        <mat-spinner *ngIf="saving" [diameter]="30"></mat-spinner>
+      </mat-card-actions>
+    </div>
+  </lib-content-wrapper>
+</div>

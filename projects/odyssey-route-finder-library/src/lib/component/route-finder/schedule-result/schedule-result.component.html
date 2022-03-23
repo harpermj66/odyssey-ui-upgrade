@@ -1,0 +1,27 @@
+<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="center center" style="width: 100%" fxFlex="100%" fxFlex.gt-md="1230px" >
+  <div fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="end center" style="width: 100%;">
+    <mat-label>Sort By</mat-label>
+    <mat-form-field>
+      <mat-select (selectionChange)="sort()" [(value)]="selectedSortOption">
+        <mat-option *ngFor="let option of sortOptions" [value]="option">
+          {{option.displayName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select (selectionChange)="sort()" [(value)]="selectedSortOrder">
+        <mat-option *ngFor="let order of sortOrders" [value]="order">
+          {{order.displayName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="resultContainer" *ngIf="routesFound && !loadingSolutions" fxLayout="column" fxLayoutGap="10px" fxFlex="100%" fxFlex.gt-md="1230px" style="padding-top: 10px; width: 100%">
+    <lib-schedule-summary *ngFor="let s of solutions" [solution]="s"></lib-schedule-summary>
+  </div>
+
+  <div fxLayoutAlign="center center" *ngIf="loadingSolutions">
+    <mat-spinner diameter="20"></mat-spinner>
+  </div>
+</div>

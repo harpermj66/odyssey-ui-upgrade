@@ -1,0 +1,34 @@
+<div>
+  <div fxLayoutGap="0px" fxLayout="column">
+
+    <mat-progress-bar mode="indeterminate" *ngIf="loadingList"></mat-progress-bar>
+
+    <lib-standard-data-grid-template
+      [displayColumns]="displayColumns"
+      [dataGridColumnMaps]="columnMappings"
+      [dataSource]="dataSource"
+      [keyField]="keyField"
+      [headerMenus]="headerMenus"
+      [rowMenus]="rowMenus"
+
+      (sortChanged)="onSortChanged($event)"
+      (columnOrderingChanged)="onColumnOrderingChanged($event)"
+      (selectionsChanged)="onSelectionsChanged($event)"
+      (rowSelected)="onRowSelected($event)"
+      (headerActionSelected)="onHeaderActionSelected($event)"
+      (rowActionSelected)="onRowActionSelected($event)"
+      #standardDataGridTemplateComponent
+    >
+    </lib-standard-data-grid-template>
+  </div>
+
+  <lib-data-grid-navigator
+    *ngIf="!noData"
+    [totalRecords]="resultModel.totalRecords"
+    [page]="findModel.page"
+    [size]="findModel.size"
+    (pageChanged)="onPageChange($event)"
+  >
+  </lib-data-grid-navigator>
+
+</div>

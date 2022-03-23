@@ -1,0 +1,71 @@
+<div class="wrapper" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+  <button *ngIf="!readonly"
+          [disabled]="disabled"
+          mat-raised-button
+          [matMenuTriggerFor]="sortFieldMenu"
+          fxLayout="row" fxLayoutAlign="center center">
+    Add Sort Field
+    <mat-icon>add</mat-icon>
+  </button>
+
+  <mat-menu #sortFieldMenu="matMenu">
+    <button *ngFor="let field of filterItems | listFilter:filterOutSelected;"
+            mat-menu-item
+            [value]="field" (click)="selectField(field)">
+      {{field.displayName | removeUnderscore | titlecase}}
+    </button>
+  </mat-menu>
+
+  <div class="sort-list"
+            cdkDropList
+            (cdkDropListDropped)="drop($event)"
+            [cdkDropListData]="savedSearch.sortRules"
+            fxLayout="column" fxLayoutAlign="start start">
+
+    <div *ngFor="let sort of savedSearch.sortRules; "
+         class="sort-list-entry"
+         cdkDrag
+         [cdkDragDisabled]="disabled || readonly"
+         fxLayout="row"
+         fxLayoutAlign="start center"
+         fxLayoutGap="10px">
+
+      <mat-icon *ngIf="!readonly" class="drag-indicator">drag_indicator</mat-icon>
+
+      <mat-form-field class="sort-field">
+        <mat-label>Field</mat-label>
+        <input matInput
+               [ngModel]="sort.field | titlecase | removeUnderscore | titlecase"
+               [readonly]="readonly"
+               [disabled]="disabled">
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!readonly; else readonlyOperator"
+                      class="sort-direction-select">
+        <mat-label >Direction</mat-label>
+        <mat-select [(value)]="sort.direction"
+                    [disabled]="disabled">
+          <mat-option *ngFor="let dir of directions"
+                      [value]="dir">{{dir | removeUnderscore | titlecase}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <ng-template #readonlyOperator>
+        <mat-form-field>
+          <mat-label>Direction</mat-label>
+          <input matInput
+                 [ngModel]="sort.direction | removeUnderscore | titlecase"
+                 [disabled]="disabled"
+                 [readonly]="readonly">
+        </mat-form-field>
+      </ng-template>
+
+      <button *ngIf="!readonly"
+              mat-icon-button
+              (click)="removeFromList(sort)"
+              [disabled]="disabled"><mat-icon>delete_outline</mat-icon></button>
+
+    </div>
+  </div>
+</div>

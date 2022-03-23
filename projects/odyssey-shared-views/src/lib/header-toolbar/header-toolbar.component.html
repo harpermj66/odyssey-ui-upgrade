@@ -1,0 +1,72 @@
+<mat-toolbar class="headerToolbar" >
+
+  <img src="assets/{{themeService.appLogo}}" style="padding-top: 4px"
+       [ngClass]="themeService.getCurrentCarrier()">
+<!--  <button mat-icon-button-->
+<!--          *ngIf="drawerOpened"-->
+<!--          (click)="onToggleLeftSideNavigator()"-->
+<!--  >-->
+<!--    <mat-icon class="closeDrawer">keyboard_arrow_left</mat-icon>-->
+<!--  </button>-->
+
+<!--  <button mat-icon-button-->
+<!--          (click)="onOpen()"-->
+<!--          *ngIf="!drawerOpened"-->
+<!--  >-->
+<!--    <mat-icon class="openDrawer">keyboard_arrow_right</mat-icon>-->
+<!--  </button>-->
+
+  <span class="fill-remaining-space"></span>
+
+  <div
+    *ngIf="authenticated"
+    class="signOut">
+    <button mat-icon-button
+            [matTooltip]="'Sign Out'"
+            (click)="onSignOut()"
+    >
+      <mat-icon>login</mat-icon>
+    </button>
+  </div>
+
+  <div
+          *ngIf="authenticated"
+          class="help"
+  >
+    <button *ngIf="delayedDrawReady"
+            mat-icon-button
+            [matTooltip]="'Help'"
+            [mat-menu-trigger-for]="helpDropDown.helpMenu"
+    >
+      <mat-icon>help_outline</mat-icon>
+    </button>
+    <lib-help-menu #helpDropDown rootTitle="root"></lib-help-menu>
+  </div>
+
+  <div *ngIf="!authenticated">
+    <mat-label class="signInLabel" >Sign in</mat-label>
+    <button mat-icon-button
+            [matTooltip]="'Sign In'"
+            (click)="onSignIn()"
+    >
+      <mat-icon class="signInIcon" >login</mat-icon>
+    </button>
+  </div>
+
+  <div *ngIf="authenticated" class="profile" matTooltip="Profile Menu">
+    <button mat-card-avatar mat-icon-button [mat-menu-trigger-for]="profileMenu">
+      <mat-icon *ngIf="!avatar(); else hasAvatar">person</mat-icon>
+      <ng-template #hasAvatar>
+        <div class="avatar" [style]="'background-image: url(\'' + avatar() + '\')'"></div>
+      </ng-template>
+    </button>
+  </div>
+
+  <mat-menu #profileMenu>
+    <button *ngFor="let item of userMenuItems()" mat-menu-item (click)="onUserMenuItemClick(item)">
+      <mat-icon>{{item.icon}}</mat-icon>
+      <span>{{item.title}}</span>
+    </button>
+  </mat-menu>
+
+</mat-toolbar>

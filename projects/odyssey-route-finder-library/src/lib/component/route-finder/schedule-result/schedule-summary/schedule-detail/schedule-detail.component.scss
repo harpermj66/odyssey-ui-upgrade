@@ -1,0 +1,79 @@
+
+@import "~@angular/material/theming";
+
+@mixin schedule-detail($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+
+  .outerDiv {
+
+    border-left: solid 1px mat-color($primary, 100) !important;
+    border-right: solid 1px mat-color($primary, 100) !important;
+    border-bottom: solid 1px mat-color($primary, 100) !important;
+
+    .detailContainer {
+
+      background-color:  mat-contrast($primary, 500) !important;
+      color: grey;
+
+      .detailRenderer {
+        padding-left: 0px;
+        padding-right: 10px;
+        color: grey;
+        width: 100%;
+      }
+
+      .legStartEnd {
+        width: 100%;
+        border-bottom: solid 1px  mat-color($primary, 100) !important;
+        border-top: solid 1px  mat-color($primary, 100) !important;
+        padding: 2px
+      }
+
+      .bold {
+        font-weight: bold;
+      }
+
+      .legDuration {
+        width: 100px;
+        padding-left: 24px;
+      }
+
+      .horDuration {
+        width: 100px;
+        padding-left: 24px;
+        padding-top: 40px;
+      }
+
+      .layoverSurround {
+        padding-left: 20px;
+        width: 100%;
+      }
+
+      .layoverItinerary {
+        width: 100%;
+        padding-left: 20px;
+        padding-top: 14px;
+      }
+
+      .itineraryInfo {
+        width: 770px;
+        padding-top: 6px;
+        padding-left: 214px
+      }
+
+      .layoverDuration {
+        width: 100px;
+        padding-left: 15px;
+        padding-bottom: 6px;
+      }
+
+      .horDuration {
+        height: 26px;
+      }
+
+    }
+  }
+}

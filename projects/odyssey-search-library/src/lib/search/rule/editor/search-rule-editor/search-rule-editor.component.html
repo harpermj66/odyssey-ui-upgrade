@@ -1,0 +1,133 @@
+<div fxLayoutGap="0px">
+
+  <mat-horizontal-stepper [linear]="currentState === 'add'"  #stepper >
+
+    <mat-step [completed]="nameAndShareValid">
+      <ng-template matStepLabel>Name and share</ng-template>
+      <lib-save-rule
+        [area]="area"
+        [newRecord]="this.currentState === 'add'"
+        [savedSearch]="savedSearch"
+        (validityChanged)="onNameShareValidityChanged($event)"
+        (changesMade)="onNameAndShareChangesMade()"
+      ></lib-save-rule>
+      <mat-toolbar class="button-toolbar" fxLayoutAlign="end">
+        <span class="fill-remaining-space mat-wizard-button"></span>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="close()">Cancel</button>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="save()"
+                *ngIf="currentState !== 'add'"
+                [disabled]="saving || noEdits "
+        >Save & Close</button>
+        <button mat-button matStepperNext class="mat-wizard-button"
+                [disabled]="!nameAndShareValid && currentState === 'add'"
+                (click)="onNameAndShareNext()"
+        >Next</button>
+      </mat-toolbar>
+    </mat-step>
+    <mat-step [completed]="createFilterValid">
+      <ng-template matStepLabel>Create the filter</ng-template>
+      <lib-search-rule-editor-generic-rule [resourceType]="resourceType"
+                                           [rule]="savedSearch.searchRule"
+                                           [filterItems]="filterItems"
+                                           [disabled]="saving || disabled"
+                                           [readonly]="readonly"
+      >
+
+      </lib-search-rule-editor-generic-rule>
+      <mat-toolbar class="button-toolbar" fxLayoutAlign="end">
+        <span class="fill-remaining-space mat-wizard-button"></span>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="close()">Cancel
+        </button>
+        <button mat-button matStepperPrevious class="mat-wizard-button">Previous</button>
+        <button mat-button matStepper class="mat-wizard-button"
+                *ngIf="!readonly"
+                [disabled]="saving || disabled"
+                (click)="clear()"
+        >
+          Clear
+        </button>
+        <button mat-button matStepper
+                class="mat-wizard-button"
+                [disabled]="saving || !canTry"
+                (click)="try()"
+        >Try
+        </button>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="save()"
+                *ngIf="!readonly"
+                [disabled]="saving || disabled || !createFilterValid "
+        >Save & Close
+        </button>
+        <button mat-button matStepperNext class="mat-wizard-button"
+                [disabled]="!createFilterValid && currentState === 'add'"
+        >Next
+        </button>
+      </mat-toolbar>
+
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Set the sort order</ng-template>
+      <lib-search-rule-editor-sort-selector [savedSearch]="savedSearch"
+                                            [filterItems]="filterItems | listFilter:filterOutUnsortable"
+                                            [disabled]="saving || disabled"
+                                            [readonly]="readonly"></lib-search-rule-editor-sort-selector>
+      <mat-toolbar class="button-toolbar" fxLayoutAlign="end">
+        <span class="fill-remaining-space mat-wizard-button"></span>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="close()">Cancel</button>
+        <button mat-button matStepperPrevious class="mat-wizard-button">Previous</button>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="trySort()"
+                *ngIf="!readonly"
+                [disabled]="saving || disabled">Try</button>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="save()"
+                *ngIf="!readonly"
+                [disabled]="saving || disabled || !createFilterValid "
+        >Save & Close</button>
+        <button mat-button matStepperNext class="mat-wizard-button"
+        >Next</button>
+      </mat-toolbar>
+
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Groups and totals</ng-template>
+      <lib-search-rule-editor-grouping [savedSearch]="savedSearch"
+                                       [resourceType]="resourceType"
+                                       [filterItems]="filterItems"
+                                       [disabled]="saving || disabled"
+                                       [readonly]="readonly"
+                                       (groupingChanged)="onGroupingChanged($event)"
+      ></lib-search-rule-editor-grouping>
+
+      <mat-toolbar class="button-toolbar" fxLayoutAlign="end">
+        <span class="fill-remaining-space mat-wizard-button"></span>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="close()">Cancel</button>
+        <button mat-button matStepperPrevious class="mat-wizard-button">Previous</button>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="tryGroupings()"
+                *ngIf="!readonly"
+                [disabled]="saving || disabled || !groupsAndTotalsValid">Try</button>
+        <button mat-button matStepper class="mat-wizard-button"
+                (click)="save()"
+                *ngIf="!readonly"
+                [disabled]="saving || disabled || !createFilterValid || !groupsAndTotalsValid"
+        >Save & Close</button>
+
+      </mat-toolbar>
+    </mat-step>
+
+
+
+  </mat-horizontal-stepper>
+
+</div>
+
+
+
+

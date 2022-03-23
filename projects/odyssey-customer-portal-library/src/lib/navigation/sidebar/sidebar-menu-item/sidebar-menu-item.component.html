@@ -1,0 +1,10 @@
+<button class="menu-button" fxLayout="center center" mat-button disableRipple (click)="emitMenuItem(menuItem)">
+    <mat-icon class="iconClass">{{menuItem.groupIcon}}</mat-icon>
+    <mat-label
+            class="menu-item-label"
+            [style.visibility]="sidebarClosed() ? 'hidden' : 'visible'"
+            [style.opacity]="sidebarClosed() ? 0 : 1"
+    >
+        {{menuItem.groupTitle}}
+    </mat-label>
+</button>

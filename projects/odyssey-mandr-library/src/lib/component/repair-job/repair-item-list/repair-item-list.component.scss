@@ -1,0 +1,56 @@
+.repair-item-list {
+  height: 100%;
+  width: 100%;
+
+  lib-standard-list-page-header {
+    width: 100%;
+  }
+
+  .table-wrapper {
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow: auto;
+  }
+
+  .mat-paginator {
+    width: 100%;
+  }
+
+  .selected {
+    border: solid 1px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.1),
+    0 8px 20px 1px rgba(0, 0, 0, 0.14),
+    0 3px 24px 2px rgba(0, 0, 0, 0.12);
+  }
+
+  lib-cedex-component-select, lib-cedex-damage-select, lib-cedex-location-select, lib-cedex-repair-select {
+    height: 100%;
+    width: 100%;
+  }
+
+  .column-button {
+    max-width: 60px;
+  }
+
+  .column-number {
+    max-width: 100px;
+  }
+
+  .column-measurements {
+    max-width: 100px;
+  }
+
+  .column-number-short {
+    max-width: 60px;
+  }
+
+  .column-status {
+    max-width: 100px;
+  }
+
+  .column-icon {
+    max-width: 40px;
+  }
+}
+
+

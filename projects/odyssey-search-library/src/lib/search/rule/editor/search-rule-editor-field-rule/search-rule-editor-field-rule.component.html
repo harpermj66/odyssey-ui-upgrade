@@ -1,0 +1,30 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+  <mat-form-field *ngIf="!readonly; else readonlyOperator">
+    <mat-label>Field</mat-label>
+    <mat-select [(value)]="rule.field"
+                [disabled]="disabled"
+                (selectionChange)="onChangeField($event)">
+      <mat-option *ngFor="let field of filterItems"
+                  [value]="field.fieldName">{{field.displayName | removeUnderscore | titlecase}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-template #readonlyOperator>
+    <mat-form-field>
+      <mat-label>Field</mat-label>
+      <input matInput
+             [ngModel]="rule.field | removeUnderscore | titlecase"
+             [readonly]="readonly"
+             [disabled]="disabled">
+    </mat-form-field>
+  </ng-template>
+
+  <lib-search-rule-editor-generic-matcher *ngIf="rule.matcher"
+                                          [resourceType]="resourceType"
+                                          [filterItem]="selectedFilterItem"
+                                          [matcher]="rule.matcher"
+                                          [disabled]="disabled"
+                                          [readonly]="readonly"></lib-search-rule-editor-generic-matcher>
+</div>
+
+

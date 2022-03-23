@@ -1,0 +1,7 @@
+<mat-form-field class="search-values-input">
+    <mat-select (selectionChange)="onOptionSelect($event)" [value]="selectedSearchOption">
+        <mat-option *ngFor="let option of searchOptions" [value]="option">
+            {{option.displayName}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>

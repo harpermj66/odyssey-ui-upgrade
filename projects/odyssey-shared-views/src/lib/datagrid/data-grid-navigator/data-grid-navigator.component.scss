@@ -1,0 +1,64 @@
+@import "~@angular/material/theming";
+
+@mixin data-grid-navigator($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+
+  .tableFooterNavigator {
+      width: 100%;
+      height: 55px;
+      background-color: mat-color($primary, 50) !important;
+      padding-top: 0px !important;
+      padding-bottom: 4px !important;
+      padding-right:0px !important;
+      border-top: solid 1px mat-color($accent, 200);
+      border-right: solid 1px mat-color($accent, 200);
+      border-left: solid 1px  mat-color($accent, 200);
+      border-bottom: solid 1px mat-color($accent, 200);
+      //border-top: solid 1px mat-color($accent, 100);
+
+      .mat-paginator.paginatorView {
+
+        background-color: transparent !important;
+        color: mat-color($accent, 150) !important;
+        padding-top: 0px !important;
+        padding-right: 0px !important;
+        padding-bottom: 0px !important;
+        margin: 0px !important;
+        font-size:12px !important;
+
+        .mat-paginator-container {
+          min-height: 30px  !important;
+        }
+
+        .mat-paginator-page-size {
+          color: mat-color($accent, 150)  !important;
+        }
+
+        .mat-paginator-page-size-label {
+          color: mat-color($accent, 150)  !important;
+        }
+
+        .mat-option.mat-selected {
+          background: #E3E3E3 !important;
+          color: mat-color($accent, 150) !important;
+        }
+
+        .mat-select-value-wrapper {
+          color: mat-color($accent, 150) !important;
+        }
+
+        ::ng-deep .mat-paginator .mat-paginator-page-size .mat-select-trigger {
+          width: 60px;
+          color: mat-color($accent, 150) !important;
+        }
+
+        .mat-select-trigger {
+          color: mat-color($accent, 150) !important;
+        }
+      }
+  }
+}

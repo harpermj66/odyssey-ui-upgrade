@@ -1,0 +1,46 @@
+<div
+  fxLayoutGap="4px" fxLayoutAlign="left center" fxLayout="100%"
+  class="subheader"
+>
+
+
+  <button  mat-icon-button
+          (click)="onHome()"
+  >
+    <mat-icon class="homeIcon">home</mat-icon>
+  </button>
+
+
+  <div>
+    <mat-label class="moduleLabel">{{subHeaderToolbarService.module}}</mat-label>
+  </div>
+
+  <span class="fill-remaining-space"></span>
+
+  <div *ngIf="development">
+<!--    <button mat-icon-button [matMenuTriggerFor]="menu"-->
+<!--    >-->
+<!--      <mat-icon style="font-size: 20px">brush</mat-icon>-->
+<!--    </button>-->
+
+    <mat-menu #menu="matMenu"  >
+      <button mat-menu-item (click)="onThemeChange('Locus')">
+        <span>Locus</span>
+      </button>
+      <button mat-menu-item (click)="onThemeChange('Marfret')">
+        <span>Marfret</span>
+      </button>
+      <button mat-menu-item (click)="onThemeChange('Ncl')">
+        <span>Ncl</span>
+      </button>
+      <button mat-menu-item (click)="onThemeChange('Transmar')">
+        <span>Transmar</span>
+      </button>
+      <button mat-menu-item (click)="onThemeChange('Dal')">
+        <span>Dal</span>
+      </button>
+    </mat-menu>
+  </div>
+
+
+</div>

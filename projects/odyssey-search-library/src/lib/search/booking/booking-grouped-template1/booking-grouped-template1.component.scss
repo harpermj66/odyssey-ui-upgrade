@@ -1,0 +1,56 @@
+@import "~@angular/material/theming";
+
+@mixin booking-grouped-template1-component ($theme){
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .groupedTemplate1Container {
+    overflow: auto;
+    width: 100%;
+
+    table {
+      display: table;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      border-left: solid 1px mat-color($primary, 100);
+      border-right: solid 1px mat-color($primary, 100);
+      color: mat-color($primary, 500);
+      flex-shrink: 0;
+
+      .mat-cell {
+        height: 30px !important;
+        color: mat-color($primary, 500);
+        font-size: 12px !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+      }
+
+      .mat-row {
+        min-height: 30px !important;
+        vertical-align: middle;
+        border-color: transparent;
+      }
+
+    }
+
+    .headerClass {
+      font-weight: bold;
+      color: mat-color($primary, 700) !important;
+      background-color: mat-color($primary,100);
+    }
+
+    .sumTotalClass {
+      font-weight: bold;
+      color: mat-color($primary, 700) !important;
+      border-bottom: solid 2px mat-color($primary, 400);
+      border-top: solid 2px mat-color($primary, 400);
+    }
+
+    .sumClass {
+      color: mat-color($primary, 700) !important;
+    }
+
+  }
+
+}

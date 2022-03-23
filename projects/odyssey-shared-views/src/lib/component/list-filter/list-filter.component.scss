@@ -1,0 +1,61 @@
+@import "~@angular/material/theming";
+
+@mixin list-filter($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .lookup-autocomplete-input {
+    height: 20px !important;
+    padding-top: 0px !important;
+    margin-top: -11px !important;
+    border: none !important;
+  }
+
+
+  .listFilter {
+    padding-left: 2px;
+    padding-top: 2px;
+    padding-bottom: 0px;
+    border: solid 1px mat-color($accent, 200) !important;
+    border-radius: 2px;
+    //height: 32px;
+    background-color: mat-color($primary, 700) !important;
+
+    .slideToggleContainer {
+      color: grey;
+      padding-top: 1px;
+      font-size: 14px;
+    }
+
+    .filterItem {
+      padding-top: 1px;
+    }
+
+    .filterIcon {
+      font-size: 24px;
+      padding-top: 2px;
+      padding-left: 4px;
+      color: mat-color($accent, 200) !important;
+    }
+
+    .searchFieldInput {
+      height: 20px;
+      padding-top: 0px;
+      margin-top: -11px;
+      border: none !important;
+    }
+
+
+    .listFilterButton {
+      color: darkgray;
+      font-size: 18px;
+      padding-bottom: 16px;
+      padding-right: 0px;
+    }
+
+    .mat-form-field-underline {
+      display: none !important;
+    }
+  }
+
+}

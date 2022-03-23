@@ -1,0 +1,25 @@
+@import "~@angular/material/theming";
+
+@mixin standard-list-page-header ($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .standaloneDataGridHeader {
+    width: 100%;
+    background-color: mat-color($primary, 300);
+    color: mat-contrast($primary, 700) !important;
+    height: 40px;
+    gap: 6px;
+    font-size: 14px;
+    border-right: solid 1px mat-color($accent, 200);
+    border-left: solid 1px mat-color($accent, 200);
+    border-top: solid 1px mat-color($accent, 200);
+    padding-right: 0px !important;
+    .mat-icon {
+      font-size: 20px;
+    }
+  }
+
+}

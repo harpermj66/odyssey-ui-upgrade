@@ -1,0 +1,22 @@
+@import "~@angular/material/theming";
+
+@mixin welcome-page-toolbar($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .welcomeToolbar {
+    background-color: mat-contrast($primary, 700);
+
+    mat-label {
+      color: mat-color($accent, 400)
+    }
+
+    mat-icon {
+      color: mat-color($accent, 400)
+    }
+
+  }
+
+}

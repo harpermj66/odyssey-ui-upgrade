@@ -1,0 +1,17 @@
+<div fxFlex="100%" fxLayoutAlign="start">
+  <div fxLayout="column" fxLayoutGap="6px" class="searchContainer" fxFlex="96%" fxFlex.gt-lg="1600px">
+
+    <nav mat-tab-nav-bar >
+
+      <a mat-tab-link (click)="onLumpSumClick()" [active]="tab == 'lump-sum'">Lump Sum</a>
+
+      <a mat-tab-link (click)="onLabourRateClick()" [active]="tab == 'labour-rate'">Labour Rate</a>
+
+      <span class="fill-remaining-space"></span>
+
+    </nav>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>
+

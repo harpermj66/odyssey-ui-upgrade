@@ -1,0 +1,16 @@
+.page-container{
+    min-height: 100vh;
+    height: 100%;
+}
+
+/*form {
+    height: 100%;
+}*/
+
+mat-form-field {
+    width: 100%;
+}
+
+checkbox-container {
+    height: 57px; /* same height as mat-form-field wrapper */
+}

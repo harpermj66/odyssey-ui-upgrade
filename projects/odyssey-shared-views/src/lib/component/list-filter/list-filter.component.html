@@ -1,0 +1,125 @@
+<div class="listFilter" fxLayout="row" fxLayoutGap="10px" >
+
+  <div>
+    <mat-icon class="filterIcon material-icons-outlined">filter_alt</mat-icon>
+  </div>
+
+  <div fxLayout="row" fxFlex="100%" fxLayoutGap="6px">
+
+    <div class="slideToggleContainer">
+      <mat-slide-toggle
+              (click)="onMatchTypeChanged()">{{filterMatchAll ? 'Matching All' : 'Matching Any'}}</mat-slide-toggle>
+    </div>
+
+    <div id="existingFilterItems" *ngIf="filterValues != null && filterValues.length > 0" fxLayout="row"
+         fxLayoutGap="6px">
+      <lib-list-filter-item
+              *ngFor="let fi of filterValues"
+              [resourceType]="resourceTypeModel"
+              [filterItem]="fi"
+              (filterClosed)="onFilterClosed($event)"
+              (filterUpdated)="onFilterItemUpdated($event)"
+      >
+      </lib-list-filter-item>
+    </div>
+
+    <ng-container *ngIf="viewMode=='search'">
+      <mat-form-field class="searchFieldInput"
+      >
+        <input matInput
+               type="text"
+               [matAutocomplete]="fieldOptionsAutoComplete"
+               [formControl]="searchControl"
+        />
+        <mat-autocomplete autoActiveFirstOption #fieldOptionsAutoComplete="matAutocomplete">
+          <mat-option class="option" *ngFor="let option of availableItems | async" [value]="option"
+                      (onSelectionChange)="onFilterItemAdded(option)">
+            {{option.displayName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </ng-container>
+
+    <ng-container *ngIf="viewMode=='enterFilter'">
+      <mat-form-field class="searchFieldInput" *ngIf="!currentFieldHasLookup(); else hasLookup">
+        <input matInput
+               [formControl]="filterControl"
+               (keyup.enter)="onFilterAddComplete()"/>
+
+      </mat-form-field>
+      <ng-template #hasLookup>
+        <lib-lookup-autocomplete [(value)]="lastAddedFilterItem!!.fieldValue"
+                                 (valueChange)="filterControl.setValue($event)"
+                                 [field]="lastAddedFilterItem!!.fieldName!!"
+                                 [required]="true"
+                                 [resourceType]="resourceTypeModel!!"
+                                 [filterItems]="filterValues"
+                                 inputClass="lookup-autocomplete-input"
+                                 (keyup.enter)="onFilterAddComplete()"
+                                 (valueMappedChange)="onLookupSelect($event)">
+        </lib-lookup-autocomplete>
+      </ng-template>
+    </ng-container>
+
+    <mat-icon class="favouriteIcon" *ngIf="filterValues.length > 0 && viewMode === 'search'" (click)="onSaveToFavourites()" >bookmark_border</mat-icon>
+
+    <span class="fill-remaining-space"></span>
+
+    <div fxLayout="row" fxLayoutGap="0px">
+
+      <button mat-icon-button [matMenuTriggerFor]="quickSearchOptionsMenu">
+        <mat-icon class="listFilterButton"
+        >more_vert
+        </mat-icon>
+
+        <mat-menu #quickSearchOptionsMenu="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="favouritesMenu">
+            <mat-icon>bookmark</mat-icon>
+            Favourites
+          </button>
+
+          <button *ngIf="history.length > 0" mat-menu-item [matMenuTriggerFor]="historyMenu">
+            <mat-icon>history</mat-icon>
+            History
+          </button>
+        </mat-menu>
+
+        <mat-menu #favouritesMenu="matMenu">
+          <button mat-menu-item (click)="onSaveToFavourites()"
+                  [disabled]="filterValues.length == 0  && viewMode === 'search'">
+            <mat-icon>done</mat-icon>
+
+            Save to Favourites
+          </button>
+          <mat-divider *ngIf="favourites.length > 0"></mat-divider>
+          <button *ngFor="let fav of favourites" mat-menu-item (click)="onApplyFavourite(fav)"
+                  matTooltip="{{fav.title}}">
+            <mat-icon>bookmark_border</mat-icon>
+            {{fav.title}}</button>
+          <mat-divider *ngIf="favourites.length > 0"></mat-divider>
+          <button *ngIf="favourites.length > 0" mat-menu-item (click)="onManageFavourites()">
+            <span>Manage Favourites</span>
+          </button>
+        </mat-menu>
+
+        <mat-menu
+                #historyMenu="matMenu">
+          <button *ngFor="let hist of history" mat-menu-item (click)="onApplyHistoryItem(hist)"
+                  matTooltip="{{hist.title}}">{{hist.title}}</button>
+          <mat-divider *ngIf="history.length > 0"></mat-divider>
+          <button *ngIf="history.length > 0" mat-menu-item (click)="onManageHistory()">
+            <span>Manage History</span>
+          </button>
+        </mat-menu>
+      </button>
+
+      <button mat-icon-button matTooltip="Clear search" (click)="onCloseItems()">
+        <mat-icon class="listFilterButton"
+        >close
+        </mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+</div>

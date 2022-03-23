@@ -1,0 +1,26 @@
+<mat-toolbar class="welcomeToolbar">
+
+  <mat-toolbar-row fxLayoutGap="20px">
+    <div class="left-container" fxLayout="row" fxLayoutAlign="start center">
+      <div class="navbar-brand" fxLayout="column" fxLayoutAlign="center">
+        <a routerLink="/welcome">
+          <img src="assets/{{themeService.appLogo}}" height="{{themeService.appLogoHeight}}">
+        </a>
+      </div>
+    </div>
+
+    <span class="fill-remaining-space"></span>
+
+    <div >
+      <mat-label class="signInLabel"  (click)="onSignIn()">Sign in</mat-label>
+      <button mat-icon-button
+              [matTooltip]="'Sign In'"
+              (click)="onSignIn()"
+      >
+        <mat-icon class="signInIcon" i18n >login</mat-icon>
+      </button>
+    </div>
+
+  </mat-toolbar-row>
+
+</mat-toolbar>

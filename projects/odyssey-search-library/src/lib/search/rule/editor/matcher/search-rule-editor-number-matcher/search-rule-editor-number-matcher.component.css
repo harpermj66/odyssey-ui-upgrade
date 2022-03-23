@@ -1,0 +1,35 @@
+.wrapper {
+  width: 100%;
+}
+
+.mat-chip-list {
+  width: 100%;
+}
+
+.mat-chip {
+  max-width: 200px;
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+.fill-horizontal {
+  flex-direction: row;
+  flex: 1 1 auto;
+}
+
+.chip-content {
+  width: 90%;
+  max-width: 90%;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  text-align: start;
+  vertical-align: middle;
+}
+
+.remove-icon {
+  vertical-align: middle;
+}

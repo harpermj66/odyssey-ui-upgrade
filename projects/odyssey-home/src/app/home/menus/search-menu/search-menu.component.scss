@@ -1,0 +1,44 @@
+@import "~@angular/material/theming";
+
+@mixin search-menu($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .expandedMenu {
+    margin-top: 0px;
+    padding-right: 4px;
+    min-width: 220px;
+
+    mat-label {
+      padding-left: 26px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .mat-list {
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+
+      .mat-list-item {
+        padding-left: 10px;
+        font-size: 14px !important;
+        color: mat-color($accent, 900) !important;
+        height: 34px !important;
+      }
+
+      .mat-list-item:hover {
+        background-color: mat-color($primary, 900) !important;
+        color: white !important;
+      }
+
+      .mat-list-item:active {
+        background-color: mat-color($accent, 900) !important;
+        color: white !important;
+      }
+
+    }
+  }
+}

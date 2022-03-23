@@ -1,0 +1,25 @@
+<mat-menu #helpMenu overlapTrigger="true">
+  <ng-container *ngIf="menuModel != null && menuModel.children != null">
+    <ng-container *ngFor="let item of menuModel.children">
+
+      <ng-container *ngIf="item.children">
+        <button *ngIf="delayedDrawReady"
+                mat-menu-item
+                [matMenuTriggerFor]="childMenu.helpMenu"
+                [matTooltip]="item.title.length > 26 ? item.title : ''">
+          {{item.title | shortentext: 26}}
+        </button>
+        <lib-help-menu #childMenu [menuModel]="item"></lib-help-menu>
+      </ng-container>
+
+      <ng-container *ngIf="!item.children">
+        <button mat-menu-item
+                (click)="helpItemSelected(item)"
+                [matTooltip]="item.title.length > 26 ? item.title : ''">
+          {{item.title | shortentext: 26}}
+        </button>
+      </ng-container>
+
+    </ng-container>
+  </ng-container>
+</mat-menu>

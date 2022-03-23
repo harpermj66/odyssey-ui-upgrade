@@ -1,0 +1,166 @@
+<div class="standardDataGridTemplate" [style.height.px]="contentHeight" (window:resize)="onResize()" cdkScrollable>
+  <table
+    mat-table #table [dataSource]="dataSource"
+    multiTemplateDataRows
+    (matSortChange)="onSortChange($event)" matSort
+    cdkDropList
+    cdkDropListOrientation="horizontal"
+    (cdkDropListDropped)="dropColumn($event)"
+    style="width: 2500px"
+  >
+
+    <ng-container matColumnDef="select" [sticky]="true" >
+      <div [ngStyle]="{'display': multiSelect ? 'inline' : 'none'}">
+        <th mat-header-cell *matHeaderCellDef >
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+                        [checked]="selection.hasValue() && isAllSelected()"
+                        [indeterminate]="selection.hasValue() && !isAllSelected()"
+                        [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row" >
+          <mat-checkbox (click)="$event.stopPropagation()"
+                        (change)="$event ? rowSelectToggle(row) : null"
+                        [checked]="selection.isSelected(row)"
+                        [aria-label]="checkboxLabel(row)" >
+          </mat-checkbox>
+        </td>
+      </div>
+    </ng-container>
+
+    <ng-container *ngFor="let column of displayColumns" matColumnDef="{{column}}">
+
+      <ng-container *ngIf="isSortable(column)">
+        <th mat-header-cell cdkDrag *matHeaderCellDef mat-sort-header i18n [matTooltip]="getTitle(column)">{{getTitle(column)}}</th>
+      </ng-container>
+
+      <ng-container *ngIf="!isSortable(column)" [matTooltip]="getTitle(column)">
+        <th mat-header-cell cdkDrag *matHeaderCellDef i18n >{{getTitle(column)}}</th>
+      </ng-container>
+
+      <ng-container [ngSwitch]="getType(column)">  <!-- TODO: center the header for itinerary types -->
+
+        <ng-container *ngSwitchCase="'Date'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}">{{row[column] | date:'dd/MM/yyyy hh:mm '}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Double'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}" style="text-align: right">{{row[column] | number:'1.2-2'}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'BigDecimal'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}" style="text-align: right">{{row[column] | number:'1.2-2'}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Float'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}" style="text-align: right">{{row[column] | number:'1.2-2'}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Long'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}" style="text-align: right">{{row[column]}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Int'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}" style="text-align: right">{{row[column]}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Boolean'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}">{{row[column] ? 'Yes' : 'No' }}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'Enum'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}">{{row[column] | removeUnderscore | titlecase}}</td>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'ItineraryLeg'">
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}"
+              style="text-align: right">
+            <lib-itinerary-view #itineraryView [itinerary]="row[column]"></lib-itinerary-view>
+          </td>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          <td mat-cell *matCellDef="let row"
+              [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}"
+              [matTooltipDisabled]="!isCollection(column) || !row[column] || ((row[column] | commaSeparated).length <= 36)"
+              [matTooltip]="isCollection(column) && row[column] ? (row[column] | commaSeparated) : ''"
+          >{{isCollection(column) && row[column] ? (row[column] | commaSeparated | shortentext: 36) : row[column] }}</td>
+        </ng-container>
+
+      </ng-container>
+
+    </ng-container>
+
+    <ng-container matColumnDef="buttons" stickyEnd>
+
+      <th mat-header-cell *matHeaderCellDef [ngClass]="{'hide': headerMenus.length <= 0 && rowMenus.length <= 0}">
+        <div *ngIf="headerMenus.length > 0" mat-icon-button [matMenuTriggerFor]="headerMenu"><mat-icon>more_vert</mat-icon></div>
+      </th>
+
+      <td mat-cell *matCellDef="let element" style="padding-top: 1px; padding-bottom: 0px" [ngClass]="{'hide': headerMenus.length <= 0 && rowMenus.length <= 0}">
+        <div *ngIf="rowMenus.length > 0" mat-icon-button [matMenuTriggerFor]="rowMenu" [matMenuTriggerData]="{element: element}"><mat-icon>more_vert</mat-icon></div>
+      </td>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="allColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: allColumns;" [ngClass]="{'highlight': selectedRow != null && selectedRow[keyField] === row[keyField]}" (click)="onSelectRow(row)"></tr>
+  </table>
+</div>
+
+<mat-menu #headerMenu="matMenu">
+  <ng-template matMenuContent>
+    <ng-container *ngFor="let parentMenu of headerMenus">
+      <button *ngIf="parentMenu.children.length === 0" mat-menu-item (click)="onHeaderMenuClick(parentMenu.actionId)">
+        <mat-icon *ngIf="parentMenu.icon.length > 0">{{parentMenu.icon}}</mat-icon>
+        <span>{{parentMenu.title}}</span>
+      </button>
+      <button *ngIf="parentMenu.children.length > 0" mat-menu-item [mat-menu-trigger-for]="submenu">
+        <mat-icon *ngIf="parentMenu.icon.length > 0">{{parentMenu.icon}}</mat-icon>
+        <span>{{parentMenu.title}}</span>
+      </button>
+      <mat-menu #submenu >
+        <ng-container *ngFor="let childMenu of parentMenu.children">
+          <button mat-menu-item (click)="onHeaderMenuClick(childMenu.actionId)">
+            <mat-icon *ngIf="childMenu.icon.length > 0">{{childMenu.icon}}</mat-icon>
+            <span>{{childMenu.title}}</span>
+          </button>
+          <mat-divider *ngIf="childMenu.title === ''"></mat-divider>
+        </ng-container>
+      </mat-menu>
+    </ng-container>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #rowMenu="matMenu">
+  <ng-template matMenuContent let-element="element">
+    <ng-container *ngFor="let parentMenu of rowMenus"> <!-- currently the isEnabled authorisation function only applies to top level menu items-->
+      <button *ngIf="parentMenu.children.length === 0 && (parentMenu.isEnabled != null ? parentMenu.isEnabled(element, userService.user) : true)" mat-menu-item (click)="onRowMenuClickAction(parentMenu, element); onRowMenuClick(parentMenu.actionId)">
+        <mat-icon *ngIf="parentMenu.icon.length > 0">{{parentMenu.icon}}</mat-icon>
+        <span>{{parentMenu.title}}</span>
+      </button>
+      <button *ngIf="parentMenu.children.length > 0 && (parentMenu.isEnabled != null ? parentMenu.isEnabled(element, userService.user) : true)" mat-menu-item [mat-menu-trigger-for]="submenu">
+        <mat-icon *ngIf="parentMenu.icon.length > 0">{{parentMenu.icon}}</mat-icon>
+        <span>{{parentMenu.title}}</span>
+      </button>
+      <mat-menu #submenu >
+        <ng-container *ngFor="let childMenu of parentMenu.children">
+          <button mat-menu-item (click)="onRowMenuClickAction(childMenu, element); onRowMenuClick(childMenu.actionId)">
+            <mat-icon *ngIf="childMenu.icon.length > 0">{{childMenu.icon}}</mat-icon>
+            <span>{{childMenu.title}}</span>
+          </button>
+          <mat-divider *ngIf="childMenu.title === ''"></mat-divider>
+        </ng-container>
+      </mat-menu>
+    </ng-container>
+  </ng-template>
+</mat-menu>

@@ -1,0 +1,163 @@
+<div class="page-container" fxLayoutAlign="center center">
+  <mat-horizontal-stepper class="stepper" linear="true" #stepper>
+    <mat-step [stepControl]="personalDetailsForm" label="Personal Details">
+      <form [formGroup]="personalDetailsForm" (ngSubmit)="submitPersonalDetails()" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+          <mat-form-field fxFlex="1 1 10%">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" placeholder="Title" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="1 1 auto">
+            <mat-label>First Name</mat-label>
+            <input matInput formControlName="firstName" placeholder="First Name" required>
+          </mat-form-field>
+          <mat-form-field fxFlex="2 1 auto">
+            <mat-label>Last Name</mat-label>
+            <input matInput formControlName="lastName" placeholder="Last Name" required>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" placeholder="Email" required>
+          <mat-error *ngIf="personalDetailsForm.controls.email.invalid">You must enter a valid email address.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Repeat Email</mat-label>
+          <input matInput formControlName="emailRepeat" placeholder="Repeat Email" required>
+          <mat-error *ngIf="personalDetailsForm.controls.emailRepeat.invalid">Emails do not match.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" placeholder="Password" type="password" required>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Repeat Password</mat-label>
+          <input matInput formControlName="passwordRepeat" placeholder="Repeat Password" type="password"  required>
+          <mat-error *ngIf="personalDetailsForm.controls.passwordRepeat.invalid">Passwords do not match.</mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="end center" class="button-row">
+          <button mat-button matStepperNext type="submit" [disabled]="!personalDetailsForm.valid">Next</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="companyDetailsForm" label="Company Details">
+      <form [formGroup]="companyDetailsForm" (ngSubmit)="submitCompanyDetails()" fxLayout="column">
+        <div fxLayout="row">
+          <div fxLayout="column" fxLayoutAlign="start center" fxFlex="50">
+            <mat-form-field>
+              <mat-label>Company Lookup</mat-label>
+              <input
+                      matInput
+                      formControlName="companyNameLookup"
+                      placeholder="Start typing the company name..."
+                      [matAutocomplete]="auto"
+                      (keyup)="findPlacePredictions($event)"
+              >
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="getPlaceDetails($event.option.value)" [displayWith]="getPredictionDescription">
+                <mat-option *ngFor="let prediction of companyPredictions" [value]="prediction">
+                  {{prediction.description}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Company Name</mat-label>
+              <input matInput formControlName="companyName" placeholder="Company Name" required>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Short Name</mat-label>
+              <input matInput formControlName="shortName" placeholder="Short Name" required>
+            </mat-form-field>
+            <lib-currency-lookup
+              [required]="true"
+              (currencySelected)="setSelectedCurrency($event)"
+            ></lib-currency-lookup>
+            <mat-form-field>
+              <mat-label>EORI</mat-label>
+              <input matInput formControlName="eori" placeholder="EORI">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Main Phone</mat-label>
+              <input matInput formControlName="phone" placeholder="Phone">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Main Fax</mat-label>
+              <input matInput formControlName="fax" placeholder="Fax">
+            </mat-form-field>
+          </div>
+
+          <mat-divider [vertical]="true"></mat-divider>
+
+          <div fxLayout="column" fxLayoutAlign="start center" fxFlex>
+            <mat-form-field>
+              <mat-label>Address</mat-label>
+              <textarea rows="4" matInput formControlName="address"  placeholder="Address" required></textarea>
+            </mat-form-field>
+            <lib-un-locode-lookup
+              [required]="true"
+              (unLocodeSelected)="setUnLocodeAndPopulateFields($event)"
+            >
+            </lib-un-locode-lookup>
+            <mat-form-field>
+              <mat-label>Country</mat-label>
+              <input matInput formControlName="country" placeholder="Country" required>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Town/City</mat-label>
+              <input matInput formControlName="city" placeholder="City" required>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Postcode</mat-label>
+              <input matInput formControlName="postcode" placeholder="Postcode" required>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" class="button-row">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext type="submit" [disabled]="!companyDetailsForm.valid || !selectedUnLocode || !selectedCurrency">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Terms and Conditions">
+      <form fxLayout="column">
+        <div fxLayout="column">
+          <p>
+            It is important that you read and understand the terms and conditions before confirming acceptance.
+            Please click on the link below to read the Terms and Conditions.
+            By accepting the Terms and Conditions and clicking next the system will create a Company account in Odyssey.
+          </p>
+          <a
+            href="https://locussoftware.atlassian.net/wiki/spaces/ODYDOC/pages/410925/Universal+Terms+and+Conditions"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Terms and Conditions
+          </a>
+          <mat-checkbox [(ngModel)]="termsAndConditionsAccepted" name="termsAndConditionsCheckbox">I Accept the Terms and Conditions</mat-checkbox>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" class="button-row">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext [disabled]="!termsAndConditionsAccepted">Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step label="Done">
+      <form fxLayout="column">
+        <div fxLayout="row">
+          Click Register to complete your registration.
+        </div>
+        <div *ngIf="registrationSuccessMessage" class="success-message" fxLayout="row">
+          {{registrationSuccessMessage}}
+        </div>
+        <div *ngIf="registrationErrorMessage" class="error-message" fxLayout="row">
+          {{registrationErrorMessage}}
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" class="button-row">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="register()">Register</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

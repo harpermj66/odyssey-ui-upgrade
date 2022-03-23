@@ -1,0 +1,58 @@
+.page-container{
+  background-color: lightgray;
+  height: 100vh;
+}
+
+.stepper{
+  width: 60%;
+  min-height: 600px;
+}
+
+form {
+  height: 100%;
+}
+
+.button-row{
+  margin-top: auto;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-divider {
+  margin: 0 10px;
+}
+
+mat-step {
+  height: 500px;
+}
+
+lib-un-locode-lookup {
+  width: 100%;
+}
+
+lib-currency-lookup {
+  width: 100%;
+}
+
+success-message {
+  color: green;
+}
+
+error-message {
+  color: crimson;
+}
+
+::ng-deep .mat-horizontal-stepper-content{
+  height: 100%;
+}
+
+::ng-deep .mat-horizontal-content-container{
+  height: 480px !important;
+  padding: 24px !important;
+}
+
+::ng-deep .mat-horizontal-stepper-header{
+  pointer-events: none !important;
+}

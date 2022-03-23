@@ -1,0 +1,13 @@
+<ng-container [ngSwitch]="matcher.type">
+  <lib-search-rule-editor-date-matcher *ngSwitchCase="date"
+                                       [matcher]="getDateMatcher(matcher)" [filterItem]="filterItem" [disabled]="disabled" [readonly]="readonly"></lib-search-rule-editor-date-matcher>
+  <lib-search-rule-editor-number-matcher *ngSwitchCase="number"
+                                         [matcher]="getNumberMatcher(matcher)" [filterItem]="filterItem" [disabled]="disabled" [readonly]="readonly"></lib-search-rule-editor-number-matcher>
+  <lib-search-rule-editor-string-matcher *ngSwitchCase="string" [resourceType]="resourceType"
+                                         [matcher]="getStringMatcher(matcher)"
+                                         [filterItem]="filterItem" [disabled]="disabled"
+                                         [readonly]="readonly"></lib-search-rule-editor-string-matcher>
+</ng-container>
+
+
+

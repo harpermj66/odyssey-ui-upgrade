@@ -1,0 +1,138 @@
+@import "~@angular/material/theming";
+
+@mixin sidebar-menu-container($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .menuArea {
+    //top: 0px;
+    border: none;
+    background-color: mat-color($primary, 900);
+    color: mat-color($primary, 200) !important;
+    transition: all 500ms;
+    //padding-top: 108px;
+    //overflow-y: hidden;
+    //height: calc(100% - 108px);
+    //border-top: solid 1px mat-color($accent, 200);
+
+
+    .iconClass {
+      font-size: 22px;
+      //padding-left: 22px;
+      color: mat-color($primary, 200) !important;
+      //padding-bottom: 4px;
+    }
+
+    mat-panel-title {
+      color: mat-color($primary, 200) !important;
+    }
+
+    mat-expansion-panel {
+      background-color: transparent !important;
+      color: mat-color($primary, 200) !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    .mat-expansion-panel-body{
+      padding: 0 !important;
+    }
+  }
+
+  .menu-button {
+    width: 100%;
+    padding-left: 25px !important;
+  }
+
+  .menuContainer {
+    overflow-y: hidden;
+  }
+
+  .logo-container {
+    min-width: 72px;
+    min-height: 72px;
+  }
+
+  .menu-item-container {
+    height: 100%;
+    padding-top: 10px;
+    position: relative;
+    width: 100%;
+  }
+
+  .menu-item-label {
+    transition: all 500ms;
+  }
+
+  .bottom-menu-items {
+    bottom: 20px;
+    width: 100%;
+    position: absolute;
+  }
+
+  .signOut {
+    color: mat-color($primary, 200) !important;
+    padding-top: 2px;
+    padding-left: 56px;
+
+    mat-label {
+      font-size: small;
+    }
+
+    mat-icon {
+      transform: rotate(180deg);
+      color: mat-color($primary, 200) !important;
+    }
+  }
+
+  .signIn {
+    color: mat-color($primary, 200) !important;
+    padding-top: 2px;
+    //padding-left: 6px;
+
+    mat-label {
+      font-size: small;
+    }
+
+    mat-icon {
+      color: mat-color($primary, 200) !important;
+    }
+  }
+
+  .help {
+    color: mat-color($primary, 200) !important;
+    padding-top: 2px;
+    //padding-left: 6px;
+
+    mat-label {
+      font-size: small;
+    }
+
+  }
+
+  .openDrawer {
+    font-size: 20px;
+    color: mat-color($primary, 200) !important;
+    padding-bottom: 4px
+  }
+
+  .profile {
+    height: 40px;
+    color: mat-color($primary, 200) !important;
+    padding-top: 2px;
+    //padding-left: 6px;
+
+    .avatar {
+      overflow: hidden;
+      clip-path: circle();
+      background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+}

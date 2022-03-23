@@ -1,0 +1,73 @@
+<div class="repair-comment-list">
+  <mat-card-header>
+    <mat-card-title>Remarks</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-toolbar>
+    <mat-form-field>
+      <mat-icon matPrefix>search</mat-icon>
+      <input type="text"
+             [(ngModel)]="filter"
+             (keyup)="onFilterChange()"
+             placeholder="Search"
+             matInput>
+      <button matSuffix mat-icon-button (click)="filter = ''; onFilterChange()"><mat-icon>close</mat-icon></button>
+    </mat-form-field>
+  </mat-toolbar>
+
+  <div #scrollPanel
+       [ngClass]="{'comment-wrapper-page': !isMainDialog, 'comment-wrapper-dialog': !!isMainDialog}"
+       fxFlexFill fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="15px">
+
+    <mat-card class="comment-card" *ngIf="newComment && !readonly">
+      <mat-card-header>
+        <mat-card-title>Add Remark</mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="comment-content">
+        <mat-form-field class="comment-content">
+          <textarea class="comment-content"
+                    matInput
+                    [disabled]="disabled"
+                    [readonly]="readonly"
+                    [(ngModel)]="newComment.comment"></textarea>
+        </mat-form-field>
+      </mat-card-content>
+
+      <mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <button mat-raised-button
+                color="primary"
+                (click)="saveNewComment()"
+                [disabled]="!canSave">Save</button>
+        <mat-spinner *ngIf="saving" [diameter]="30"></mat-spinner>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card class="comment-card" *ngFor="let comment of comments; trackBy: trackById">
+      <mat-card-header>
+        <mat-card-title>{{comment.user ? comment.user.firstName + ' ' + comment.user.lastName : ''}}</mat-card-title>
+        <mat-card-subtitle>{{comment.created | date}}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="comment-text">
+        <p class="comment-content">{{comment.comment}}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-spinner [diameter]="30" *ngIf="infiniteScroll.loading"></mat-spinner>
+
+  </div>
+
+  <mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+    <button *ngIf="isMainDialog"
+            mat-raised-button
+            (click)="onClose()"
+            [disabled]="saving">Close</button>
+  </mat-card-actions>
+</div>

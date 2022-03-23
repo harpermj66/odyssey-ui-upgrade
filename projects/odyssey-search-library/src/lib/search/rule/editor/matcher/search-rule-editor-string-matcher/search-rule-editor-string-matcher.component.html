@@ -1,0 +1,70 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+  <mat-form-field *ngIf="!readonly; else readonlyOperator">
+    <mat-label>Operator</mat-label>
+    <mat-select [(value)]="matcher.operator"
+                [disabled]="disabled">
+      <mat-option *ngFor="let operator of operators"
+                  [value]="operator">{{operator | removeUnderscore | titlecase}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-template #readonlyOperator>
+    <mat-form-field>
+      <mat-label>Matches</mat-label>
+      <input matInput
+             [ngModel]="matcher.operator | removeUnderscore | titlecase"
+             [readonly]="readonly"
+             [disabled]="disabled">
+    </mat-form-field>
+  </ng-template>
+
+  <div *ngIf="!hasLookup(); else lookup" fxLayout="column" fxLayoutAlign="start start">
+    <mat-form-field>
+      <mat-label>Value(s)</mat-label>
+      <input matInput
+             (blur)="onBlur(chipInput)"
+             [(ngModel)]="chipInput"
+             [disabled]="disabled"
+             [readonly]="readonly"
+             (keyup.enter)="addValue(chipInput)">
+
+      <button *ngIf="!readonly"
+              matSuffix
+              mat-icon-button
+              matTooltip="Add Value"
+              [disabled]="disabled">
+        <mat-icon>add</mat-icon>
+      </button>
+    </mat-form-field>
+
+
+    <mat-chip-list #chipList fxLayout="row wrap" fxLayoutAlign="start start">
+      <mat-chip *ngFor="let value of matcher.values; let i = index" (removed)="removeValue(value, i)"
+
+                fxLayout="row"
+                fxLayoutAlign="start center">
+        <span class="chip-content" [matTooltip]="value">{{value}}</span>
+        <span class="fill-horizontal" [matTooltip]="value"></span>
+        <mat-icon *ngIf="!readonly && !disabled"
+                  matChipRemove
+                  class="remove-icon"
+                  matTooltip="Remove Value">
+          cancel
+        </mat-icon>
+      </mat-chip>
+    </mat-chip-list>
+  </div>
+
+  <ng-template #lookup>
+    <lib-lookup-autocomplete [(value)]="matcher.values[0]"
+                             label="Value"
+                             [field]="filterItem.fieldName"
+                             [required]="false"
+                             [resourceType]="resourceType"
+                             (valueMappedChange)="onLookupSelect($event)"></lib-lookup-autocomplete>
+  </ng-template>
+</div>
+
+
+
+

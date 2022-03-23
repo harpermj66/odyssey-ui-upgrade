@@ -1,0 +1,72 @@
+<mat-card-header>
+  <mat-card-title>Add Attachment</mat-card-title>
+</mat-card-header>
+
+<mat-card-content fxLayout="column" fxLayoutAlign="start start">
+
+  <button mat-raised-button
+          class="file-button"
+          (click)="fileInput.click()">Select Files</button>
+  <input #fileInput
+         hidden
+         type="file"
+         multiple
+         (change)="onFilesSelected(fileInput.files)">
+
+  <div fxFill fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+    <div class="file-upload" *ngFor="let attachment of attachments">
+
+      <mat-divider></mat-divider>
+
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-card-subtitle>{{attachment.originalFileName}}</mat-card-subtitle>
+      </div>
+
+      <mat-form-field class="upload-field">
+        <label>Name</label>
+        <input required
+               matInput
+               [ngModel]="attachment.name">
+        <mat-hint>{{validationIssues[attachment.file.name]?.name}}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="upload-field">
+        <label>Description</label>
+        <textarea required
+                  matInput
+                  [(ngModel)]="attachment.description"></textarea>
+        <mat-hint>{{validationIssues[attachment.file.name]?.description}}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="upload-field">
+        <label>Keywords</label>
+        <input required
+               matInput
+               [ngModel]="attachment.keywords">
+        <mat-hint>{{validationIssues[attachment.file.name]?.keywords}}</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="upload-field">
+        <label>File Name</label>
+        <input required
+               matInput
+               [ngModel]="attachment.fileName | removeExtension"
+               (ngModelChange)="onSetFileName(attachment, $event)">
+        <span *ngIf="attachment.extension" matSuffix>{{attachment.extension}}</span>
+        <mat-hint>{{validationIssues[attachment.file.name]?.fileName}}</mat-hint>
+      </mat-form-field>
+    </div>
+
+  </div>
+
+</mat-card-content>
+
+<mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+  <button mat-raised-button
+          color="primary"
+          [disabled]="!isValid()"
+          (click)="onConfirmClick()">Attach</button>
+  <button mat-raised-button
+          (click)="onCancelClick()">Cancel</button>
+</mat-card-actions>

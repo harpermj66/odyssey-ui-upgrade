@@ -1,0 +1,91 @@
+<mat-sidenav-container
+  fxFill
+>
+  <mat-sidenav [opened]="true" mode="side" class="sideNav" [style.width.px]="leftNavWidth" #leftDrawer="matSidenav"  >
+
+<!--    &lt;!&ndash; testing git &ndash;&gt;-->
+<!--    <lib-sidebar-wide-->
+<!--      *ngIf="leftSideBarState === 'maximized'"-->
+<!--      [menu]="sideBarWideMenu"-->
+<!--      (menuChanged)="onMenuChanged($event)"-->
+<!--    >-->
+<!--    </lib-sidebar-wide>-->
+
+    <div fxLayout="row" class="sideBarBackground">
+      <lib-sidebar-icon
+        *ngIf="leftSideBarState === 'minimized'"
+        [menu]="sideBarWideMenu"
+        [sidebarMode]="closedSidebarMode"
+        [showExpandIcon] = false
+        (menuChanged)="onSidebarMenuChanged($event)"
+        (signedOut)="onSignOut()"
+        style="width: 72px"
+      >
+      </lib-sidebar-icon>
+      <div fxFlex="column" style="width: 100%">
+        <div class="logoHeader" >
+          <img src="assets/{{themeService.appLogo}}"
+               [ngClass]="themeService.getCurrentCarrier()"
+               (click)="onHome()"
+          >
+        </div>
+        <div class="expandedMenu" [ngSwitch]="expandedMenu" style="width: 100%">
+          <app-search-menu *ngSwitchCase="'Dynamic Search'" [menus]="sideBarWideMenu[0]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Dashboards'" [menus]="sideBarWideMenu[1]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Notifications'" [menus]="sideBarWideMenu[2]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Schedules'" [menus]="sideBarWideMenu[3]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Quotations'" [menus]="sideBarWideMenu[4]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Service contracts'" [menus]="sideBarWideMenu[5]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Bookings'" [menus]="sideBarWideMenu[6]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Equipment'" [menus]="sideBarWideMenu[7]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Documents'" [menus]="sideBarWideMenu[8]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Finance'" [menus]="sideBarWideMenu[9]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'CRM'" [menus]="sideBarWideMenu[10]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Data'" [menus]="sideBarWideMenu[11]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+          <app-search-menu *ngSwitchCase="'Administration'" [menus]="sideBarWideMenu[12]" (menuChanged)="onMenuChanged($event)"></app-search-menu>
+        </div>
+      </div>
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav [opened]="rightViewOpened" mode="over" position="end" (closed)="onRightDrawerClose()" >
+    <app-slide-out-right-view [rightViewEvent]="rightViewEvent" [appTitle]="viewTitle" ></app-slide-out-right-view>
+  </mat-sidenav>
+
+  <mat-sidenav-content fxLayout="row" fxFlex="100%" fxLayoutGap="0px">
+
+    <div fxFlex="100%" [ngStyle]="{'display': legacyView ? 'none' : 'block'}" >
+      <router-outlet></router-outlet>
+    </div>
+
+    <div fxFlex="100%" [ngStyle]="{'display': legacyView ? 'block' : 'none'}" >
+      <app-odyssey-legacy-page >
+
+      </app-odyssey-legacy-page>
+    </div>
+<!--    <div class="drawerContainer" fxLayout="row" fxLayoutAlign="center">-->
+<!--      <mat-drawer-container style="width: 100%" autosize>-->
+<!--        <mat-drawer mode="side" opened >-->
+
+<!--        </mat-drawer>-->
+<!--        <mat-drawer-content>-->
+
+<!--          <div fxLayout="column" fxLayoutAlign="center center" fxFlexFill>-->
+
+<!--            -->
+
+<!--          </div>-->
+
+<!--        </mat-drawer-content>-->
+<!--      </mat-drawer-container>-->
+<!--    </div>-->
+
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+
+
+

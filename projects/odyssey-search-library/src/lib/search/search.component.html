@@ -1,0 +1,21 @@
+<div fxFlex="100%" fxLayoutAlign="start">
+  <div fxLayout="column" fxLayoutGap="6px" class="searchContainer" fxFlex="96%" >
+
+    <nav mat-tab-nav-bar >
+
+      <a mat-tab-link *ngFor="let link of links"
+         (click)="onActivateLink(link)"
+         [active]="activeLink == link"> {{link}} </a>
+
+      <span class="fill-remaining-space"></span>
+
+    </nav>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+
+
+
+

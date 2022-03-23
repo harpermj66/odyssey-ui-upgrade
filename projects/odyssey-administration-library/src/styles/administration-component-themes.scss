@@ -1,0 +1,5 @@
+@import "~projects/odyssey-administration-library/src/lib/users/user-list/user-list.component";
+
+@mixin administration-component-themes($theme) {
+  @include user-list($theme);
+}

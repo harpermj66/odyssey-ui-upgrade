@@ -1,0 +1,39 @@
+<table mat-table *ngIf="data" [dataSource]="data" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The order is defined in columnsToDisplay list -->
+
+    <!-- Container Number Column -->
+    <ng-container matColumnDef="containerNumber">
+        <th mat-header-cell *matHeaderCellDef> Container No.</th>
+        <td mat-cell *matCellDef="let element"> {{element.containerNumber}} </td>
+    </ng-container>
+
+    <!-- Date Column -->
+    <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef> Date</th>
+        <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+    </ng-container>
+
+    <!-- Event Type Column -->
+    <ng-container matColumnDef="eventType">
+        <th mat-header-cell *matHeaderCellDef> Event Type</th>
+        <td mat-cell *matCellDef="let element"> {{element.eventType}} </td>
+    </ng-container>
+
+    <!-- Location Column -->
+    <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef> Location</th>
+        <td mat-cell *matCellDef="let element"> {{element.location}} </td>
+    </ng-container>
+
+    <!-- Voyage Column -->
+    <ng-container matColumnDef="voyage">
+        <th mat-header-cell *matHeaderCellDef> Voyage</th>
+        <td mat-cell
+            *matCellDef="let element"> {{element.voyage}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+</table>

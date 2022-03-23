@@ -1,0 +1,77 @@
+
+@import "~@angular/material/theming";
+
+@mixin schedule-summary($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+
+  .outerSummaryDiv {
+    //border-left: solid 1px mat-color($primary, 100) !important;
+    //border-right: solid 1px mat-color($primary, 100) !important;
+    //border-bottom: solid 1px mat-color($primary, 100) !important;
+    border: none !important;
+    background-color: white !important;
+
+    .solutionTitle {
+      font-size: 16px;
+      height: 30px;
+      //background-color: mat-color($primary, 100) !important;
+      background-color: white !important;
+      color: black;
+      padding-left: 20px;
+      padding-bottom: 10px;
+    }
+
+    .departsArrives {
+      height: 26px;
+      //background-color: mat-color($primary, 100) !important;
+      background-color: transparent;
+      padding-top: 2px;
+    }
+
+    .summaryContainer {
+      color: black;
+      width: 100%;
+      border-top: solid 1px mat-color($accent, 200) !important;
+      background-color: white;
+
+      .departsArrivesInfo {
+        padding-top: 2px;
+
+        .percent100 {
+          width: 100%;
+        }
+
+        .percent100Bold {
+          width: 100%;
+          font-weight: bold;
+        }
+      }
+
+      .summaryDuration {
+        padding-top: 2px;
+
+        .percent100 {
+          width: 100%;
+        }
+
+        .legDimensions {
+          width: 200px;
+          padding-bottom: 6px;
+        }
+
+        .multiPorts {
+          width: 100%;
+          padding-top: 0px;
+        }
+      }
+
+      .showHide {
+        padding-top: 4px;
+      }
+    }
+  }
+
+}

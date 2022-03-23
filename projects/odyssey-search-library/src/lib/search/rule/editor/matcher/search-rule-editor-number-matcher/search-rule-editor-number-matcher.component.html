@@ -1,0 +1,87 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+  <mat-form-field *ngIf="!readonly; else readonlyOperator">
+    <mat-label>Matches</mat-label>
+    <mat-select [(value)]="matcher.operator"
+                (selectionChange)="onOperatorChange()"
+                [disabled]="disabled">
+      <mat-option *ngFor="let operator of operators"
+                  [value]="operator">{{operator | removeUnderscore | titlecase}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-template #readonlyOperator>
+    <mat-form-field>
+      <mat-label>Matches</mat-label>
+      <input matInput
+             [ngModel]="matcher.operator | removeUnderscore | titlecase"
+             [readonly]="readonly"
+             [disabled]="disabled">
+    </mat-form-field>
+  </ng-template>
+
+  <ng-container *ngIf="matcher.operator !== operatorRange">
+
+    <div *ngIf="!hasLookup(); else lookup" fxLayout="column" fxLayoutAlign="start start">
+      <mat-form-field>
+        <mat-label *ngIf="operatorNotRange(matcher.operator); else isRange">Value</mat-label>
+        <ng-template #isRange>
+          <mat-label>From</mat-label>
+        </ng-template>
+
+        <input matInput
+               type="number"
+               (blur)="onBlur(chipInput)"
+               [(ngModel)]="chipInput"
+               [disabled]="disabled"
+               [readonly]="readonly"
+               (keyup.enter)="addValue(chipInput)">
+
+        <!-- button on this view will just unfocus the input which will trigger the add -->
+        <button *ngIf="!readonly"
+                matSuffix
+                mat-icon-button
+                [disabled]="disabled">
+          <mat-icon>add</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <mat-chip-list #chipList fxLayout="row wrap" fxLayoutAlign="start start">
+        <mat-chip *ngFor="let value of matcher.values; let i = index" (removed)="removeValue(value, i)"
+
+                  fxLayout="row"
+                  fxLayoutAlign="start center">
+          <span class="chip-content" [matTooltip]="value ? value.toString() : ''">{{value}}</span>
+          <span class="fill-horizontal" [matTooltip]="value ? value.toString() : ''"></span>
+          <mat-icon *ngIf="!readonly && !disabled"
+                    matChipRemove
+                    class="remove-icon"
+                    matTooltip="Remove Value">
+            cancel
+          </mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+
+    <ng-template #lookup>
+      <lib-lookup-autocomplete [value]="matcher.values[0] ? matcher.values[0].toString() : ''"
+                               label="Value"
+                               [field]="filterItem.fieldName"
+                               [required]="false"
+                               [resourceType]="resourceType"
+                               (valueChange)="onValueChange($event)"
+                               (valueMappedChange)="onLookupSelect($event)"></lib-lookup-autocomplete>
+    </ng-template>
+
+  </ng-container>
+
+  <mat-form-field *ngIf="matcher.operator === operatorRange">
+    <mat-label>To</mat-label>
+    <input matInput
+           type="number"
+           [(ngModel)]="matcher.values[1]"
+           [readonly]="readonly"
+           [disabled]="disabled">
+  </mat-form-field>
+</div>
+
+

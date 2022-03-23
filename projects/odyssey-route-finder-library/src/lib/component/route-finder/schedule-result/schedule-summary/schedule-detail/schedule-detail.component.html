@@ -1,0 +1,45 @@
+<div class="detailContainer" fxLayout="row" fxLayoutGap="10px">
+  <div fxFlex="100%">
+    <div class="detailRenderer" *ngFor="let d of detailRenderers" fxLayout="row" fxLayoutAlign="space-between center">
+      <div class="legStartEnd" style="width: 100%" *ngIf="!d.isLayover" fxLayout="row" fxLayoutGap="6px" fxLayoutAlign="space-between center">
+        <div>
+          <div *ngFor="let rh of d.details" >
+            <div fxLayoutGap="6px" fxLayout="row" fxFlex="50%" fxLayoutAlign="start center" >
+              <mat-label class="bold" fxFlex="110px" >{{rh.time | date: 'EEE dd/MM/yy'}}</mat-label>
+              <mat-label class="bold" fxFlex="90px" >{{rh.time | date: 'hh:mm'}}</mat-label>
+              <div fxLayout="column" style="width: 450px">
+                <mat-label style="width: 100%">{{rh.details}}</mat-label>
+                <mat-label style="width: 100%">{{rh.itineraryInfo}}</mat-label>
+              </div>
+            </div>
+            <div fxLayout="column" fxFlex="50%" fxLayoutAlign="center start" >
+              <mat-label style="width: 100%">{{rh.infoCol2}}</mat-label>
+              <mat-label>{{rh.detailsCol2}}</mat-label>
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <div fxLayoutAlign="center center">
+            <img src="assets/routes/horConnect.png" >
+          </div>
+          <div class="horDuration" style="width: 70px" fxLayoutAlign="center center" >
+            <mat-label>{{d.duration}}</mat-label>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="d.isLayover" class="layoverSurround"  fxLayout="row" fxFlexAlign="center center">
+        <div class="layoverItinerary" fxFlexAlign="start center" fxLayout="row" fxLayoutGap="10px">
+          <div class="itineraryInfo" >
+            <mat-label>{{d.detail.itineraryInfo}}</mat-label>
+          </div>
+          <div>
+            <img class="horDots" src="assets/routes/horDots.png" >
+          </div>
+          <div class="layoverDuration" fxLayoutAlign="center center" >
+            <mat-label>{{d.detail.duration}}</mat-label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

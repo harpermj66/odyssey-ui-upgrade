@@ -1,0 +1,95 @@
+<div id="permission-group-creation-page-container" class="page-container" fxLayout="row" fxLayoutAlign="center start">
+
+    <form id="permission-group-creation-form" [formGroup]="permissionGroupCreationForm" (ngSubmit)="submitForm()" fxFlex="70%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutGap="30px">
+        <mat-card id="permission-group-details-card">
+            <mat-card-header>
+                <mat-card-title id="permission-group-details-card-title">Permission Group</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div
+                        fxLayout.gt-md="row"
+                        fxLayout.lt-md="column"
+                        fxLayoutAlign.gt-md="start end"
+                        fxLayoutAlign.lt-md="start start"
+                        fxLayoutGap="10px"
+                >
+                    <mat-form-field>
+                        <mat-label>Name</mat-label>
+                        <input id="permission-group-creation-form-name-input" matInput formControlName="displayName" placeholder="Name" required>
+                        <mat-error *ngIf="permissionGroupCreationForm.controls.displayName.invalid">Name may only contain alphabetical characters.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Description</mat-label>
+                        <input id="permission-group-creation-form-first-description-input" matInput formControlName="description" placeholder="Description" required>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title id="roles-card-title">Roles</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div
+                        fxLayout.gt-md="column"
+                        fxLayout.lt-md="column"
+                        fxLayoutAlign.gt-md="start start"
+                        fxLayoutAlign.lt-md="start start"
+                        fxLayoutGap="10px"
+                >
+                    <div *ngFor="let role of roles; let i = index" >
+                        <mat-checkbox
+                                [checked]="role.checked"
+                                id="permission-group-creation-form-roles-{{role.name}}"
+                                (change)="handleRoleSelection($event, role)"
+                        >
+                            {{role.name}}
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Users</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div
+                        fxLayout.gt-md="column"
+                        fxLayout.lt-md="column"
+                        fxLayoutAlign.gt-md="start start"
+                        fxLayoutAlign.lt-md="start start"
+                        fxLayoutGap="10px"
+                >
+                    <div *ngFor="let user of users; let i = index" >
+                        <mat-checkbox
+                                [checked]="user.checked"
+                                id="permission-group-creation-form-roles-{{user.firstName}}-{{i}}"
+                                (change)="handleUserSelection($event, user)"
+                        >
+                            {{user.firstName}} {{user.lastName}}
+                        </mat-checkbox>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button type="button" (click)="openDialog()">Cancel</button>
+            <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                [disabled]="!permissionGroupCreationForm.valid || selectedRoles.length < 1 || awaitingResponse"
+            >
+                {{permissionGroupToEdit ? 'Update' : 'Create'}}
+                <mat-icon *ngIf="awaitingResponse">
+                    <mat-spinner color="accent" diameter="20"></mat-spinner>
+                </mat-icon>
+            </button>
+        </div>
+    </form>
+
+</div>

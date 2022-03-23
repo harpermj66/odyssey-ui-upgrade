@@ -1,0 +1,45 @@
+<div>
+
+  <mat-progress-bar mode="indeterminate" *ngIf="loadingList"></mat-progress-bar>
+
+  <lib-data-grid-grouped-sums-template1
+    *ngIf="searchConfigurationService.advancedListType === 'advancedGroupType1'"
+    [displayColumns]="displayColumns"
+    [dataGridColumnMaps]="columnMappings"
+    [dataSource]="dataSource"
+    [keyField]="keyField"
+    [multiSelect]="true"
+
+    (columnOrderingChanged)="onColumnOrderingsChange($event)"
+  >
+  </lib-data-grid-grouped-sums-template1>
+
+  <div fxLayoutGap="0px" fxLayout="column"
+       *ngIf="(searchConfigurationService.advancedListType === 'basic' || searchConfigurationService.advancedListType === 'preview')
+       && (searchConfigurationService.savedAdvancedSearchNames.length != 0 || searchConfigurationService.advancedListType === 'preview')"
+  >
+    <lib-standard-data-grid-template
+      [displayColumns]="displayColumns"
+      [dataGridColumnMaps]="columnMappings"
+      [dataSource]="dataSource"
+      [keyField]="keyField"
+      [multiSelect]="true"
+      [headerMenus]="headerMenus"
+      [rowMenus]="rowMenus"
+      [additionalOffset]="searchConfigurationService.additionalOffset"
+    >
+    </lib-standard-data-grid-template>
+  </div>
+
+  <lib-data-grid-navigator
+          *ngIf="((searchConfigurationService.advancedListType === 'basic' && searchConfigurationService.searchPageConfiguration.lastAdvancedSearchItems) || (searchConfigurationService.advancedListType === 'preview' && searchConfigurationService.searchPageConfiguration.tempAdvanceSearchItems))
+       && searchConfigurationService.savedAdvancedSearchNames.length != 0"
+          [totalRecords]="resultModel.totalRecords"
+          [page]="searchConfigurationService.advancedListType === 'preview' ? searchConfigurationService.searchPageConfiguration.tempAdvanceSearchItems.page : searchConfigurationService.searchPageConfiguration.lastAdvancedSearchItems.page"
+          [size]="searchConfigurationService.advancedListType === 'preview' ? searchConfigurationService.searchPageConfiguration.tempAdvanceSearchItems.size : searchConfigurationService.searchPageConfiguration.lastAdvancedSearchItems.size"
+          [navigatorEnabled]="searchConfigurationService.advancedListType !== 'preview'"
+          (pageChanged)="onPageChange($event)"
+  >
+  </lib-data-grid-navigator>
+
+</div>

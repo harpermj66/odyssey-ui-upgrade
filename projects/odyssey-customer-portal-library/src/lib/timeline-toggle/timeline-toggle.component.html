@@ -1,0 +1,3 @@
+<mat-button-toggle-group name="timelines" aria-label="Timelines" (change)="onTimelineSelectionChange($event)">
+    <mat-button-toggle *ngFor="let timeline of timelines" [value]="timeline">{{timeline.containerNumber}}</mat-button-toggle>
+</mat-button-toggle-group>

@@ -1,0 +1,43 @@
+<div class="wideMenuArea mat-elevation-z6">
+  <div *ngIf="menuLoaded">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let m of menu"
+                           class="mat-elevation-z0" hideToggle ex>
+        <mat-expansion-panel-header expandedHeight="40px" collapsedHeight="40px">
+          <mat-toolbar fxLayoutGap="2px" (click)="onHeaderClicked(m)">
+            <button mat-icon-button>
+              <mat-icon matTooltip="{{m.groupTitle}}">{{m.groupIcon}}</mat-icon>
+            </button>
+            <mat-label class="groupTitle">{{m.groupTitle}}</mat-label>
+          </mat-toolbar>
+        </mat-expansion-panel-header>
+
+        <mat-list *ngIf="m.menus.length > 0">
+          <div *ngFor="let sm of m.menus " style="padding-left: 0px">
+
+            <div *ngIf="sm.title !== 'div'">
+              <mat-list-item *ngIf="sm.menus.length === 0 && !sm.menuGroup" (click)="onMenuChange(sm)" [matTooltip]="sm.title">
+                {{sm.title | shortentext: 26}}
+              </mat-list-item>
+            </div>
+
+            <span *ngIf="sm.menus.length > 0">
+                <mat-list-item [matMenuTriggerFor]="ssMenu">
+                  <span style="order: 1;">{{sm.title}}</span>
+                  <div style="order: 2; flex-grow: 10"></div>
+                  <mat-icon mat-list-icon style="order: 3;">arrow_right</mat-icon>
+                </mat-list-item>
+                <mat-menu #ssMenu class="wider-mat-menu" [overlapTrigger]="false">
+                  <span *ngFor="let ssm of sm.menus">
+                      <button mat-menu-item color="primary" (click)="onMenuChange(ssm)">{{ssm.title}}</button>
+                  </span>
+                </mat-menu>
+              </span>
+
+          </div>
+        </mat-list>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

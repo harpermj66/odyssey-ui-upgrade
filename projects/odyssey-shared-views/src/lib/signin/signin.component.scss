@@ -1,0 +1,119 @@
+@import "../../../../../node_modules/@angular/material/theming";
+
+@mixin signIn-page($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .loginContainer {
+    background-color: mat-color($accent, 200);
+    width: 400px;
+  }
+
+  .locusLogo {
+    position: absolute;
+    top: 0;
+    padding: 20px;
+  }
+
+  .imageContainer {
+    height: 120px;
+    width: 340px !important;
+    margin-left: 15px !important;
+    padding: 0px !important;
+    background-color: mat-contrast($primary, 700) !important;
+  }
+
+  .mat-card {
+    color: mat-color($accent, 150)
+  }
+
+  .signInImage {
+    padding-left: 0px;
+    padding-right: 15px;
+    margin-left: -1px;
+  }
+
+  .tandcLink {
+    color: mat-color($accent, 150);
+  }
+
+  .inputClass:focus {
+    outline: none !important;
+    border: none;
+  }
+
+  .inputClass::selection {
+    outline: none !important;
+    border: none;
+  }
+
+  .errorDiv {
+    height: 30px;
+    padding-left: 10px;
+  }
+
+  .cardContent {
+    font-size: 14px;
+    padding-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 100%;
+  }
+
+  .cardHeader {
+    height: 40px;
+  }
+
+  .tacCard {
+    width: 540px;
+  }
+
+  .tacIcon {
+    font-size: 12px;
+    padding-top: 4px;
+  }
+
+  .mat-card-actions.cardActionStyle {
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-bottom: 10px !important;
+  }
+
+  .errorLbl {
+    color: mat-color($warn, 700);
+    padding-top: 7px
+  }
+
+  .locusImage {
+    margin-top: -6px;
+    margin-right: -10px;
+    height: 30px;
+  }
+
+  .MARFRET {
+    height: 80px;
+  }
+
+  .NCL {
+    height: 80px;
+    margin-left: -20px;
+  }
+
+  .DAL {
+    height: 40px;
+    padding-bottom: 10px;
+  }
+
+  .LOCUS {
+    height: 0px;
+  }
+
+  .TRANSMAR {
+    padding-top: 10px;
+    height: 52px;
+  }
+
+}

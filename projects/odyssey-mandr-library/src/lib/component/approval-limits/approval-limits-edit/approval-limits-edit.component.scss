@@ -1,0 +1,81 @@
+.approval-limits-edit {
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+
+  lib-content-wrapper {
+    max-height: 100%;
+    width: 100%;
+    max-width: 100%;
+    overflow: auto;
+  }
+
+  .spinner-wrapper, .mat-spinner {
+    height: 100%;
+    width: 100%;
+  }
+
+  .edit-content-page {
+    max-height: calc(100% - 100px);
+    width: 100%;
+    overflow: auto;
+  }
+
+  .edit-content-dialog {
+    max-height: calc(90vh - 140px);
+    max-width: 90vw;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .edit-field {
+    width: 300px;
+    max-width: 100%;
+  }
+
+  lib-currency-lookup, lib-container-location-lookup {
+    width: 100%;
+  }
+
+  .section {
+    width: 100%;
+  }
+
+  .section-content {
+    width: 100%;
+  }
+
+  .email-chip {
+
+    width: 100%;
+    max-width: 100%;
+
+    overflow: hidden;
+
+    .fill-horizontal {
+      flex-direction: row;
+      flex: 1 1 auto;
+    }
+
+    .email-chip-content {
+      width: 90%;
+      max-width: 90%;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+      text-align: start;
+      vertical-align: middle;
+    }
+
+    padding: 5px;
+    border-radius: 5px;
+  }
+
+  .email-remove-icon {
+    vertical-align: middle;
+  }
+
+}

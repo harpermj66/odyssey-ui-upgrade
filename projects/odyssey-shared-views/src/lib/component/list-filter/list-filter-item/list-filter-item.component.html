@@ -1,0 +1,36 @@
+<div fxLayout="row">
+  <div class="nameClass" *ngIf="filterItem != null">
+    <mat-label id="labelValue">{{filterItem.displayName}}</mat-label>
+  </div>
+  <div class="valueClass" *ngIf="filterItem != null && !filterItem.editing" fxLayout="row" fxLayoutGap="4px">
+    <mat-label id="valueLabel" *ngIf="!editingFilter"
+               class="filter-item-min-input-width"
+               (click)="onFilterClick()"
+    >{{filterItem.fieldValue}}
+    </mat-label>
+    <ng-container *ngIf="editingFilter">
+      <input *ngIf="!hasLookup(); else lookup" matInput type="text"
+             class="filter-item-min-input-width"
+             id="inputField"
+             appAutofocus
+             [value]="filterItem.fieldValue"
+             (mouseout)="editingFilter=false"
+             (keyup.enter)="onFilterEditComplete($event)"
+             #inputElement
+      >
+      <ng-template #lookup>
+        <lib-lookup-autocomplete [(value)]="filterItem!!.fieldValue"
+                                 [field]="filterItem!!.fieldName"
+                                 [required]="true"
+                                 [resourceType]="resourceType!!"
+                                 [filterItems]="filterValues"
+                                 inputClass="lookup-autocomplete-input filter-item-min-input-width"
+                                 (valueMappedChange)="onLookupSelect($event)"
+                                 (keyup.enter)="onLookupFilterEditComplete()">
+        </lib-lookup-autocomplete>
+      </ng-template>
+    </ng-container>
+
+    <mat-icon class="closeIcon" (click)="onCloseItem()">close</mat-icon>
+  </div>
+</div>

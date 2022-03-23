@@ -1,0 +1,127 @@
+<div fxFlex="900px" fxLayout="column" class="mat-elevation-z1" >
+    <mat-toolbar class="standaloneDataGridHeader">
+
+      <div fxLayout="row" fxLayoutGap="20px" style="padding-left: 8px">
+        <mat-icon class="userIcon" style="font-size: 34px">people</mat-icon>
+        <mat-label style="font-size: 20px; padding-top: 4px">{{viewStatus === 'add' ? 'Add User' : 'Update User' }}</mat-label>
+      </div>
+
+      <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step >
+      <form >
+        <ng-template matStepLabel>Personal</ng-template>
+        <div fxLayout="column"  >
+
+          <div fxLayout="row" fxLayoutGap="10px" >
+            <!--      <mat-label class="title">Basic information</mat-label>-->
+            <mat-form-field appearance="legacy" fxFlex="200px" >
+              <input matInput placeholder="Title" />
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutGap="10px" >
+            <mat-form-field appearance="legacy" fxFlex="200px">
+              <input matInput placeholder="First Name" />
+            </mat-form-field>
+            <mat-form-field  fxFlex="200px" >
+              <input matInput placeholder="Last Name" />
+            </mat-form-field>
+            <mat-form-field appearance="legacy" fxFlex="410px" >
+              <input matInput placeholder="Email" />
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutGap="10px" >
+            <mat-form-field fxFlex="200px" >
+              <input matInput placeholder="Job Title" />
+            </mat-form-field>
+            <mat-form-field fxFlex="200px">
+              <input matInput placeholder="Vessel" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayoutGap="10px">
+          <mat-form-field appearance="legacy" fxFlex="200px" >
+            <input matInput placeholder="Office Phone" />
+          </mat-form-field>
+          <mat-form-field appearance="legacy" fxFlex="200px">
+            <input matInput placeholder="Mobile Phone" />
+          </mat-form-field>
+          <mat-form-field appearance="legacy" fxFlex="200px">
+            <input matInput placeholder="Office Fax" />
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Preferences</ng-template>
+      <div fxLayout="row" fxLayoutGap="10px" >
+        <mat-slide-toggle>Enable user access to analytics tools.</mat-slide-toggle>
+      </div>
+      <div fxLayout="column" fxLayoutGap="4px">
+        <mat-label class="title">Contact Details</mat-label>
+
+        <div style="height: 0px"></div>
+        <mat-label class="title">Preferences</mat-label>
+        <mat-slide-toggle>Enable email alerts.</mat-slide-toggle>
+        <mat-slide-toggle>Enable search history.</mat-slide-toggle>
+        <mat-form-field appearance="legacy"  class="formField300">
+          <mat-label i18n>Default Language</mat-label>
+          <mat-select>
+            <mat-option value="english">English</mat-option>
+            <mat-option value="french">French</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="legacy"  class="formField300">
+          <mat-label i18n>Time Zone</mat-label>
+          <mat-select>
+            <mat-option value="english">-12:00 - Etc/GMT+12</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Group assignment</ng-template>
+      <p>You are now done.</p>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Passwords</ng-template>
+      <div fxLayout="row" fxLayoutGap="10px" >
+        <mat-form-field appearance="legacy" fxFlex="200px">
+          <input matInput placeholder="Password" />
+        </mat-form-field>
+        <mat-form-field appearance="legacy" fxFlex="200px" >
+          <input matInput placeholder="Repeat Password" />
+        </mat-form-field>
+        <mat-form-field appearance="legacy" fxFlex="200px" >
+          <input matInput placeholder="Job Title" />
+        </mat-form-field>
+        <mat-form-field appearance="legacy" fxFlex="200px">
+          <input matInput placeholder="Vessel" />
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+
+<!--      <mat-card-actions class="matCardActions" >-->
+<!--        <button class="small" mat-raised-button color="accent" (click)="onCancel()">Cancel</button>-->
+<!--        <button class="small" mat-raised-button color="primary" (click)="onSave()">Save</button>-->
+<!--      </mat-card-actions>-->
+
+</div>

@@ -1,0 +1,19 @@
+@import "~@angular/material/theming";
+
+@mixin rate-enquiry($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .rateEnquiry {
+    padding: 10px;
+    background: transparent;
+  }
+
+  .mat-card-actions.matCardActions {
+    padding-left: 10px;
+  }
+}
+
+

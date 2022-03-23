@@ -1,0 +1,111 @@
+@import "~@angular/material/theming";
+
+@mixin data-grid-grouped-sums-template1($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .dataGridGroupedSumsTemplate {
+
+    overflow: auto;
+
+    table {
+      display: table;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      border-left: solid 1px mat-color($accent, 100);
+      border-right: solid 1px mat-color($accent, 100);
+      flex-shrink: 0;
+
+      .mat-header-row {
+        background-color: mat-color($accent, 100);
+        border-bottom: solid 1px mat-color($primary, 100);
+        border-top: solid 10px mat-color($primary, 100);
+      }
+
+      .mat-header-cell {
+        border-top: solid 1px mat-color($primary, 100);
+        color: mat-color($accent, 150) !important;
+        font-size: 12px !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+      }
+
+      td.mat-column-select, th.mat-column-select {
+        width: 12px !important;
+        padding-left: 9px !important;
+        padding-right: 9px !important;
+        background-color: mat-color($accent, 50) !important;
+      }
+
+      td.mat-column-buttons, th.mat-column-buttons {
+        width: 12px !important;
+        padding-right: 0px;
+        padding-top: 6px !important;
+        background-color: mat-color($accent, 50) !important;
+        border-left: 1px solid mat-color($primary, 100);
+      }
+
+      .mat-table-sticky-border-elem-right {
+        border-left: 1px solid mat-color($primary, 100);
+      }
+
+      .mat-table-sticky-border-elem-left {
+        border-right: 1px solid mat-color($primary, 100);
+      }
+
+      .mat-cell {
+        color: mat-color($accent, 150);
+        font-size: 12px !important;
+        padding-left: 4px !important;
+        padding-right: 4px !important;
+      }
+
+      .mat-row {
+        height: 38px !important;
+        min-height: 38px !important;
+        vertical-align: middle;
+        border-color: transparent;
+      }
+
+      .mat-row:nth-child(even) {
+        //background-color: mat-color($accent, 25);
+        &.highlight {
+          background: mat-color($primary, 500);
+        }
+      }
+
+      .mat-row:nth-child(odd) {
+        //background-color: mat-color($primary, 50);
+        &.highlight {
+          background: mat-color($primary, 500);
+        }
+      }
+
+      .mat-sort-header-arrow {
+        color: mat-contrast($accent, 100) !important;
+      }
+
+      .highlight {
+        color: mat-contrast($primary, 500) !important;
+      }
+
+      .headerClass {
+        //color: mat-color($accent, 150) !important;
+        background-color: mat-color($accent, 50);
+      }
+
+      .sumTotalClass {
+        border-bottom: solid 2px mat-color($accent, 150);
+        border-top: solid 2px mat-color($accent, 150);
+      }
+
+      .sumClass {
+        //color: mat-color($primary, 700) !important;
+      }
+    }
+
+  }
+}

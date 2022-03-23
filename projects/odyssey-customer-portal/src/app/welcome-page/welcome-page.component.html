@@ -1,0 +1,22 @@
+<mat-sidenav-container  fxFill>
+    <mat-sidenav opened="true" mode="side" [style.width.px]="sidebarMode.width" #leftDrawer="matSidenav">
+        <lib-sidebar-container
+            [menuItems]="sideBarMenu"
+            [sidebarMode]="sidebarMode"
+            [currentWidth]="sidebarMode.width"
+            (mouseOverEvent)="openSidebar()"
+            (mouseOutEvent)="closeSidebar()"
+            (menuItemClicked)="navigateToPage($event)"
+            (signInClicked)="navigateToSignInPage()"
+            (signOutClicked)="navigateToCoverPage()"
+            (registerClicked)="navigateToRegistrationPage()"
+            (profileClicked)="navigateToProfilePage()"
+        >
+        </lib-sidebar-container>
+    </mat-sidenav>
+    <mat-sidenav-content fxLayout="row" fxLayoutAlign="center" fxFlex="100%" fxLayoutGap="0px">
+        <div class="router-outlet-container">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

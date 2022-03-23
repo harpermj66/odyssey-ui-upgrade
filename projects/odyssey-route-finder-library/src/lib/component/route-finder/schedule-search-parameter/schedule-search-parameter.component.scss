@@ -1,0 +1,33 @@
+@import "../../../../../../../node_modules/@angular/material/theming";
+
+@mixin schedule-search-parameter($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .loading {
+    padding: 10px;
+  }
+
+  .countryImage {
+    height: 32px;
+    padding-top: 6px
+  }
+
+  .optionCode {
+    color: #0a4e68;
+    font-size: 12px;
+  }
+
+  .optionName {
+    font-size: 12px;
+  }
+
+  .buttonStyle {
+    padding-top: 20px !important;
+  }
+
+}
+

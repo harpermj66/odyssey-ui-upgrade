@@ -1,0 +1,104 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+  <div fxFlex="50%" >
+    <div fxLayout="column" fxLayoutGap="10px">
+      <button *ngIf="!readonly"
+              [disabled]="disabled || groupingMaxItemsPopulated"
+              mat-raised-button
+              [matMenuTriggerFor]="groupFieldMenu"
+              class="groupSumButton"
+              fxLayout="row"
+              fxLayoutAlign="center center">
+        Add Group Field
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <mat-menu #groupFieldMenu="matMenu">
+        <button *ngFor="let field of groupItems "
+                mat-menu-item
+                [value]="field" (click)="selectGroupingField(field)">
+          {{field.displayName}}
+        </button>
+      </mat-menu>
+
+      <div class="group-list"
+           cdkDropList
+           fxLayout="column" fxLayoutAlign="start start">
+
+        <div *ngFor="let sort of savedSearch.groupingRules; "
+             class="sort-list-entry"
+             cdkDrag
+             [cdkDragDisabled]="disabled || readonly"
+             fxLayout="row"
+             fxLayoutAlign="start center"
+             fxLayoutGap="10px">
+
+          <mat-icon *ngIf="!readonly" class="drag-indicator">drag_indicator</mat-icon>
+
+          <mat-form-field class="sort-field">
+            <mat-label>Field</mat-label>
+            <input matInput
+                   [ngModel]="sort.field | titlecase | removeUnderscore "
+                   [readonly]="readonly"
+                   [disabled]="disabled">
+          </mat-form-field>
+
+          <button *ngIf="!readonly"
+                  mat-icon-button
+                  (click)="removeFromGroupingList(sort)"
+                  [disabled]="disabled"><mat-icon>delete_outline</mat-icon></button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div fxFlex="50%">
+    <div fxLayout="column" fxLayoutGap="10px">
+      <button *ngIf="!readonly"
+              [disabled]="disabled"
+              mat-raised-button
+              [matMenuTriggerFor]="sumFieldMenu"
+              class="groupSumButton"
+              fxLayout="row" fxLayoutAlign="center center">
+        Add Sum Field
+        <mat-icon>add</mat-icon>
+      </button>
+
+      <mat-menu #sumFieldMenu="matMenu">
+        <button *ngFor="let field of sumItems "
+                mat-menu-item
+                [value]="field" (click)="selectSumField(field)">
+          {{field.displayName}}
+        </button>
+      </mat-menu>
+
+      <div *ngFor="let sum of savedSearch.sumRules; "
+           class="sum-list-entry"
+           cdkDrag
+           [cdkDragDisabled]="disabled || readonly"
+           fxLayout="row"
+           fxLayoutAlign="start center"
+           fxLayoutGap="10px">
+
+        <mat-icon *ngIf="!readonly" class="drag-indicator">drag_indicator</mat-icon>
+
+        <mat-form-field class="sort-field">
+          <mat-label>Field</mat-label>
+          <input matInput
+                 [ngModel]="sum.field | titlecase | removeUnderscore "
+                 [readonly]="readonly"
+                 [disabled]="disabled">
+        </mat-form-field>
+
+        <button *ngIf="!readonly"
+                mat-icon-button
+                (click)="removeFromSumList(sum)"
+                [disabled]="disabled"><mat-icon>delete_outline</mat-icon></button>
+
+      </div>
+    </div>
+  </div>
+
+</div>

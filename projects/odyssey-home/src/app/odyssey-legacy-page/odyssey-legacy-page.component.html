@@ -1,0 +1,10 @@
+<div fxLayoutAlign="center" style="padding-top: 10px; width: 100%; height: 100%;" >
+  <div fxLayout="column" fxFlex="96%" fxFlex.gt-lg="1560px" style=" height: 100%">
+    <div class="legacy-container" (window:resize)="onResize()">
+      <iframe *ngIf="odysseyInstanceUrl && authenticationService.accessToken()" [src]="odysseyInstanceUrlWithParams"
+              [style.height.px]="contentHeight"
+              style="width: 100%; border: none" #odysseyFrame (load)="setupOdyssey(odysseyFrame)"
+              sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals"></iframe>
+    </div>
+  </div>
+</div>

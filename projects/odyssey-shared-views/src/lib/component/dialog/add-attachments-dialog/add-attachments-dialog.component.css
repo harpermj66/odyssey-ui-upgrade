@@ -1,0 +1,19 @@
+.mat-card-content {
+  max-height: calc(90vh - 140px);
+  max-width: 90vw;
+  overflow: auto;
+}
+
+.file-button {
+  margin: 10px;
+}
+
+.file-upload {
+  max-width: 100%;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.upload-field {
+  width: 100%;
+}

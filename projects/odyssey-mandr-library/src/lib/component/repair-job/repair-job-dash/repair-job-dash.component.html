@@ -1,0 +1,5 @@
+<mat-card class="wrapper" fxLayout="column" fxLayoutAlign="start start">
+  <lib-repair-job-list (selectedChange)="jobSelectChange($event)"></lib-repair-job-list>
+  <lib-repair-item-list [repairJobId]="selectedJob ? selectedJob.id : null" [repairJobNumber]="selectedJob ? selectedJob.jobNum
+   : null"></lib-repair-item-list>
+</mat-card>

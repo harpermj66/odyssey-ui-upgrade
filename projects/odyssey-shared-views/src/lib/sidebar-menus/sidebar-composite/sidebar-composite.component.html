@@ -1,0 +1,18 @@
+<div fxLayout="row" class="compositeSidebarContainer" [style.width.px]="sidebarMode.width"
+     (mouseleave)="onMouseLeave()">
+
+    <lib-sidebar-icon
+            [style.width.px]="sidebarMode.width" style="height: 100%;"
+            [unauthenticatedMenu]="true"
+            [menu]="sideBarMenu"
+            [sidebarMode]="sidebarMode"
+            [showExpandIcon]="true"
+            (menuChanged)="onSidebarMenuChanged($event)"
+            (mouseover)="onMouseOver()"
+            (signedIn)="signIn()"
+            (signedOut)="onSignOut()"
+            (registerClicked)="emitRegisterClicked()"
+    >
+
+    </lib-sidebar-icon>
+</div>

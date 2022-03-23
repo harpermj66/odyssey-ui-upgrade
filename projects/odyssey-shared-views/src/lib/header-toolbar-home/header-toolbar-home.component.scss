@@ -1,0 +1,32 @@
+@import "~@angular/material/theming";
+
+@mixin header-toolbar-home($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .headerToolbarHome {
+    height: 75px;
+    padding-left: 0px;
+    padding-top: 4px;
+    background-color: mat-color($accent, 0);
+    border-right: solid 1px mat-color($accent, 200);
+
+    .logoClass {
+      padding-left: 10px !important;
+      padding-top: 0px !important;
+      padding-bottom: 4px !important;
+    }
+
+    .homeAlternate {
+      font-size: 20px;
+      padding-left: 6px;
+      color: mat-color($accent, 150) !important;
+      padding-bottom: 4px
+    }
+
+  }
+
+}

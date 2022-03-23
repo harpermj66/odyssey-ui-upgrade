@@ -1,0 +1,15 @@
+@import "~@angular/material/theming";
+
+@mixin work-in-progress($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .containerClass {
+    border: solid silver 1px;
+    height: 40px;
+    background-color: mat-color($primary, 700);
+    color: white;
+  }
+
+}
+

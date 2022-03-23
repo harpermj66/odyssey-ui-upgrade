@@ -1,0 +1,84 @@
+@import "~@angular/material/theming";
+
+@mixin home-page($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .headerImage {
+    padding-left: 0px;
+    padding-bottom: 10px;
+    background-color: mat-contrast($primary, 700);
+    height: 45px;
+  }
+
+  .drawerContainer {
+    height: 100%;
+    overflow-y: auto;
+
+    .mat-drawer-container {
+      padding-right: 0px;
+      background-color: mat-contrast($primary, 700) !important;
+      .mat-drawer {
+        padding-top: 0px;
+        background-color: mat-color($primary, 50);
+      }
+    }
+  }
+
+  .logoHeader {
+    padding-left: 24px;
+    padding-bottom: 16px;
+    padding-top: 12px;
+  }
+
+  .sideBarBackground {
+    height: 100%;
+    background-color: mat-color($primary, 50);
+    padding-right: 0px;
+  }
+
+  .routeContainer {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  .sideNav {
+    width: 100%;
+    border: none;
+    overflow-y: hidden !important;
+  }
+
+  .MARFRET {
+    height: 70px;
+  }
+
+  .NCL {
+    height: 70px;
+  }
+
+  .DAL {
+    height: 40px;
+    padding-bottom: 10px;
+  }
+
+  .LOCUS {
+    height: 0px;
+  }
+
+  .TRANSMAR {
+    padding-top: 10px;
+    padding-left: 0px;
+    height: 42px;
+  }
+
+  .mat-sidenav-content {
+    background-color: mat-contrast($primary, 700);
+  }
+
+  .expandedMenu {
+
+  }
+}

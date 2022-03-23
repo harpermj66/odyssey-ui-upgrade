@@ -1,0 +1,76 @@
+<div class="lookup-select-one" (click)="onClick()">
+
+  <!-- A dummy input that hides the default select, allowing custom values to be displayed if desired -->
+  <mat-form-field *ngIf="hasDisplayValue"
+                  (click)="selectList.toggle()"
+                  [ngClass]="{clickable: !readonly && !disabled}">
+    <mat-label *ngIf="label" [ngClass]="{clickable: !readonly && !disabled}">{{label}}</mat-label>
+    <input [ngClass]="{clickable: !readonly && !disabled}"
+           matInput
+           [ngModel]="displayValue"
+           [disabled]="disabled"
+           [placeholder]="placeholder"
+           [readonly]="true">
+  </mat-form-field>
+
+  <!-- The select list. If displayValue is set then this will be hidden and the custom display value will be shown instead-->
+  <mat-form-field [ngClass]="{hidden: hasDisplayValue}">
+    <mat-label *ngIf="label">{{label}}</mat-label>
+    <mat-select #selectList
+                panelClass="lookup-select-one-panel"
+                [ngModel]="value"
+                [placeholder]="placeholder"
+                (opened)="selectOpened()"
+                (closed)="selectClosed()"
+                (selectionChange)="onSelectChange($event)"
+                [errorStateMatcher]="errorStateMatcher"
+                [disabled]="disabled || readonly"
+                [required]="required">
+
+      <mat-form-field class="lookup-select-one-sticky-option"
+                      color="accent"
+                      *ngIf="showSearch">
+        <input #searchInput
+               type="text"
+               [(ngModel)]="filter"
+               (keyup)="onFilterChange()"
+               placeholder="Search"
+               matInput>
+      </mat-form-field>
+
+        <!-- hidden value in case the selected value is off page -->
+        <mat-option class="lookup-select-one-lookup-hidden-option" *ngIf="this.value && !valueMatch"
+                    [value]="this.value">{{this.value.containerNumber}}</mat-option>
+
+        <mat-option *ngIf="!required"></mat-option>
+
+        <!-- Create options for each data set entry -->
+        <mat-option class="lookup-select-one-option" *ngFor="let lookup of dataset; trackBy: trackById"
+                    [value]="lookup">
+
+          <!-- Layout the possible display fields as a grid so they have equal space -->
+          <mat-grid-list class="lookup-select-one-grid-list" [cols]="displayFields.length" rowHeight="40">
+            <mat-grid-tile class="lookup-select-one-grid-tile"
+                           *ngFor="let fieldName of displayFields; let i = index"
+                           [matTooltip]="lookup[fieldName]">
+              <!-- Pad any fields that are not the first -->
+              <span class="tile-content"
+                    [ngClass]="{'padded-left': i > 0, 'padded-right': i < (displayFields.length - 1)}">{{lookup[fieldName]}}</span>
+            </mat-grid-tile>
+          </mat-grid-list>
+
+        </mat-option>
+
+
+        <!-- have a hidden unclickable option so that the menu will always open (mat-select will not open unless there is one option -->
+        <mat-option [disabled]="true" [style.height.px]="0"></mat-option>
+        <span *ngIf="infiniteScroll.loading; else notLoading" fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </span>
+      <ng-template #notLoading>
+        <mat-optgroup class="no-results" *ngIf="noResults" label="No Results" [disabled]="true"></mat-optgroup>
+      </ng-template>
+    </mat-select>
+    <mat-error *ngIf="error">{{error}}</mat-error>
+  </mat-form-field>
+</div>

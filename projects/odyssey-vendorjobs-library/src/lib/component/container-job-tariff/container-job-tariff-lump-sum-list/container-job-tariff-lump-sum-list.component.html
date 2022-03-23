@@ -1,0 +1,43 @@
+<div class="wrapper" fxLayout="column" fxFlex="100%" fxLayoutAlign="center" style="padding: 20px">
+
+  <lib-basic-filter [(value)]="filter" (valueChange)="refresh()"></lib-basic-filter>
+
+  <lib-standard-list-page-header title="Lump Sum Tariffs"
+                                 [selectColumnsAvailable]="true"
+                                 [showSearchOptions]="true"
+                                 (sortCleared)="onCearSort()"
+                                 [displayableFields]="displayableFields"
+                                 (columnVisibilityChanged)="onColumnsChanged($event)">
+
+    <button *ngIf="!readonly"
+            mat-raised-button
+            matTooltip="Add Job"
+            color="primary"
+            (click)="onEditAddClick()">Add Tariff</button>
+  </lib-standard-list-page-header>
+
+  <div class="table-wrapper">
+
+    <lib-standard-data-grid-template
+      #dataGrid
+      [displayColumns]="displayedColumns"
+      [dataGridColumnMaps]="dataGridColumnMaps"
+      [dataSource]="datasource"
+      [keyField]="fieldId"
+      [rowMenus]="rowMenus"
+
+      (sortChanged)="onSortChange($event)"
+      (rowActionAltSelected)="onRowActionSelected($event)"
+    >
+    </lib-standard-data-grid-template>
+  </div>
+
+  <lib-data-grid-navigator
+    *ngIf="datasource && datasource.data && datasource.data.length > 0"
+    [totalRecords]="totalElements"
+    [page]="pageSettings.pageNumber"
+    [size]="pageSettings.pageSize"
+    (pageChanged)="onPagingChanged($event)"
+  >
+  </lib-data-grid-navigator>
+</div>

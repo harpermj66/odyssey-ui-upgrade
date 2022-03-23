@@ -1,0 +1,11 @@
+<div id="action-toolbar-container" fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start start">
+    <h2 mat-dialog-title>{{data.title}}</h2>
+    <div mat-dialog-content>
+        <p>{{data.message}}</p>
+    </div>
+    <div mat-dialog-actions fxLayout="row" class="full-width" fxLayoutAlign="end center">
+        <button mat-button (click)="onNoClick()">{{data.cancelButtonTitle}}</button>
+        <button mat-flat-button color="primary" (click)="emitConfirmClicked()">{{data.confirmButtonTitle}}</button>
+    </div>
+</div>
+

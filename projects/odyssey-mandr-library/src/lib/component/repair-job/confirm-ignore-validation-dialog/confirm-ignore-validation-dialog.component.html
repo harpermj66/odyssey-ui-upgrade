@@ -1,0 +1,17 @@
+<mat-card-header>
+  <mat-card-title>Confirm {{data?.action | titlecase}}</mat-card-title>
+</mat-card-header>
+
+<mat-card-content>
+  <ng-container *ngIf="data?.validationIssues">
+    <p *ngFor="let issue of data.validationIssues">{{issue.message}}</p>
+  </ng-container>
+</mat-card-content>
+
+<mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+  <button mat-raised-button
+          color="primary"
+          (click)="onConfirmClick()">{{data?.action | titlecase}}</button>
+  <button mat-raised-button
+          (click)="onCancelClick()">Cancel</button>
+</mat-card-actions>

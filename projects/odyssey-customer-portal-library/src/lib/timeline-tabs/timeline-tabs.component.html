@@ -1,0 +1,7 @@
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab *ngFor="let timeline of timelines;" [label]="getTabLabel(timeline)">
+        <ng-template matTabContent>
+            <lib-container-timeline [timeline]="timeline"></lib-container-timeline>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

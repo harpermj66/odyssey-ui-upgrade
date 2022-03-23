@@ -1,0 +1,68 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+
+  <mat-form-field *ngIf="!readonly; else readonlyOperator">
+    <mat-label>Matches</mat-label>
+    <mat-select [(value)]="rule.operator"
+                [disabled]="disabled">
+      <mat-option *ngFor="let operator of operators" [value]="operator">{{operator == 'AND' ? 'All Of' : 'Any Of'}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-template #readonlyOperator>
+    <mat-form-field *ngIf="rule.rules && rule.rules.length > 1">
+      <mat-label>Matches</mat-label>
+      <input matInput
+             [ngModel]="rule.operator | removeUnderscore | titlecase"
+             [readonly]="readonly"
+             [disabled]="disabled">
+    </mat-form-field>
+  </ng-template>
+
+  <div class="rules-list"
+       fxLayout="column"
+       fxLayoutAlign="start start"
+       [ngClass]="{leftborder: !(readonly && rule.rules && rule.rules.length <= 1)}">
+
+    <div *ngFor="let subRule of rule.rules; let i = index; trackBy:trackById"
+         fxLayout="row"
+         fxLayoutGap="10px"
+         fxLayoutAlign="start start">
+
+      <div #buttonsDiv
+           fxLayout="row"
+           fxLayoutAlign="start center">
+        <button *ngIf="!readonly"
+                mat-icon-button
+                matTooltip="Delete Rule(s)"
+                (click)="deleteRule(subRule)"
+                [disabled]="disabled">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <lib-search-rule-editor-generic-rule [resourceType]="resourceType"
+                                           [rule]="subRule"
+                                           [filterItems]="filterItems"
+                                           [disabled]="disabled"
+                                           [readonly]="readonly"></lib-search-rule-editor-generic-rule>
+    </div>
+
+
+    <button *ngIf="!readonly"
+            mat-button
+            class="add-rule-button"
+            [matMenuTriggerFor]="addRuleMenu"
+            [disabled]="disabled"
+            fxLayout="row" fxLayoutAlign="center center">
+      <mat-icon>add_circle_outline</mat-icon>
+      Add Rule
+    </button>
+    <mat-menu #addRuleMenu="matMenu">
+      <button mat-menu-item (click)="addRule()">Field Matching Rule</button>
+      <button mat-menu-item (click)="addListRule()">Match All/Match Any</button>
+    </mat-menu>
+  </div>
+</div>
+
+
+

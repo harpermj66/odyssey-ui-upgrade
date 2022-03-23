@@ -1,0 +1,116 @@
+{
+  "michaelharper@locussoftware.com": [
+    {
+      "id": "saves",
+      "title": "Saves",
+      "searchType": "none"
+    },
+    {
+      "id": "quote",
+      "title": "Quote",
+      "searchType": "quick"
+    },
+    {
+      "id": "service-contract",
+      "title": "Service Contract",
+      "searchType": "quick"
+    },
+    {
+      "id": "booking",
+      "title": "Booking",
+      "searchType": "quick",
+      "defaultFields": [
+        {
+          "name": "bookingNum",
+          "title": "Booking Num",
+          "type": "String"
+        },
+        {
+          "name": "account",
+          "title": "Account",
+          "type": "String"
+        },
+        {
+          "name": "bookingAgent",
+          "title": "Booking Agent",
+          "type": "String"
+        },
+        {
+          "name": "partyRef",
+          "title": "Party Ref",
+          "type": "String"
+        },
+        {
+          "name": "type",
+          "title": "Type",
+          "type": "String"
+        },
+        {
+          "name": "status",
+          "title": "Status",
+          "type": "String"
+        }
+      ]
+    },
+    {
+      "id": "si",
+      "title": "SI",
+      "searchType": "quick",
+      "defaultFields": [
+        {
+          "fieldName": "status",
+          "displayName": "Status",
+          "type": "String"
+        },
+        {
+          "name": "contactNo",
+          "title": "Contact No",
+          "type": "String"
+        },
+        {
+          "name": "account",
+          "title": "Account",
+          "type": "String"
+        },
+        {
+          "name": "effectiveDate",
+          "title": "Effective Date",
+          "type": "Date"
+        },
+        {
+          "name": "expiryDate",
+          "title": "Expiry Date",
+          "type": "Date"
+        },
+        {
+          "name": "createdBy",
+          "title": "Created By",
+          "type": "String"
+        },
+        {
+          "name": "created",
+          "title": "Created",
+          "type": "Date"
+        }
+      ]
+    },
+    {
+      "id": "freight-invoice",
+      "title": "Freight Invoice",
+      "searchType": "quick"
+    },
+    {
+      "id": "cnote",
+      "title": "C/Note",
+      "searchType": "quick"
+    },
+    {
+      "id": "da",
+      "title": "DA",
+      "searchType": "quick"
+    }
+  ]
+}
+
+
+

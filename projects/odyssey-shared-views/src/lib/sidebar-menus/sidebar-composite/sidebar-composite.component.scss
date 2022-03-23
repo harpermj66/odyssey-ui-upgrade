@@ -1,0 +1,23 @@
+@import "~@angular/material/theming";
+
+@mixin sidebar-composite($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .compositeSidebarContainer {
+    width: 100%;
+    height: 100%;
+    background-color: mat-color($primary, 900);
+    transition: width 500ms;
+  }
+
+  .mat-drawer-backdrop.mat-drawer-shown{
+    background-color: transparent;
+  }
+
+  lib-sidebar-icon {
+    transition: width 500ms;
+  }
+}

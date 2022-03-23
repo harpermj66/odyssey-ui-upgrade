@@ -1,0 +1,40 @@
+@import "~@angular/material/theming";
+
+@mixin manage-quick-search-favourites($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .favouritesContainer {
+    height: 100%;
+    padding-top: 4px;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: none;
+
+    mat-selection-list {
+      .mat-list-option {
+        padding: 0px;
+        font-size: 12px !important;
+        color: mat-color($primary, 700) !important;
+        height: 30px !important;
+        width: 100%;
+      }
+
+      .mat-list-option:hover {
+        background-color: mat-color($primary, 200) !important;
+      }
+
+      .mat-list-option:active {
+        background-color: mat-color($primary, 200) !important;
+      }
+
+      .mat-list-option::selection {
+        background-color: mat-color($primary, 700) !important;
+      }
+
+    }
+  }
+
+}

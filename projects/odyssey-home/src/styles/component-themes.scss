@@ -1,0 +1,95 @@
+@import "projects/odyssey-shared-views/src/lib/welcome-page-toolbar/welcome-page-toolbar.component";
+@import "projects/odyssey-home/src/app/welcome-page/welcome-page.component";
+@import "projects/odyssey-home/src/app/home/slide-out-right-view/slide-out-right-view.component";
+@import "projects/odyssey-shared-views/src/lib/signin/signin.component";
+@import "projects/odyssey-shared-views/src/lib/sidebar-menus/sidebar-wide/sidebar-wide.component";
+@import "projects/odyssey-shared-views/src/lib/sidebar-menus/sidebar-icon/sidebar-icon.component";
+@import "projects/odyssey-shared-views/src/lib/favourites/manage-favourites/manage-favourites.component";
+@import "projects/odyssey-home/src/app/welcome-page/rate-enquiry/rate-enquiry.component";
+@import "projects/odyssey-shared-views/src/lib/header-toolbar/header-toolbar.component";
+@import "projects/odyssey-shared-views/src/lib/subheader-toolbar/subheader-toolbar.component";
+@import "projects/odyssey-shared-views/src/lib/component/list-filter/list-filter-item/list-filter-item.component";
+@import "projects/odyssey-shared-views/src/lib/component/basic-filter/basic-filter.component";
+@import "projects/odyssey-shared-views/src/lib/datagrid/standard-data-grid-template/standard-data-grid-template.component";
+@import "projects/odyssey-shared-views/src/lib/datagrid/data-grid-grouped-sums-template1/data-grid-grouped-sums-template1.component";
+@import "projects/odyssey-shared-views/src/lib/datagrid/data-grid-navigator/data-grid-navigator.component";
+@import "projects/odyssey-shared-views/src/lib/component/standard-list-page-header/standard-list-page-header.component";
+@import "projects/odyssey-shared-views/src/lib/search/search-type/search-type.component";
+@import "projects/odyssey-shared-views/src/lib/slide-right-view-toolbar/slide-right-view-toolbar.component";
+@import "projects/odyssey-shared-views/src/lib/header-toolbar-home/header-toolbar-home.component";
+@import "projects/odyssey-home/src/app/home/home.component";
+
+@import "projects/odyssey-home/src/app/home/menus/search-menu/search-menu.component";
+
+@import "projects/odyssey-shared-views/src/lib/component/list-filter/list-filter.component";
+@import "projects/odyssey-shared-views/src/lib/component/content-wrapper/content-wrapper.component";
+@import "projects/odyssey-shared-views/src/lib/search/advanced-search-toolbar/advanced-search-toolbar.component";
+@import "projects/odyssey-search-library/src/lib/search/booking/booking-grouped-template1/booking-grouped-template1.component";
+@import "projects/odyssey-route-finder-library/src/lib/component/route-finder/schedule-search-parameter/schedule-search-parameter.component";
+@import "projects/odyssey-route-finder-library/src/lib/component/route-finder/schedule-result/schedule-result.component";
+@import "projects/odyssey-route-finder-library/src/lib/component/route-finder/schedule-result/schedule-summary/schedule-summary.component";
+@import "projects/odyssey-route-finder-library/src/lib/component/route-finder/schedule-result/schedule-summary/schedule-detail/schedule-detail.component";
+
+@import "projects/odyssey-search-library/src/lib/search/rule/editor/search-rule-editor/search-rule-editor.component";
+@import "projects/odyssey-search-library/src/lib/search/booking/booking.component";
+@import "projects/odyssey-shared-views/src/lib/component/work-in-progress/work-in-progress.component";
+@import "projects/odyssey-shared-views/src/lib/favourites/favourites.component";
+
+@import "projects/odyssey-mandr-library/src/lib/component/container/container-lookup/container-lookup.component";
+@import "projects/odyssey-mandr-library/src/lib/component/container-location/container-location-lookup/container-location-lookup.component";
+@import "projects/odyssey-mandr-library/src/lib/component/currency/currency-lookup/currency-lookup.component";
+@import "projects/odyssey-mandr-library/src/lib/component/cedex/cedex-select-field/cedex-select-field.component";
+@import "projects/odyssey-mandr-library/src/lib/component/approval-limits/approval-limits-list/approval-limits-list.component";
+@import "projects/odyssey-mandr-library/src/lib/component/repair-job/repair-job-attachments-list/repair-job-attachments-list.component";
+@import "projects/odyssey-mandr-library/src/lib/component/repair-job/repair-job-attachment-view/repair-job-attachments-view.component";
+@import "projects/odyssey-shared-views/src/lib/lookup/lookup-select-one/lookup-select-one.component";
+@import "projects/odyssey-shared-views/src/lib/lookup/lookup-autocomplete/lookup-autocomplete.component";
+
+@mixin component-themes($theme) {
+
+  @include welcome-page-toolbar($theme);
+  @include welcome-page($theme);
+  @include signIn-page($theme);
+  @include sidebar-wide($theme);
+  @include sidebar-icon($theme);
+  @include rate-enquiry($theme);
+  @include shared-toolbar($theme);
+  @include header-toolbar-home($theme);
+  @include slide-right-toolbar($theme);
+  @include shared-subheader($theme);
+  @include standard-list-page-header($theme);
+  @include search-type-container($theme);
+  @include standard-data-grid-template($theme);
+  @include data-grid-grouped-sums-template1($theme);
+  @include data-grid-navigator($theme);
+  @include home-page($theme);
+  @include list-filter($theme);
+  @include content-wrapper($theme);
+  @include basic-filter($theme);
+  @include advanced-search-list-filter($theme);
+  @include booking-grouped-template1-component($theme);
+  @include manage-quick-search-favourites($theme);
+  @include schedule-result($theme);
+  @include schedule-search-parameter($theme);
+  @include schedule-summary($theme);
+  @include schedule-detail($theme);
+
+  @include quick-search-items($theme);
+  @include search-rule-editor($theme);
+  @include booking-search-component($theme);
+
+  @include work-in-progress($theme);
+  @include favourites($theme);
+
+  @include container-lookup-theme($theme);
+  @include container-location-lookup-theme($theme);
+  @include currency-lookup-theme($theme);
+  @include cedex-select-lookup-theme($theme);
+  @include approval-limits-list-theme($theme);
+  @include repair-job-attachments-list-theme($theme);
+  @include repair-job-attachments-view-theme($theme);
+  @include lookup-select-one-theme($theme);
+  @include lookup-autocomplete-theme($theme);
+
+  @include search-menu($theme);
+}

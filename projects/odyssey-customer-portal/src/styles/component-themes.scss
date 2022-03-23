@@ -1,0 +1,24 @@
+@import "projects/odyssey-customer-portal-library/src/lib/crm-cover-page/crm-cover-page.component";
+@import "projects/odyssey-customer-portal/src/app/main-menu/main-menu.component";
+@import "projects/odyssey-shared-views/src/lib/sidebar-menus/sidebar-icon/sidebar-icon.component";
+@import "projects/odyssey-shared-views/src/lib/sidebar-menus/sidebar-composite/sidebar-composite.component";
+@import "projects/odyssey-shared-views/src/lib/signin/signin.component";
+@import "projects/odyssey-route-finder-library/src/lib/component/route-finder/schedule-result/schedule-summary/schedule-summary.component";
+@import "projects/odyssey-route-finder-library/src/lib/component/route-finder/schedule-result/schedule-summary/schedule-detail/schedule-detail.component";
+@import "projects/odyssey-route-finder-library/src/lib/component/route-finder/schedule-dashboard-search-parameter/schedule-dashboard-search-parameter.component";
+@import "projects/odyssey-customer-portal/src/app/dashboard/dashboard.component";
+@import "projects/odyssey-customer-portal/src/app/welcome-page/welcome-page.component";
+@import "projects/odyssey-customer-portal-library/src/lib/navigation/sidebar/sidebar-menu-container/sidebar-menu-container.component";
+
+@mixin component-themes($theme) {
+  @include crm-cover-page($theme);
+  @include customer-portal-main-menu($theme);
+  @include sidebar-menu-container($theme);
+  @include schedule-summary($theme);
+  @include schedule-detail($theme);
+  @include customer-portal-dashboard($theme);
+  @include customer-portal-welcome-page($theme);
+  @include signIn-page($theme);
+  @include sidebar-composite($theme);
+  @include route-planner-dashboard($theme);
+}

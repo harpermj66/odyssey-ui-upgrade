@@ -1,0 +1,47 @@
+@import "~@angular/material/theming";
+
+@mixin customer-portal-main-menu($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .expandedMainMenu {
+    margin-top: 0px;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
+    height: 100%;
+    min-width: 240px !important;
+    background-color: mat-color($primary, 600) !important;
+
+    mat-label {
+      padding-left: 16px;
+      font-size: 15px;
+      color: mat-color($primary, 100) !important;
+    }
+
+    .mat-list {
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+
+      .mat-list-item {
+        font-size: 15px !important;
+        color: mat-color($primary, 100) !important;
+        width: 100%;
+        height: 34px !important;
+        border-bottom: solid 1px mat-color($primary, 800);
+      }
+
+      .mat-list-item:hover {
+        background-color: mat-color($primary, 900) !important;
+      }
+
+      .mat-list-item:active {
+        background-color: mat-color($primary, 400) !important;
+      }
+
+    }
+  }
+}

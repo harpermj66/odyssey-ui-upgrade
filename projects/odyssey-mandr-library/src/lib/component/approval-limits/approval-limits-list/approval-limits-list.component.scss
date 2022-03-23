@@ -1,0 +1,27 @@
+@import "~@angular/material/theming";
+
+@mixin approval-limits-list-theme($theme) {
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .wrapper {
+    height: 100%;
+    width: 100%;
+
+    lib-basic-filter {
+      padding-bottom: 6px;
+    }
+
+    lib-standard-list-page-header {
+      width: 100%;
+    }
+
+    .table-wrapper {
+      width: 100%;
+      height: calc(100% - 60px);
+      overflow: auto;
+    }
+  }
+
+
+}

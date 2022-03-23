@@ -1,0 +1,33 @@
+<div class="expandedMenu" fxLayout="column" fxLayoutGap="10px">
+
+    <div>
+        <!--    <mat-icon>{{menus.groupIcon}}</mat-icon>-->
+        <mat-label>{{menus.groupTitle}}</mat-label>
+    </div>
+
+
+    <mat-list style="width: 100%">
+        <div *ngFor="let m of menus.menus">
+            <ng-container *ngIf="m.menus.length === 0">
+                <mat-list-item *ngIf="m.title !== 'div'" (click)="onMenuChange(m)">
+                    <!--        <mat-icon style="width: 44px" class="mat-icon-outlined">{{m.menuIcon}}</mat-icon>-->
+                    {{m.title}}
+                </mat-list-item>
+                <mat-divider *ngIf="m.title === 'div'"></mat-divider>
+            </ng-container>
+            <ng-container *ngIf="m.menus.length > 0">
+                <mat-list-item [matMenuTriggerFor]="subMenu">
+                    <!--        <mat-icon style="width: 44px" class="mat-icon-outlined">{{m.menuIcon}}</mat-icon>-->
+                    {{m.title}}
+                </mat-list-item>
+                <mat-menu #subMenu>
+                    <button *ngFor="let sm of m.menus" mat-menu-item (click)="onMenuChange(sm)" style="min-width: 260px">{{sm.title}}</button>
+                </mat-menu>
+            </ng-container>
+
+        </div>
+
+    </mat-list>
+
+</div>
+

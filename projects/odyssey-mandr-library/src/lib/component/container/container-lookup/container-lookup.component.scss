@@ -1,0 +1,35 @@
+@import "~@angular/material/theming";
+
+@mixin container-lookup-theme($theme) {
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .container-lookup {
+      height: 100%;
+      width: 100%;
+
+      .mat-form-field {
+        height: 100%;
+        width: 100%;
+      }
+  }
+
+  .container-lookup-sticky-option {
+     position: sticky !important;
+     width: 100%;
+     z-index: 1;
+     top: 0;
+     box-shadow: 1px -2px 10px 0px grey;
+     background-color: $background-color;
+
+      box-sizing: border-box;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 10px;
+   }
+
+  .container-lookup-hidden-option {
+    max-height: 0;
+    height: 0;
+  }
+}

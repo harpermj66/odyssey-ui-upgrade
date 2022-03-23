@@ -1,0 +1,51 @@
+<div class="wrapper" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+
+  <div fxFill *ngFor="let attachmentInfo of attachmentInfos; trackBy: trackById"
+       fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px">
+    <mat-card-header>
+      <mat-card-title>{{attachmentInfo.name}}</mat-card-title>
+    </mat-card-header>
+
+    <div class="attachment-toolbar" fxLayout="row" fxLayoutAlign="start center">
+      <button (click)="onPreviousClick()"
+              [disabled]="disabled"
+              mat-icon-button
+              matTooltip="Previous"><mat-icon>arrow_left</mat-icon></button>
+      <button (click)="onNextClick()"
+              [disabled]="disabled"
+              mat-icon-button
+              matTooltip="Next"><mat-icon>arrow_right</mat-icon></button>
+    </div>
+
+    <img *ngIf="attachmentInfo.id && attachmentImages[attachmentInfo.id.toString()]; else noImage"
+         class="image-preview"
+         [src]='attachmentImages[attachmentInfo.id.toString()]'
+         [alt]="attachmentInfo.description">
+    <ng-template #noImage>
+      <ng-container [ngSwitch]="attachmentInfo.contentType">
+        <mat-icon *ngSwitchCase="'image/jpeg'">image</mat-icon>
+        <mat-icon *ngSwitchDefault>description</mat-icon>
+      </ng-container>
+    </ng-template>
+
+    <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+      <mat-label>Description</mat-label>
+      <mat-divider></mat-divider>
+      <div class="section-content vertical-filler" fxLayout="Column" fxLayoutAlign="start start" fxLayoutGap="20px">
+        {{attachmentInfo.description}}
+      </div>
+
+      <mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <button *ngIf="!readonly"
+                (click)="onDeleteClick(attachmentInfos[0])"
+                [disabled]="disabled"
+                mat-raised-button
+                matTooltip="Delete Attachment">Delete</button>
+      </mat-card-actions>
+
+    </div>
+
+  </div>
+
+
+</div>

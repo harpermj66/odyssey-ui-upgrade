@@ -1,0 +1,12 @@
+<ng-container [ngSwitch]="rule.type">
+  <lib-search-rule-editor-multi-rule *ngSwitchCase="multiRule" [resourceType]="resourceType" [rule]="castMultiRule"
+                                     [filterItems]="filterItems" [disabled]="disabled" [readonly]="readonly"
+                                     (validityChanged)="onMultiRuleValidityChanged($event)"
+  ></lib-search-rule-editor-multi-rule>
+  <lib-search-rule-editor-field-rule *ngSwitchCase="matchRule" [resourceType]="resourceType" [rule]="castFieldRule"
+                                     [filterItems]="filterItems" [disabled]="disabled"
+                                     [readonly]="readonly"></lib-search-rule-editor-field-rule>
+</ng-container>
+
+
+

@@ -1,0 +1,16 @@
+<mat-card-header>
+  <mat-card-title>Confirm Delete</mat-card-title>
+</mat-card-header>
+
+<mat-card-content>
+  <p class="dialog-content">Are you sure you wish to
+    delete {{data?.plural ? 'these' : 'this'}}{{ data?.entityTypeName ? ' ' + data.entityTypeName : ''}}?</p>
+</mat-card-content>
+
+<mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+  <button mat-raised-button
+          color="primary"
+          (click)="onConfirmClick()">Delete</button>
+  <button mat-raised-button
+          (click)="onCancelClick()">Cancel</button>
+</mat-card-actions>

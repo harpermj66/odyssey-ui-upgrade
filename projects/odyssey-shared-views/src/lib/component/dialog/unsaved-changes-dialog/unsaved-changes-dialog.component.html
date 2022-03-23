@@ -1,0 +1,15 @@
+<mat-card-header>
+  <mat-card-title>Unsaved Changes</mat-card-title>
+</mat-card-header>
+
+<mat-card-content>
+  Are you sure you wish to discard your unsaved changes?
+</mat-card-content>
+
+<mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+  <button mat-raised-button
+          color="primary"
+          (click)="onConfirmClick()">Discard Changes</button>
+  <button mat-raised-button
+          (click)="onCancelClick()">Cancel</button>
+</mat-card-actions>

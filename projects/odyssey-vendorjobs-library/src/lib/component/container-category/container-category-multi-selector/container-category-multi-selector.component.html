@@ -1,0 +1,40 @@
+<div class="container-job-type-selector" (click)="onClick()" [matTooltip]="this.value | commaSeparated | removeUnderscore | titlecase">
+  <mat-form-field *ngIf="!readonly; else isReadonly">
+    <mat-label *ngIf="label">{{label}}</mat-label>
+    <mat-select #selectList
+                multiple
+                [errorStateMatcher]="errorMatcher"
+                [ngModel]="value"
+                [placeholder]="placeholder"
+                (selectionChange)="onSelectChange($event)"
+                [disabled]="disabled"
+                [required]="required">
+
+      <mat-option *ngIf="!required"></mat-option>
+      <mat-option *ngFor="let cat of categories" [value]="cat">{{cat | removeUnderscore | titlecase}}</mat-option>
+
+      <!-- have a hidden unclickable option so that the menu will always open (mat-select will not open unless there is one option -->
+      <mat-option [disabled]="true" [style.height.px]="0"></mat-option>
+      <span *ngIf="requestQueue.loading; else notLoading" fxLayout="row" fxLayoutAlign="center center">
+        <mat-spinner [diameter]="20"></mat-spinner>
+      </span>
+      <ng-template #notLoading>
+        <mat-optgroup class="no-results" *ngIf="noResults" [disabled]="true" label="No Results"></mat-optgroup>
+      </ng-template>
+
+    </mat-select>
+    <mat-error class="mat-error" *ngIf="error">{{error}}</mat-error>
+  </mat-form-field>
+
+  <ng-template #isReadonly>
+    <mat-form-field>
+      <mat-label *ngIf="label">{{label}}</mat-label>
+      <input type="text"
+             [ngModel]="this.value | commaSeparated | removeUnderscore | titlecase"
+             [placeholder]="placeholder"
+             matInput
+             readonly
+             [disabled]="disabled">
+    </mat-form-field>
+  </ng-template>
+</div>

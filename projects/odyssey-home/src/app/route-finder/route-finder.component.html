@@ -1,0 +1,18 @@
+<div
+     fxLayout="row" fxFlex="100%" fxLayoutAlign="center" *ngIf="restPins != null">
+  <div fxLayoutAlign="center" fxLayout="column" fxFlex="100%">
+    <lib-schedule-search-parameter
+      [pin]="portsPin"
+      (routesRequested)="onRoutesRequested($event)"
+      fxLayoutAlign="center"
+    >
+    </lib-schedule-search-parameter>
+    <lib-schedule-result
+      [pin]="schedulesPin"
+      [routeParameterSelectionEvent]="routeParameterSelectionEvent" *ngIf="routeParameterSelectionEvent != null"
+      fxLayoutAlign="center"
+      fxFlex="100%"
+    >
+    </lib-schedule-result>
+  </div>
+</div>

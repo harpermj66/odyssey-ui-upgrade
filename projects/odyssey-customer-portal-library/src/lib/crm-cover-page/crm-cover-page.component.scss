@@ -1,0 +1,13 @@
+@import "~@angular/material/theming";
+
+@mixin crm-cover-page($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .contentRightArea {
+    background-color: mat-color($primary, 900);
+    padding: 20px;
+    color: mat-color($accent, 100);
+  }
+
+}

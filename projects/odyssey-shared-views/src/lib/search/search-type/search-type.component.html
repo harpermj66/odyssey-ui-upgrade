@@ -1,0 +1,35 @@
+<div class="searchSortContainer">
+  <!--  <button mat-icon-button [matMenuTriggerFor]="menu" [matTooltip]="searchDescription" >-->
+  <!--    <mat-icon>search</mat-icon>-->
+  <!--  </button>-->
+  <!--  <mat-menu #menu="matMenu"  >-->
+  <!--    <button *ngIf="searchType === 'advanced'" mat-menu-item (click)="onSearchTypeChange('quick')">-->
+  <!--      <span>Change to quick search</span>-->
+  <!--    </button>-->
+  <!--    <button *ngIf="searchType === 'quick'" mat-menu-item (click)="onSearchTypeChange('advanced')">-->
+  <!--      <span>Change to advanced search</span>-->
+  <!--    </button>-->
+  <!--  </mat-menu>-->
+
+  <mat-slide-toggle *ngIf="searchType" [(ngModel)]="advanced"
+                    (click)="onSearchTypeChange(searchType === 'advanced' ? 'quick' : 'advanced')"
+                    style="padding-top: 6px">{{searchDescription}}</mat-slide-toggle>
+
+  <button mat-icon-button [matTooltip]="sortTooltip" matTooltipClass="sort-tooltip"
+          *ngIf="searchType && sort.length == 0  && searchType !== 'advanced'">
+    <mat-icon>sort</mat-icon>
+  </button>
+
+  <button mat-icon-button [matMenuTriggerFor]="menuSort" [matTooltip]="sortTooltip" matTooltipClass="sort-tooltip"
+          *ngIf="sort.length > 0  && searchType !== 'advanced'">
+    <mat-icon>sort</mat-icon>
+  </button>
+
+  <mat-menu #menuSort="matMenu">
+    <button mat-menu-item (click)="onClearSort()">
+      <span>Clear sort</span>
+    </button>
+  </mat-menu>
+
+</div>
+

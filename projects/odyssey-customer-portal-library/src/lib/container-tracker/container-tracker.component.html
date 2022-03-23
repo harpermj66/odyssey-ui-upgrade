@@ -1,0 +1,26 @@
+<div fxFlex="100%" fxLayoutAlign="center" fxLayout="column">
+    <div>
+        <div class="loading" *ngIf="fetchingData" fxLayout="row" fxLayoutGap="10px">
+            <mat-label>Loading...</mat-label>
+            <mat-spinner diameter="20"></mat-spinner>
+        </div>
+
+        <div class="search-row" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="space-between end">
+            <div fxFlex="70%">
+                <lib-chip-search-field [placeholder]="selectedSearchOption.displayName" [searchString]="searchString" (searchValuesChanged)="setSearchValues($event)"></lib-chip-search-field>
+            </div>
+
+            <div fxFlex="20%">
+                <lib-tracking-option-select [selectedOption]="selectedOption" (optionChanged)="setSelectedSearchOption($event)"></lib-tracking-option-select>
+            </div>
+
+            <button fxFlex="10%" mat-flat-button color="primary" (click)="onSubmit()">
+                Search
+            </button>
+        </div>
+    </div>
+
+    <h4 fxLayoutAlign="center center" *ngIf="errorMessage">{{errorMessage}}</h4>
+
+    <lib-timeline-tabs *ngIf="containerTimelines" [timelines]="containerTimelines"></lib-timeline-tabs>
+</div>

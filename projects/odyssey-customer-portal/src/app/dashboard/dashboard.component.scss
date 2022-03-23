@@ -1,0 +1,68 @@
+@import "../../../../../node_modules/@angular/material/theming";
+
+@mixin customer-portal-dashboard($theme) {
+
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+
+
+  .cpDashboardTitle {
+    width: 100%;
+    height: 60px;
+    background-color: mat-color($primary, 50) !important;
+  }
+
+  .cpDashboardContainer {
+    width: 100%;
+    //height: calc(100% - 60px);
+    background-color: mat-color($primary, 50) !important;
+
+    .cpDashboardCentralArea {
+      padding-top: 60px;
+      //height: calc(100% - 20px) !important;
+    }
+
+    .cpRoutePlanner {
+      width: 480px;
+      height: 300px;
+      background-color: #EDB9FF;
+      font-size: 24px;
+      color: black;
+      border-radius: 6px;
+    }
+
+    .cpContainerTracker {
+      width: 480px;
+      height: 300px;
+      background-color: #EDB9FF;
+      font-size: 24px;
+      color: black;
+      border-radius: 6px;
+    }
+  }
+
+
+  .MARFRET {
+    height: 80px;
+  }
+
+  .NCL {
+    height: 80px;
+    margin-left: -20px;
+  }
+
+  .DAL {
+    height: 40px;
+    padding-bottom: 10px;
+  }
+
+  .LOCUS {
+    height: 0px;
+  }
+
+  .TRANSMAR {
+    padding-top: 10px;
+    height: 52px;
+  }
+}

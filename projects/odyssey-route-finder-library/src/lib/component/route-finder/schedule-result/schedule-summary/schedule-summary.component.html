@@ -1,0 +1,59 @@
+<div fxLayout="column" fxLayoutAlign="left" class="outerSummaryDiv" fxFlex="100%">
+    <mat-toolbar class="solutionTitle" fxLayoutAlign="first middle">
+      <mat-label>{{solution.solutionKey}}</mat-label>
+    </mat-toolbar>
+  <div>
+
+    <div class="departsArrives" fxLayout="row" >
+      <div fxLayoutAlign="center" fxFlex="50%">Departs:</div>
+      <div fxLayoutAlign="center" fxFlex="50%">Arrives:</div>
+    </div>
+
+    <div *ngFor="let s of solution.summaries" >
+      <div class="summaryContainer">
+
+        <div class="departsArrivesInfo" fxFlex="33%" fxLayoutGap="2px" fxLayout="column" >
+          <div class="percent100" fxLayoutAlign="end">{{s.departs}}</div>
+          <div class="percent100Bold" fxLayoutAlign="end">{{s.etd | date: 'EEE dd/MM/yy'}}</div>
+        </div>
+
+        <div class="summaryDuration" fxFlex="33%" fxLayoutGap="2px" fxLayout="column" >
+          <div class="percent100" fxLayoutAlign="center">{{s.duration}}</div>
+          <div class="percent100" fxLayoutAlign="center">
+            <img class="legDimensions" *ngIf="s.legs == 1" src="assets/routes/Stop0.png">
+            <img class="legDimensions" *ngIf="s.legs == 2" src="assets/routes/Stop1.png">
+            <img class="legDimensions" *ngIf="s.legs == 3" src="assets/routes/Stop2.png">
+            <img class="legDimensions" *ngIf="s.legs == 4" src="assets/routes/Stop3.png">
+            <img class="legDimensions" *ngIf="s.legs == 5" src="assets/routes/Stop4.png">
+            <img class="legDimensions" *ngIf="s.legs == 6" src="assets/routes/Stop5.png">
+          </div>
+          <div class="multiPorts" *ngIf="s.legs > 1" fxLayoutAlign="center">
+            <mat-label >{{s.tsPorts}}</mat-label>
+          </div>
+        </div>
+
+        <div class="departsArrivesInfo" fxFlex="33%" fxLayoutGap="2px" fxLayoutAlign="left" fxLayout="column" >
+          <div class="percent100" fxLayoutAlign="left">{{s.arrives}}</div>
+          <div class="percent100Bold" fxLayoutAlign="left">{{s.eta | date: 'EEE dd/MM/yy'}}</div>
+        </div>
+
+        <div class="showHide">
+          <button *ngIf="!s.showDetail"  mat-icon-button (click)="onShowDetail(s)">
+            <mat-icon>expand</mat-icon>
+          </button>
+          <button *ngIf="s.showDetail" mat-icon-button (click)="onHideDetails(s)">
+            <mat-icon>compress</mat-icon>
+          </button>
+        </div>
+
+      </div>
+
+      <lib-schedule-detail [summary]="s" *ngIf="s.showDetail"></lib-schedule-detail>
+
+    </div>
+
+  </div>
+
+</div>
+
+

@@ -1,0 +1,70 @@
+<div id="permission-group-list-page-container" class="page-container" fxLayout="column" fxLayoutAlign="start center">
+    <form class="full-width">
+        <mat-form-field class="full-width">
+            <mat-label>Search</mat-label>
+            <input
+                    matInput
+                    name="searchValueInput"
+                    [(ngModel)]="searchValue"
+                    (keyup)="findPermissionGroups()"
+            >
+        </mat-form-field>
+    </form>
+
+    <h3 [style.visibility]="permissionGroups.length === 0 && !loading ? 'visible' : 'hidden'">No Records Matched</h3>
+
+    <table mat-table matSort *ngIf="permissionGroups" [dataSource]="dataSource" class="mat-elevation-z8">
+        <!-- Name Column -->
+        <ng-container matColumnDef="displayName">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let permissionGroup">{{permissionGroup.displayName}}</td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let permissionGroup">{{permissionGroup.description}}</td>
+        </ng-container>
+
+        <!-- Roles Column -->
+        <ng-container matColumnDef="roles">
+            <th mat-header-cell *matHeaderCellDef>Roles</th>
+            <td mat-cell *matCellDef="let permissionGroup">
+                <!--{{permissionGroup.roles.join()}}-->
+
+                <span *ngFor="let role of permissionGroup.roles, let lastItem = last">
+                    {{role.name}}{{lastItem ? '' : ', '}}
+                </span>
+            </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let permissionGroup">
+                <button mat-button [matMenuTriggerFor]="menu">
+                    <mat-icon>more_horiz</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="emitEditButtonClicked(permissionGroup)">
+                        Edit
+                    </button>
+                    <button mat-menu-item (click)="openDialog(permissionGroup)">
+                        Delete
+                    </button>
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnsToDisplay;"></tr>
+    </table>
+
+    <mat-paginator
+            [pageSizeOptions]="[20, 40, 60]"
+            showFirstLastButtons
+    >
+    </mat-paginator>
+
+
+</div>

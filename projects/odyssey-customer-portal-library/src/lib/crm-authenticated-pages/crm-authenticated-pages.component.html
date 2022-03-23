@@ -1,0 +1,41 @@
+<mat-sidenav-container
+  fxFill
+  >
+
+  <mat-sidenav [opened]="true" mode="side" class="sideNavLeft" #leftDrawer>
+
+    <lib-header-toolbar-home
+      [viewState]="leftSideBarState"
+      (homeClicked)="onHome()"
+      (toggleLeftSideBar)="leftDrawer.opened = true; onDrawerClose()"
+    >
+    </lib-header-toolbar-home>
+
+    <lib-sidebar-wide
+      [menu]="sideBarWideMenu"
+      (menuChanged)="onMenuChanged($event)"
+    >
+    </lib-sidebar-wide>
+
+  </mat-sidenav>
+
+  <mat-sidenav [opened]="false" mode="side" position="end" fxFlex.xl="1600px" fxFlex.lg="1200px" fxFlex.md="1024px" fxFlex.sm="200px">
+  </mat-sidenav>
+
+  <mat-sidenav-content class="contentContainer" fxLayout="column" fxFlex="100%">
+
+    <!--<lib-header-toolbar
+      (signedOut)="onSignOut()"
+      (openMenuRequested)="leftDrawer.opened = true"
+      [drawerOpened]="leftDrawer.opened"
+    >
+    </lib-header-toolbar>-->
+
+    <!--<lib-subheader-toolbar></lib-subheader-toolbar>-->
+
+      <router-outlet></router-outlet>
+    <!--<div class="content" fxLayout>
+    </div>-->
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

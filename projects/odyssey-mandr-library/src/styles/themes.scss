@@ -1,0 +1,52 @@
+@import 'node_modules/@angular/material/theming';
+@import "projects/shared/styles/locus";
+@import "projects/shared/styles/marfret";
+@import "projects/shared/styles/ncl";
+@import "projects/shared/styles/transmar";
+@import "projects/odyssey-mandr/src/styles/component-themes";
+
+@include mat-core();
+
+$primary: mat-palette($md-locus-primary);
+$accent: mat-palette($md-locus-accent);
+$warn: mat-palette($md-locus-warn);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include component-themes($theme);
+
+.marfret-theme {
+
+  $marfret-primary: mat-palette($md-marfret-primary);
+  $marfret-accent: mat-palette($md-marfret-accent);
+  $marfret-warn: mat-palette($md-marfret-warn);
+  $marfret-theme: mat-light-theme($marfret-primary, $marfret-accent, $marfret-warn);
+
+  @include angular-material-theme($marfret-theme);
+  @include component-themes($marfret-theme);
+
+}
+
+.ncl-theme {
+
+  $ncl-primary: mat-palette($md-ncl-primary);
+  $ncl-accent: mat-palette($md-ncl-accent);
+  $ncl-warn: mat-palette($md-ncl-warn);
+  $ncl-theme: mat-light-theme($ncl-primary, $ncl-accent, $ncl-warn);
+
+  @include angular-material-theme($ncl-theme);
+  @include component-themes($ncl-theme);
+
+}
+
+.transmar-theme {
+
+  $transmar-primary: mat-palette($md-transmar-primary);
+  $transmar-accent: mat-palette($md-transmar-accent);
+  $transmar-warn: mat-palette($md-transmar-warn);
+  $transmar-theme: mat-light-theme($transmar-primary, $transmar-accent, $transmar-warn);
+
+  @include angular-material-theme($transmar-theme);
+  @include component-themes($transmar-theme);
+
+}

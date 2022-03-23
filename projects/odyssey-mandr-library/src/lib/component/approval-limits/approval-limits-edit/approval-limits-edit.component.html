@@ -1,0 +1,236 @@
+<div class="approval-limits-edit">
+  <lib-content-wrapper>
+    <div fxLayout="row wrap" fxFlexFill fxLayoutAlign="start start" fxLayoutGap="20px">
+
+      <div fxLayout="column" fxLayoutAlign="start start">
+        <mat-card-subtitle>Automatic Approval Limits</mat-card-subtitle>
+        <mat-card-title></mat-card-title>
+      </div>
+
+      <div *ngIf="!loadingApproval; else isLoadingItem"
+           [ngClass]="{'edit-content-page': !isMainDialog, 'edit-content-dialog': !!isMainDialog}">
+        <div fxFlexFill fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+          <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-divider></mat-divider>
+
+            <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+              <div class="edit-field">
+                <lib-currency-lookup label="Currency"
+                                     placeholder="Currency"
+                                     [required]="true"
+                                     [disabled]="disabled || saving"
+                                     [readonly]="readonly"
+                                     [error]="validationIssues.currency ? validationIssues.currency : (!approvalLimit.currency ? 'Currency is required' : '')"
+                                     [value]="approvalLimit.currency"
+                                     (valueChange)="onChangeCurrency($event)"></lib-currency-lookup>
+              </div>
+
+              <div class="edit-field">
+                <lib-container-location-lookup label="Supplier"
+                                               placeholder="Supplier Depot"
+                                               type="depot"
+                                               [value]="approvalLimit.depot"
+                                               (valueChange)="onChangeContainerLocation($event)"
+                                               [error]="validationIssues.depot ? validationIssues.depot : (!approvalLimit.depot ? 'Supplier is required' : '')"
+                                               [required]="true"
+                                               [disabled]="disabled || saving"
+                                               [readonly]="readonly"></lib-container-location-lookup>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-divider></mat-divider>
+
+            <div fxLayout="column" fxLayoutAlign="start start">
+              <mat-card-subtitle>Contact Details</mat-card-subtitle>
+            </div>
+
+            <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+              <mat-form-field class="edit-field"
+                              matTooltip="The source email address for the approval emails, should be an address with which the supplier can contact your organisation">
+                <mat-label>Email From</mat-label>
+                <input [formControl]="emailFromCtl"
+                       (ngModelChange)="onEmailFromChange()"
+                       [errorStateMatcher]="errorMatcher"
+                       type="email"
+                       [readonly]="readonly"
+                       required
+                       matInput>
+                <mat-error *ngIf="emailFromCtl.hasError('required')">Email address is required</mat-error>
+                <mat-error *ngIf="!emailFromCtl.hasError('required') && emailFromCtl.hasError('email')">Address is not a
+                  valid email address
+                </mat-error>
+                <mat-error *ngIf="!emailFromCtl.errors && validationIssues.emailFrom">{{validationIssues.emailFrom}}</mat-error>
+              </mat-form-field>
+
+              <div class="edit-field" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <mat-form-field class="edit-field"
+                                matTooltip="List of email addresses to send the approval emails to">
+                  <mat-label>Email To List</mat-label>
+                  <input [formControl]="emailToCtl"
+                         (ngModelChange)="onEmailToChange()"
+                         [errorStateMatcher]="emailToErrorMatcher"
+                         type="email"
+                         [readonly]="readonly"
+                         matInput>
+                  <button *ngIf="!readonly"
+                          matSuffix
+                          mat-icon-button
+                          [disabled]="disabled || saving || !emailToCtl.valid"
+                          (click)="addToToList(emailToCtl.value); emailToCtl.setValue('')">
+                    <mat-icon>add</mat-icon>
+                  </button>
+
+                  <mat-error *ngIf="emailToCtl.hasError('required')">Email address is required</mat-error>
+                  <mat-error *ngIf="!emailToCtl.hasError('required') && emailToCtl.hasError('email')">Address is not a valid email address</mat-error>
+                  <mat-error *ngIf="!emailToCtl.errors && validationIssues.emailTo">{{validationIssues.emailTo}}</mat-error>
+                </mat-form-field>
+
+                <div class="edit-field" *ngIf="approvalLimit.emailTo" fxLayout="column" fxLayoutAlign="start start"
+                     fxLayoutGap="10px">
+                  <mat-chip class="email-chip"
+                            fxLayout="row"
+                            fxLayoutAlign="start center"
+                            *ngFor="let address of approvalLimit.emailTo; let i = index"
+                            [selectable]="false"
+                            [removable]="!disabled && !readonly"
+                            (removed)="removeFromList(approvalLimit.emailTo, i)">
+                    <span class="email-chip-content" [matTooltip]="address">{{address}}</span>
+                    <span class="fill-horizontal"></span>
+                    <mat-icon class="email-remove-icon" *ngIf="!readonly" matChipRemove matTooltip="Remove Email">cancel</mat-icon>
+                  </mat-chip>
+                </div>
+              </div>
+
+
+              <!-- CC list -->
+              <div class="edit-field" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <mat-form-field class="edit-field"
+                                matTooltip="List of email addresses to carbon copy the approval emails to">
+                  <mat-label>Email CC List</mat-label>
+                  <input [formControl]="emailCcCtl"
+                         type="email"
+                         [readonly]="readonly"
+                         matInput>
+                  <button *ngIf="!readonly"
+                          matSuffix
+                          mat-icon-button
+                          [disabled]="disabled || saving || !emailCcCtl.valid"
+                          (click)="addToCcList(emailCcCtl.value); emailCcCtl.setValue('')">
+                    <mat-icon>add</mat-icon>
+                  </button>
+
+                  <mat-error *ngIf="emailCcCtl.hasError('email')">Address is not a valid email address</mat-error>
+                </mat-form-field>
+
+                <div class="edit-field" *ngIf="approvalLimit.emailCc" fxLayout="column" fxLayoutAlign="start start"
+                     fxLayoutGap="10px">
+                  <mat-chip class="email-chip"
+                            fxLayout="row"
+                            fxLayoutAlign="start center"
+                            *ngFor="let address of approvalLimit.emailCc; let i = index"
+                            [selectable]="false"
+                            [removable]="!disabled && !readonly"
+                            (removed)="removeFromList(approvalLimit.emailCc, i)">
+                    <span class="email-chip-content" [matTooltip]="address">{{address}}</span>
+                    <span class="fill-horizontal"></span>
+                    <mat-icon class="email-remove-icon" *ngIf="!readonly" matChipRemove matTooltip="Remove Email">cancel</mat-icon>
+                  </mat-chip>
+                </div>
+              </div>
+
+              <!-- BCC list -->
+              <div class="edit-field" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+                <mat-form-field class="edit-field"
+                                matTooltip="List of email addresses to blind carbon copy the approval emails to">
+                  <mat-label>Email BCC List</mat-label>
+                  <input [formControl]="emailBccCtl"
+                         type="email"
+                         [readonly]="readonly"
+                         matInput>
+                  <button *ngIf="!readonly"
+                          matSuffix
+                          mat-icon-button
+                          [disabled]="disabled || saving || !emailBccCtl.valid"
+                          (click)="addToBccList(emailBccCtl.value); emailBccCtl.setValue('')">
+                    <mat-icon>add</mat-icon>
+                  </button>
+
+                  <mat-error *ngIf="emailBccCtl.hasError('email')">Address is not a valid email address</mat-error>
+                </mat-form-field>
+
+                <div class="edit-field" *ngIf="approvalLimit.emailBcc" fxLayout="column" fxLayoutAlign="start start"
+                     fxLayoutGap="10px">
+                  <mat-chip class="email-chip"
+                            fxLayout="row"
+                            fxLayoutAlign="start center"
+                            *ngFor="let address of approvalLimit.emailBcc; let i = index"
+                            [selectable]="false"
+                            [removable]="!disabled && !readonly"
+                            (removed)="removeFromList(approvalLimit.emailBcc, i)">
+                    <span class="email-chip-content" [matTooltip]="address">{{address}}</span>
+                    <span class="fill-horizontal"></span>
+                    <mat-icon class="email-remove-icon" *ngIf="!readonly" matChipRemove matTooltip="Remove Email">cancel</mat-icon>
+                  </mat-chip>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="section" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="20px">
+            <mat-divider></mat-divider>
+
+            <div fxLayout="column" fxLayoutAlign="start start">
+              <mat-card-subtitle>Max Total Per Container Type</mat-card-subtitle>
+            </div>
+
+            <div class="section-content" fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="20px">
+
+              <mat-form-field class="edit-field" *ngFor="let contGroup of contTypeGroupVoModel">
+                <mat-label>{{contGroup.groupName | titlecase}}</mat-label>
+                <input [(ngModel)]="approvalLimit.contApprovalLimits[contGroup.groupName]"
+                       (ngModelChange)="onLimitChange(containerLimitValidationPrefix + contGroup.groupName)"
+                       [errorStateMatcher]="contApprovalLimitsErrorMatchers.get(contGroup.groupName)"
+                       type="number"
+                       min="0"
+                       [readonly]="readonly"
+                       [disabled]="disabled || saving" matInput>
+                <mat-error
+                  *ngIf="validationIssues[containerLimitValidationPrefix + contGroup.groupName]">{{validationIssues[containerLimitValidationPrefix + contGroup.groupName]}}</mat-error>
+              </mat-form-field>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <ng-template #isLoadingItem>
+        <div class="spinner-wrapper" fxLayout="column" fxLayoutAlign="center center">
+          <mat-spinner></mat-spinner>
+        </div>
+      </ng-template>
+
+      <mat-card-actions fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
+        <button mat-raised-button
+                (click)="onClose()"
+                [disabled]="saving">Close
+        </button>
+        <button *ngIf="!readonly"
+                mat-raised-button
+                color="primary"
+                (click)="save()"
+                [disabled]="!canSave">Save
+        </button>
+        <mat-spinner *ngIf="saving" [diameter]="30"></mat-spinner>
+      </mat-card-actions>
+    </div>
+  </lib-content-wrapper>
+</div>

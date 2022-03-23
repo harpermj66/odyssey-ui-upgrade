@@ -1,0 +1,42 @@
+<div class="wrapper" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+
+  <div class="char-wrapper quarter">
+    <lib-cedex-select-field [type]="type"
+                            [value]="charOne"
+                            (valueChange)="onCharOneChange($event)"
+                            [label]="label"
+                            [placeholder]="placeholder"
+                            [required]="required || !!charTwo || !!charThree || !!charFour"
+                            [readonly]="readonly"
+                            [disabled]="disabled"></lib-cedex-select-field>
+  </div>
+
+  <div class="char-wrapper quarter">
+    <lib-cedex-select-field [type]="typeSecondChar"
+                            [value]="charTwo"
+                            (valueChange)="onCharTwoChange($event)"
+                            [required]="required || !!charOne || !!charThree || !!charFour"
+                            [readonly]="readonly"
+                            [disabled]="disabled"></lib-cedex-select-field>
+  </div>
+
+  <div class="char-wrapper quarter">
+    <lib-cedex-select-field [type]="typeThirdChar"
+                            [value]="charThree"
+                            (valueChange)="onCharThreeChange($event)"
+                            [required]="required || !!charOne || !!charTwo || !!charFour"
+                            [readonly]="readonly"
+                            [disabled]="disabled"></lib-cedex-select-field>
+  </div>
+
+  <div class="char-wrapper quarter">
+    <lib-cedex-select-field [type]="typeFourthChar"
+                            [value]="charFour"
+                            (valueChange)="onCharFourChange($event)"
+                            [required]="required || !!charOne || !!charTwo || !!charThree"
+                            [readonly]="readonly"
+                            [disabled]="disabled"></lib-cedex-select-field>
+  </div>
+</div>
+
+

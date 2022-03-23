@@ -1,0 +1,81 @@
+@import 'node_modules/@angular/material/theming';
+@import "projects/shared/styles/locus";
+@import "projects/shared/styles/marfret";
+@import "projects/shared/styles/ncl";
+@import "projects/shared/styles/transmar";
+@import "projects/shared/styles/dal";
+@import "projects/shared/styles/eimskip";
+@import "projects/odyssey-home/src/styles/component-themes";
+@import "projects/odyssey-administration-library/src/styles/administration-component-themes";
+
+@include mat-core();
+
+$primary: mat-palette($md-locus-primary);
+$accent: mat-palette($md-locus-accent);
+$warn: mat-palette($md-locus-warn);
+$theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($theme);
+@include component-themes($theme);
+@include administration-component-themes($theme);
+
+.marfret-theme {
+
+  $marfret-primary: mat-palette($md-marfret-primary);
+  $marfret-accent: mat-palette($md-marfret-accent);
+  $marfret-warn: mat-palette($md-marfret-warn);
+  $marfret-theme: mat-light-theme($marfret-primary, $marfret-accent, $marfret-warn);
+
+  @include angular-material-theme($marfret-theme);
+  @include component-themes($marfret-theme);
+  @include administration-component-themes($marfret-theme);
+}
+
+.ncl-theme {
+
+  $ncl-primary: mat-palette($md-ncl-primary);
+  $ncl-accent: mat-palette($md-ncl-accent);
+  $ncl-warn: mat-palette($md-ncl-warn);
+  $ncl-theme: mat-light-theme($ncl-primary, $ncl-accent, $ncl-warn);
+
+  @include angular-material-theme($ncl-theme);
+  @include component-themes($ncl-theme);
+  @include administration-component-themes($ncl-theme);
+}
+
+.transmar-theme {
+
+  $transmar-primary: mat-palette($md-transmar-primary);
+  $transmar-accent: mat-palette($md-transmar-accent);
+  $transmar-warn: mat-palette($md-transmar-warn);
+  $transmar-theme: mat-light-theme($transmar-primary, $transmar-accent, $transmar-warn);
+
+  @include angular-material-theme($transmar-theme);
+  @include component-themes($transmar-theme);
+  @include administration-component-themes($transmar-theme);
+}
+
+.dal-theme {
+
+  $dal-primary: mat-palette($md-dal-primary);
+  $dal-accent: mat-palette($md-dal-accent);
+  $dal-warn: mat-palette($md-dal-warn);
+  $dal-theme: mat-light-theme($dal-primary, $dal-accent, $dal-warn);
+
+  @include angular-material-theme($dal-theme);
+  @include component-themes($dal-theme);
+  @include administration-component-themes($dal-theme);
+}
+
+.eimskip-theme {
+
+  $eimskip-primary: mat-palette($md-eimskip-primary);
+  $eimskip-accent: mat-palette($md-eimskip-accent);
+  $eimskip-warn: mat-palette($md-eimskip-warn);
+  $eimskip-theme: mat-light-theme($md-eimskip-primary, $md-eimskip-accent, $md-eimskip-warn);
+
+  @include angular-material-theme($eimskip-theme);
+  @include component-themes($eimskip-theme);
+  @include administration-component-themes($eimskip-theme);
+}
+

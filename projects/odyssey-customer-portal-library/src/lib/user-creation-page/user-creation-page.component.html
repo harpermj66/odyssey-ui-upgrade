@@ -1,0 +1,147 @@
+<div id="user-creation-page-container" class="page-container" fxLayout="row" fxLayoutAlign="center start">
+    <!--<mat-spinner *ngIf="loading" diameter="20"></mat-spinner>-->
+
+    <form id="user-creation-form" [formGroup]="userCreationForm" (ngSubmit)="submitForm()" fxFlex="70%" fxFlex.lt-md="100%" fxLayout="column" fxLayoutGap="30px">
+        <mat-card id="personal-details-card" formGroupName="personalDetailsGroup">
+            <mat-card-header>
+                <mat-card-title id="personal-details-card-title">Personal Information</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div
+                    fxLayout.gt-md="row"
+                    fxLayout.lt-md="column"
+                    fxLayoutAlign.gt-md="start end"
+                    fxLayoutAlign.lt-md="start start"
+                    fxLayoutGap="10px"
+                >
+                    <mat-form-field fxFlex="1 1 10%">
+                        <mat-label>Title</mat-label>
+                        <input id="user-creation-form-title-input" matInput formControlName="title" placeholder="Title">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="1 1 auto">
+                        <mat-label>First Name</mat-label>
+                        <input id="user-creation-form-first-name-input" matInput formControlName="firstName" placeholder="First Name" required>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="2 1 auto">
+                        <mat-label>Last Name</mat-label>
+                        <input id="user-creation-form-last-name-input" matInput formControlName="lastName" placeholder="Last Name" required>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Email</mat-label>
+                        <input id="user-creation-form-email-input" matInput formControlName="email" placeholder="Email" required>
+                        <mat-error *ngIf="userCreationForm.controls.personalDetailsGroup?.get('email')?.invalid">You must enter a valid email address.</mat-error>
+                    </mat-form-field>
+                </div>
+                <div
+                    fxLayout.gt-md="row"
+                    fxLayout.lt-md="column"
+                    fxLayoutAlign.gt-md="start end"
+                    fxLayoutAlign.lt-md="start start"
+                    fxLayoutGap="10px"
+                >
+                    <mat-form-field>
+                        <mat-label>Password</mat-label>
+                        <input matInput formControlName="password" placeholder="Password" type="password" [required]="!userToEdit">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Repeat Password</mat-label>
+                        <input matInput formControlName="passwordRepeat" placeholder="Repeat Password" type="password"  [required]="!userToEdit">
+                        <mat-error *ngIf="userCreationForm.controls.personalDetailsGroup?.get('passwordRepeat')?.invalid">Passwords do not match.</mat-error>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Job Title</mat-label>
+                        <input id="user-creation-form-job-title-input" matInput formControlName="jobTitle" placeholder="Job Title">
+                    </mat-form-field>
+                    <div style="height: 57px;" fxLayout="row" fxLayoutAlign="center center">
+                        <mat-checkbox id="user-creation-form-active-checkbox" formControlName="active">Active</mat-checkbox>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card formGroupName="contactDetailsGroup">
+            <mat-card-header>
+                <mat-card-title id="contact-details-card-title">Contact Information</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div
+                    fxLayout.gt-md="row"
+                    fxLayout.lt-md="column"
+                    fxLayoutAlign.gt-md="start end"
+                    fxLayoutAlign.lt-md="start start"
+                    fxLayoutGap="10px"
+                >
+                    <mat-form-field>
+                        <mat-label>Work Phone Number</mat-label>
+                        <input id="user-creation-form-work-phone-input" matInput formControlName="workPhoneNumber" placeholder="Work Phone Number">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Work Mobile Number</mat-label>
+                        <input id="user-creation-form-work-fax-input" matInput formControlName="workMobileNumber" placeholder="Work Mobile Number">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Work Fax Number</mat-label>
+                        <input id="user-creation-form-work-mobile-input" matInput formControlName="workFaxNumber" placeholder="Work Fax Number">
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card formGroupName="preferencesGroup">
+            <mat-card-header>
+                <mat-card-title>Preferences</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div
+                    fxLayout.gt-md="row"
+                    fxLayout.lt-md="column"
+                    fxLayoutAlign.gt-md="start end"
+                    fxLayoutAlign.lt-md="start start"
+                    fxLayoutGap="10px"
+                >
+                    <mat-form-field>
+                        <mat-label>Report Language</mat-label>
+                        <mat-select id="user-creation-form-language-select" formControlName="language">
+                            <mat-option *ngFor="let language of languages" [value]="language.language">
+                                {{language.displayName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Time Zone</mat-label>
+                        <mat-select id="user-creation-form-timezone-select" formControlName="timeZone">
+                            <mat-option *ngFor="let timeZone of timeZones" [value]="timeZone.id">
+                                {{timeZone.displayNameWithOffset}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Permission Groups</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content>
+                <div *ngFor="let group of permissionGroups">
+                    <mat-checkbox
+                        [checked]="group.checked"
+                        id="user-creation-form-permission-group-{{group.name}}"
+                        (change)="handlePermissionGroupSelection($event, group)"
+                    >
+                        {{group.displayName}}
+                    </mat-checkbox>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <div fxLayout="row" fxLayoutAlign="end center">
+            <button mat-button type="button" (click)="openDialog()">Cancel</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="!userCreationForm.valid">
+                {{userToEdit ? 'Update' : 'Create'}}
+            </button>
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,42 @@
+<div class="lookup-autocomplete">
+
+  <mat-form-field [class]="inputClass">
+    <mat-label *ngIf="label">{{label}}</mat-label>
+    <input #searchInput
+           type="text"
+           [placeholder]="placeholder"
+           aria-label="Number"
+           matInput
+           [disabled]="disabled || readonly"
+           [required]="required"
+           [(ngModel)]="value"
+           (keyup)="onValueChanged()"
+           [matAutocomplete]="autocompeteEle">
+
+    <mat-autocomplete #autocompeteEle="matAutocomplete"
+                      [class]="panelClasses"
+                      [panelWidth]="250*displayFields.length"
+                      (opened)="selectOpened()"
+                      (optionSelected)="onSelectChange($event)">
+
+      <!-- Create options for each data set entry -->
+      <mat-option class="lookup-autocomplete-option" *ngFor="let lookup of dataset; trackBy: trackById"
+                  [value]="lookup">
+
+        <!-- Layout the possible display fields as a grid so they have equal space -->
+        <mat-grid-list class="lookup-autocomplete-grid-list" [cols]="displayFields.length" rowHeight="40">
+          <mat-grid-tile class="lookup-autocomplete-grid-tile"
+                         *ngFor="let fieldName of displayFields; let i = index"
+                         [matTooltip]="lookup[fieldName]">
+            <!-- Pad any fields that are not the first -->
+            <span class="tile-content"
+                  [ngClass]="{'padded-left': i > 0, 'padded-right': i < (displayFields.length - 1)}">{{lookup[fieldName]}}</span>
+          </mat-grid-tile>
+        </mat-grid-list>
+
+      </mat-option>
+
+    </mat-autocomplete>
+  </mat-form-field>
+
+</div>

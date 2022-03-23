@@ -1,0 +1,47 @@
+@import "~@angular/material/theming";
+
+@mixin quick-search-items($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .lookup-autocomplete-input {
+    height: 20px !important;
+    padding-top: 0px !important;
+    margin-top: -11px !important;
+    border: none !important;
+  }
+
+  .filter-item-min-input-width {
+    min-width: 20px;
+  }
+
+  .nameClass {
+    background-color: mat-color($primary, 400);
+    color: white;
+    height: 23px;
+    padding-top: 3px;
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 4px 0px 0px 4px;
+  }
+
+  .valueClass {
+    background-color: mat-color($primary, 900);
+    color: white;
+    height: 26px;
+    padding-top: 3px;
+    padding-left: 8px;
+    padding-right: 4px;
+    border-radius: 0px 4px 4px 0px;
+
+    .closeIcon {
+      color: white;
+      height: 100%;
+      font-size: 18px;
+      padding-top: 1px;
+    }
+  }
+
+}

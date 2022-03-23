@@ -1,0 +1,15 @@
+.photo-container {
+  background-color: grey;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+:host ::ng-deep .mat-card-header-text {
+  margin: 0 !important;
+}
+
+.photo {
+  border-radius: 50%;
+  object-fit: cover;
+}

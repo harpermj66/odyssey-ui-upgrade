@@ -1,0 +1,11 @@
+<div fxFlex="400px" fxFlexFill class="favouritesContainer" >
+  <mat-selection-list #shoes [multiple]="false">
+    <mat-list-option *ngFor="let shoe of typesOfShoes" [value]="shoe">
+      <div fxLayout="row" fxFlex="100%">
+        <mat-label fxFlex="100%">{{shoe}}</mat-label>
+        <mat-icon fxFlex="20px" *ngIf="shoes.selectedOptions.selected[0]?.value==shoe">delete</mat-icon>
+      </div>
+    </mat-list-option>
+  </mat-selection-list>
+</div>
+

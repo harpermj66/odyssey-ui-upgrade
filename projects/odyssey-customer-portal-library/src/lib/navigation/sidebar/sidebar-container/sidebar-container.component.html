@@ -1,0 +1,24 @@
+<div
+    fxLayout="row"
+    class="compositeSidebarContainer"
+    [style.width.px]="sidebarMode.width"
+    (mouseleave)="emitMouseLeaveEvent()"
+>
+
+    <lib-sidebar-menu-container
+        class="menu-container"
+        [style.width.px]="sidebarMode.width"
+        [unauthenticatedMenu]="true"
+        [menuItems]="menuItems"
+        [sidebarMode]="sidebarMode"
+        (menuItemClicked)="emitMenuItem($event)"
+        (mouseover)="emitMouseOverEvent()"
+        (signInClicked)="emitSignInClicked()"
+        (signOutClicked)="emitSignOutClicked()"
+        (registerClicked)="emitRegisterClicked()"
+        (profileClicked)="emitProfileClicked()"
+    >
+
+    </lib-sidebar-menu-container>
+
+</div>

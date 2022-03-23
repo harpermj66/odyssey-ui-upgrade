@@ -1,0 +1,38 @@
+.container-job-tariff-edit {
+  box-sizing: border-box;
+  width: 100%;
+  max-height: 100%;
+  max-width: 100%;
+
+  lib-content-wrapper {
+    max-height: 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .spinner-wrapper, .mat-spinner {
+    height: 100%;
+    width: 100%;
+  }
+
+  .edit-content-page {
+    height: calc(100% - 100px);
+    max-height: calc(100% - 100px);
+    width: 100%;
+    overflow: auto;
+  }
+
+  .edit-content-dialog {
+    max-height: calc(90vh - 140px);
+    max-width: 90vw;
+    width: 100%;
+    overflow: auto;
+  }
+
+  .edit-field {
+    width: 300px;
+    max-width: 100%;
+  }
+}
+
+

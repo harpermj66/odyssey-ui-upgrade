@@ -1,0 +1,14 @@
+<mat-toolbar class="tableFooterNavigator">
+  <span class="fill-remaining-space"></span>
+  <mat-paginator #paginator
+                 class="paginatorView"
+                 [length]="totalRecords"
+                 [pageIndex]="page"
+                 [pageSize]="size"
+                 [pageSizeOptions]="pageSizes"
+                 [showFirstLastButtons]="true"
+                 (page)="onPageChange($event)"
+                 [disabled]="!navigatorEnabled"
+  >
+  </mat-paginator>
+</mat-toolbar>

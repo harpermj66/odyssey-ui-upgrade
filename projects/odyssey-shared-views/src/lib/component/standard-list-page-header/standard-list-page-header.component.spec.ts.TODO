@@ -1,0 +1,25 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { StandardListPageHeaderComponent } from './standard-list-page-header.component';
+
+describe('StandardListPageHeaderComponent', () => {
+  let component: StandardListPageHeaderComponent;
+  let fixture: ComponentFixture<StandardListPageHeaderComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ StandardListPageHeaderComponent ]
+    })
+    .compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(StandardListPageHeaderComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

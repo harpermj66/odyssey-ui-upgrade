@@ -1,0 +1,25 @@
+.page-container{
+    min-height: 100vh;
+    height: 100%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-column-roles {
+    width: 50%;
+}
+
+.mat-column-action {
+    width: 32px;
+    text-align: center;
+}
+
+mat-paginator {
+    width: 100%;
+}

@@ -1,0 +1,15 @@
+<div fxLayout="column" fxLayoutGap="10px" fxLayoutAlign="start start">
+    <div class="input-row" fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start end">
+        <div fxFlex="70%">
+            <lib-chip-search-field [placeholder]="selectedSearchOption.displayName" (searchValuesChanged)="setSearchValues($event)"></lib-chip-search-field>
+        </div>
+
+        <div fxFlex="30%">
+            <lib-tracking-option-select (optionChanged)="setSelectedSearchOption($event)"></lib-tracking-option-select>
+        </div>
+    </div>
+
+    <!--<button mat-flat-button color="primary" (click)="onSubmit()">
+        Search
+    </button>-->
+</div>

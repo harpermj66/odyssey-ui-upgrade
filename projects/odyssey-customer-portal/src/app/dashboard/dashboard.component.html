@@ -1,0 +1,28 @@
+
+    <div class="cpDashboardTitle"  fxLayoutAlign="left middle">
+
+    </div>
+
+    <div class="cpDashboardContainer" fxLayoutAlign="top center" fxLayout="column">
+        <div class="cpDashboardCentralArea" [fxLayout]="dashboardLayout" fxLayoutGap="10px" [style.width.px]="dashboardLayout == 'row' ? 1010 : 500">
+            <div>
+                <lib-schedule-dashboard-search-parameter
+                        (findRouteExecuted)="onFindRoute()"
+                        [pin]="portsPin"
+                    >
+                </lib-schedule-dashboard-search-parameter>
+            </div>
+            <div>
+                <lib-container-tracker-card
+                        (onSubmit)="passDataToContainerTrackingPage($event)"
+                        [pin]="trackingPin"
+                >
+                </lib-container-tracker-card>
+            </div>
+
+
+
+        </div>
+
+    </div>
+

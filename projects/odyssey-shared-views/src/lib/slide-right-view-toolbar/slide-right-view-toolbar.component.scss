@@ -1,0 +1,19 @@
+@import "~@angular/material/theming";
+
+@mixin slide-right-toolbar($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $background: map-get($theme, background);
+  $background-color: mat-color($background, card);
+
+  .slideRightToolbarHeader {
+    height: 46px;
+    padding-top: 4px;
+    padding-left: 20px;
+    background-color: mat-color($primary, 700) !important;
+    border: none;
+    font-size: 14px;
+    color: mat-contrast($primary, 700) !important;
+  }
+
+}

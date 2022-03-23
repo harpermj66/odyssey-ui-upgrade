@@ -1,0 +1,96 @@
+<div fxLayoutGap="10px" class="rateEnquiry">
+
+  <div fxLayout="row">
+
+    <mat-card style="opacity: 0.8">
+
+      <mat-card-header  >
+        <div mat-card-avatar >
+          <mat-icon>corporate_fare</mat-icon>
+        </div>
+        <mat-card-title i18n>Create Rate Enquiry</mat-card-title>
+        <mat-card-subtitle i18n>General</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutGap="10px" >
+          <mat-form-field fxFlex="300px">
+            <mat-label i18n>Carrier</mat-label>
+            <mat-select>
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+            <mat-hint>Who are you?</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="300px">
+            <input matInput placeholder="Company Name" />
+            <mat-hint i18n>What is your name?</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px" >
+          <mat-form-field fxFlex="300px">
+            <input matInput placeholder="Contact Name" />
+            <mat-hint>Your primary contact</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="300px">
+            <input matInput placeholder="Contact email" />
+            <mat-hint>Primary contact</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="300px">
+            <mat-label i18n>Booking Agent</mat-label>
+            <mat-select>
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px" >
+
+          <mat-form-field fxFlex="300px">
+            <input matInput placeholder="Company Phone" />
+          </mat-form-field>
+
+          <mat-form-field fxFlex="300px">
+            <input matInput placeholder="Sub Account" />
+          </mat-form-field>
+
+          <mat-form-field fxFlex="300px">
+            <mat-label>Contract Country</mat-label>
+            <mat-select>
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px">
+
+          <mat-form-field fxFlex="300px">
+            <input matInput placeholder="Client Ref" />
+          </mat-form-field>
+
+          <mat-form-field fxFlex="610px">
+            <textarea matInput placeholder="Description"></textarea>
+            <mat-hint>Anything that might help with the search</mat-hint>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+
+      <mat-card-actions class="matCardActions">
+        <button mat-raised-button color="accent" (click)="onCancel()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="onMakeEnquiry()">Make Enquiry</button>
+      </mat-card-actions>
+
+    </mat-card>
+
+  </div>
+
+</div>

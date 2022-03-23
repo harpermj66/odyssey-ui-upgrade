@@ -1,0 +1,11 @@
+@import "~@angular/material/theming";
+
+@mixin booking-search-component ($theme){
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  .search-rule-editor {
+    border: solid 1px mat-color($primary, 100);
+    padding: 0px;
+  }
+}
