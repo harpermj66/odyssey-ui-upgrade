@@ -31,7 +31,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {
   ContainerJobTariffEditQueryParams
 } from "../container-job-tariff-edit/container-job-tariff-edit.component";
-import {Observable, of, throwError} from "rxjs";
+import {flatMap, Observable, of, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {ContainerJobTypeService} from "../../../../../../odyssey-service-library/src/lib/vendorjobs/container-job-tariff/service/container-job-type.service";
 import {FlatJobTariff} from "../flat-job-tariff";

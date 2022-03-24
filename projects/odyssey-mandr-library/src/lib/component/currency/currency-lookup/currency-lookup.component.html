@@ -19,7 +19,7 @@
       </mat-form-field>
 
       <!-- hidden value in case the selected value is off page -->
-      <mat-option class="currency-lookup-hidden-option" *ngIf="this.value && this.value.currencyId && !matchFound" [value]="this.value">{{this.value.shortname}}</mat-option>
+      <mat-option class="currency-lookup-hidden-option" *ngIf="this.value && this.value.currencyId && !matchFound" [value]="this.value">{{shortName(this.value)}}</mat-option>
 
       <mat-option *ngIf="!required"></mat-option>
 
@@ -45,7 +45,7 @@
     <mat-form-field>
       <mat-label *ngIf="label">{{label}}</mat-label>
       <input type="text"
-             [ngModel]="this.value?.shortname"
+             [ngModel]="shortName(this.value)"
              [placeholder]="placeholder"
              matInput
              readonly

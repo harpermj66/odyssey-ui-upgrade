@@ -5,6 +5,7 @@ import {FilterItem} from "../../component/list-filter/list-filter.component";
 import {SavedSearchModel} from "../../../../../odyssey-service-library/src/lib/search/rule/model/saved-search.model";
 import {SavedSearchHistoryService} from "../../../../../odyssey-service-library/src/lib/search/rule/history/service/saved-search-history.service";
 import {ResourceTypeModel} from "../../../../../odyssey-service-library/src/lib/model/resource-type.model";
+import {PageableModel} from "../../../../../odyssey-service-library/src/lib/model/pageable.model";
 import {MatSelectChange} from "@angular/material/select";
 
 const NO_AVAILABLE_SEARCH = 'There are no available searches. Please create one using the + icon opposite.';
@@ -122,28 +123,28 @@ export class AdvancedSearchToolbarComponent implements OnInit, OnChanges {
   }
 
   loadHistory(): void {
-    const resourceTypeName = this.resourceType?.resourceName;
-
-    if (resourceTypeName != null) {
-      this.historyService.getSavedSearchHistoryEntries(resourceTypeName, {
-        pageSize: 10
-      }).subscribe(
-        history => {
-          if (history.content) {
-            this.history = history.content;
-          }
-        }
-      );
-    }
+    // const resourceTypeName = this.resourceType?.resourceName;
+    //
+    // if (resourceTypeName != null) {
+    //   this.historyService.getSavedSearchHistoryEntries(resourceTypeName, {
+    //     pageSize: 10
+    //   }).subscribe(
+    //     history => {
+    //       if (history.content) {
+    //         this.history = history.content;
+    //       }
+    //     }
+    //   );
+    // }
   }
 
   loadFavourites(): void {
     const resourceTypeName = this.resourceType?.resourceName;
 
+    var pn = new PageableModel();
+    pn.pageSize = 200;
     if (resourceTypeName != null) {
-      this.historyService.getFavouriteSavedSearches(resourceTypeName, {
-        pageSize: 200
-      }).subscribe(
+      this.historyService.getFavouriteSavedSearches(resourceTypeName, pn).subscribe(
         favourites => {
           if (favourites.content) {
             this.favourites = favourites.content;

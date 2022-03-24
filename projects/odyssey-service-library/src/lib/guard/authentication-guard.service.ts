@@ -16,7 +16,7 @@ export class AuthenticationGuardService implements CanActivate {
       this.themeService.changeTheme(this.themeService.getCurrentCarrier());
       return true;
     } else {
-      const params = any;
+      const params = {};
       route.queryParamMap.keys.forEach((key: string) => {
         // @ts-ignore
         params[key] = route.queryParamMap.get(key);

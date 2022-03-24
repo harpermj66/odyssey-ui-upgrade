@@ -142,4 +142,8 @@ export class CurrencyLookupComponent implements OnInit , OnChanges{
       this.onSearchByShortName();
     }
   }
+
+  shortName(currencyVoModel: any): String {
+    return  (currencyVoModel as CurrencyVoModel).shortname
+  }
 }

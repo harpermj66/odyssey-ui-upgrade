@@ -14,7 +14,7 @@ import {ContTypeGroupService} from "../../../../../../odyssey-service-library/sr
 import {ValidationExceptionModel} from "../../../../../../odyssey-service-library/src/lib/model/exception/validation-exception.model";
 import {DepotVoModel} from "../../../../../../odyssey-service-library/src/lib/mandr/container-location/model/depot-vo.model";
 import {ContainerLocationVoModel} from "../../../../../../odyssey-service-library/src/lib/mandr/container-location/model/container-location-vo.model";
-import {Observable, of, throwError} from "rxjs";
+import {flatMap, Observable, of, throwError} from "rxjs";
 import {catchError, map} from "rxjs/operators";
 import {ContainerCategoriesService} from "../../../../../../odyssey-service-library/src/lib/vendorjobs/container-job-tariff/service/container-categories.service";
 import {CurrencyVoModel} from "../../../../../../odyssey-service-library/src/lib/mandr/repair-job/model/currency-vo.model";
