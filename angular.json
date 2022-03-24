@@ -28,12 +28,21 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/odyssey-home/src/favicon.ico",
-              "projects/odyssey-home/src/assets"
+              "projects/odyssey-home/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/shared/assets",
+                "output": "assets"
+              }
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/odyssey-home/src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects/odyssey-home/src/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
@@ -164,11 +173,21 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/odyssey-customer-portal/src/favicon.ico",
-              "projects/odyssey-customer-portal/src/assets"
+              "projects/odyssey-customer-portal/src/assets",
+              {
+                "glob": "**/*",
+                "input": "projects/shared/assets",
+                "output": "assets"
+              }
             ],
             "styles": [
               "projects/odyssey-customer-portal/src/styles.scss"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "projects/odyssey-customer-portal/src/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {
